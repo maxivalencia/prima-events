@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Privilege{% endblock %}
+
+{% block body %}
+    <h1>Privilege</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ privilege.id }}</td>
+            </tr>
+            <tr>
+                <th>Privilege</th>
+                <td>{{ privilege.privilege }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('privilege_index') }}">back to list</a>
+
+    <a href="{{ path('privilege_edit', {'id': privilege.id}) }}">edit</a>
+
+    {{ include('privilege/_delete_form.html.twig') }}
+{% endblock %}

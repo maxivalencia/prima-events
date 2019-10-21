@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mouvement{% endblock %}
+
+{% block body %}
+    <h1>Mouvement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ mouvement.id }}</td>
+            </tr>
+            <tr>
+                <th>Mouvement</th>
+                <td>{{ mouvement.mouvement }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('mouvement_index') }}">back to list</a>
+
+    <a href="{{ path('mouvement_edit', {'id': mouvement.id}) }}">edit</a>
+
+    {{ include('mouvement/_delete_form.html.twig') }}
+{% endblock %}
