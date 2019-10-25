@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paye index{% endblock %}
+
+{% block body %}
+    <h1>Paye index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Refstock</th>
+                <th>DatePayement</th>
+                <th>TVA</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for paye in payes %}
+            <tr>
+                <td>{{ paye.id }}</td>
+                <td>{{ paye.refstock }}</td>
+                <td>{{ paye.datePayement ? paye.datePayement|date('Y-m-d') : '' }}</td>
+                <td>{{ paye.TVA ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('paye_show', {'id': paye.id}) }}">show</a>
+                    <a href="{{ path('paye_edit', {'id': paye.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('paye_new') }}">Create new</a>
+{% endblock %}

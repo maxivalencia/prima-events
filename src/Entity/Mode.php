@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MouvementRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ModeRepository")
  */
-class Mouvement
+class Mode
 {
     /**
      * @ORM\Id()
@@ -19,10 +19,10 @@ class Mouvement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $mouvement;
+    private $mode;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stock", inversedBy="mouvement")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stock", inversedBy="mode")
      */
     private $stock;
 
@@ -31,14 +31,14 @@ class Mouvement
         return $this->id;
     }
 
-    public function getMouvement(): ?string
+    public function getMode(): ?string
     {
-        return $this->mouvement;
+        return $this->mode;
     }
 
-    public function setMouvement(string $mouvement): self
+    public function setMode(string $mode): self
     {
-        $this->mouvement = $mouvement;
+        $this->mode = $mode;
 
         return $this;
     }

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stock{% endblock %}
+
+{% block body %}
+    <h1>Stock</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stock.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantite</th>
+                <td>{{ stock.quantite }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ stock.reference }}</td>
+            </tr>
+            <tr>
+                <th>DateCommande</th>
+                <td>{{ stock.dateCommande ? stock.dateCommande|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateSortiePrevue</th>
+                <td>{{ stock.dateSortiePrevue ? stock.dateSortiePrevue|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateSortieEffectif</th>
+                <td>{{ stock.dateSortieEffectif ? stock.dateSortieEffectif|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateRetourPrevu</th>
+                <td>{{ stock.dateRetourPrevu ? stock.dateRetourPrevu|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateRetourEffectif</th>
+                <td>{{ stock.dateRetourEffectif ? stock.dateRetourEffectif|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('stock_index') }}">back to list</a>
+
+    <a href="{{ path('stock_edit', {'id': stock.id}) }}">edit</a>
+
+    {{ include('stock/_delete_form.html.twig') }}
+{% endblock %}

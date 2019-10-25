@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypePayement{% endblock %}
+
+{% block body %}
+    <h1>TypePayement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type_payement.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ type_payement.type }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('type_payement_index') }}">back to list</a>
+
+    <a href="{{ path('type_payement_edit', {'id': type_payement.id}) }}">edit</a>
+
+    {{ include('type_payement/_delete_form.html.twig') }}
+{% endblock %}

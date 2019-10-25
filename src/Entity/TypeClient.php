@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PrivilegeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TypeClientRepository")
  */
-class Privilege
+class TypeClient
 {
     /**
      * @ORM\Id()
@@ -19,10 +19,10 @@ class Privilege
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $privilege;
+    private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="privilege")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="type")
      */
     private $client;
 
@@ -31,14 +31,14 @@ class Privilege
         return $this->id;
     }
 
-    public function getPrivilege(): ?string
+    public function getType(): ?string
     {
-        return $this->privilege;
+        return $this->type;
     }
 
-    public function setPrivilege(string $privilege): self
+    public function setType(string $type): self
     {
-        $this->privilege = $privilege;
+        $this->type = $type;
 
         return $this;
     }

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TypePayement{% endblock %}
+
+{% block body %}
+    <h1>Create new TypePayement</h1>
+
+    {{ include('type_payement/_form.html.twig') }}
+
+    <a href="{{ path('type_payement_index') }}">back to list</a>
+{% endblock %}
