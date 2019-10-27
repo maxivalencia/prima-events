@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TypePayement index{% endblock %}
+{% block title %}Liste Type de Payement{% endblock %}
 
 {% block body %}
-    <h1>TypePayement index</h1>
+<div class="container">
+    <div class="row">
+        <h1>Liste Type de Payement</h1>
+    </div>
+    <hr>
 
     <table class="table">
         <thead>
@@ -19,17 +23,22 @@
                 <td>{{ type_payement.id }}</td>
                 <td>{{ type_payement.type }}</td>
                 <td>
-                    <a href="{{ path('type_payement_show', {'id': type_payement.id}) }}">show</a>
-                    <a href="{{ path('type_payement_edit', {'id': type_payement.id}) }}">edit</a>
+                    <a href="{{ path('type_payement_show', {'id': type_payement.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('type_payement_edit', {'id': type_payement.id}) }}" class="btn btn-danger">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun enregistrement trouver!</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('type_payement_new') }}">Create new</a>
+    <div class="navigation">
+        {{ knp_pagination_render(type_payements) }}
+    </div>
+
+    <a href="{{ path('type_payement_new') }}" class="btn btn-success">Créer</a>
+</div>
 {% endblock %}

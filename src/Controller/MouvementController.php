@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/mouvement")
@@ -18,10 +19,15 @@ class MouvementController extends AbstractController
     /**
      * @Route("/", name="mouvement_index", methods={"GET"})
      */
-    public function index(MouvementRepository $mouvementRepository): Response
+    public function index(MouvementRepository $mouvementRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $pagination = $paginator->paginate(
+            $mouvementRepository->findAll(), /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
         return $this->render('mouvement/index.html.twig', [
-            'mouvements' => $mouvementRepository->findAll(),
+            'mouvements' => $pagination,
         ]);
     }
 

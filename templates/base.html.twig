@@ -18,14 +18,14 @@
             <!-- partial:partials/_navbar.html -->
             <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper">
-                <a class="navbar-brand brand-logo" href="{{ path('entrer') }}"><img src="/images/logo.JPEG" alt="logo"></a>
-                <a class="navbar-brand brand-logo-mini" href="{{ path('entrer') }}"><img src="/images/profile.svg" alt="profil"></a>
+                <a class="navbar-brand brand-logo" href="#"><img src="/images/logo.JPEG" alt="logo"></a>
+                <a class="navbar-brand brand-logo-mini" href="#"><img src="/images/profile.svg" alt="profil"></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center">
                 <p class="page-name d-none d-lg-block">PRIMA-EVENT</p>
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                    <form class="mt-2 mt-md-0 d-none d-lg-block search-input" action="{{ path('rechercher') }}">
+                    <form class="mt-2 mt-md-0 d-none d-lg-block search-input" action="#">
                     <div class="input-group">
                         <span class="input-group-addon d-flex align-items-center"><i class="icon-magnifier icons"></i></span>
                         <input type="text" name="search" class="form-control" placeholder="Search...">
@@ -33,7 +33,7 @@
                     </form>
                 </li>
                 <li class="nav-item lang-dropdown d-none d-sm-block" class="btn btn-light">
-                    <a class="nav-link" href="{{ path('app_logout') }}">
+                    <a class="nav-link" href="#">
                     <p class="mb-0">Déconnexion <i class="flag-icon flag-icon-gb"></i></p>
                     </a>
                 </li>
@@ -61,73 +61,73 @@
                 <span class="nav-link">GESTION EVENT</span>
                 </li>
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('nouveau') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Nouveau</span>
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li> #}
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Sortie</span>
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Retour</span>
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Ajout</span>
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Cassure</span>
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Usure</span>
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Caisse</span>
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Facturation</span>
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Proformat</span>
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Validation<span class="notification_count"><span id="non">0</span></span></span>
                     <i class="icon-wrench menu-icon"></i>
                 </a>
                 </li> #}
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Historique</span>
                     <i class="icon-wrench menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('#') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Etat de stock</span>
                     <i class="icon-wrench menu-icon"></i>
                 </a>
@@ -138,90 +138,90 @@
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}                
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('stocks_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Historique</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li> #}
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('user_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Utilisateurs</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('username_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Compte acces</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li> #}
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('access_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Accès</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li> #}
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('clients_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Clients</span>
                     <i class="icon-grid menu-icon"></i>
                 </a> #}
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('projet_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Projet</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('unites_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Unités</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('conversions_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Conversion</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li>
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('autorisations_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Autorisation</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li> #}
                 <li class="nav-item">
-                <a class="nav-link" href="{{ path('produits_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Produit</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li>
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('type_produits_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Type de produit</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li> #}
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('mouvements_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Mouvement</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li> #}
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('piece_jointe_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Pièce-jointe</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li> #}
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('validations_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Validation</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li> #}
                 {# <li class="nav-item">
-                <a class="nav-link" href="{{ path('etats_index') }}">
+                <a class="nav-link" href="#">
                     <span class="menu-title">Etat</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
@@ -247,7 +247,7 @@
             </footer>
             <!-- partial -->
         </div>
-        {% block body %}{% endblock %}
+        {# {% block body %}{% endblock %} #}
         {# <input name="notif_validation" id="notif_validation" type="hidden" value="{{ path('avalider') }}">  #}       
         {# <input name="upload_file" id="upload_file" type="hidden" value="{{ path('upload_file') }}"> #}
         {# <input name="notif_restant" id="notif_restant" type="hidden" value="{{ path('quantiterestant') }}"> #}

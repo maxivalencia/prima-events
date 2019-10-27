@@ -3,7 +3,11 @@
 {% block title %}Utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Utilisateur</h1>
+    <div class="container">
+        <div class="row">
+            <h1>Utilisateur</h1>
+        </div>
+        <hr>
 
     <table class="table">
         <tbody>
@@ -34,9 +38,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('utilisateur_index') }}">back to list</a>
-
-    <a href="{{ path('utilisateur_edit', {'id': utilisateur.id}) }}">edit</a>
-
+    <a href="{{ path('utilisateur_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
+    <a href="{{ path('utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-warning">Modifier</a>
+    <br><br>
     {{ include('utilisateur/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

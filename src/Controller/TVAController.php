@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/t/v/a")
@@ -18,10 +19,15 @@ class TVAController extends AbstractController
     /**
      * @Route("/", name="t_v_a_index", methods={"GET"})
      */
-    public function index(TVARepository $tVARepository): Response
+    public function index(TVARepository $tVARepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $pagination = $paginator->paginate(
+            $tVARepository->findAll(), /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
         return $this->render('tva/index.html.twig', [
-            't_v_as' => $tVARepository->findAll(),
+            't_v_as' => $pagination,
         ]);
     }
 
