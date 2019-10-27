@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Privilege index{% endblock %}
+{% block title %}Liste Privilege{% endblock %}
 
 {% block body %}
-    <h1>Privilege index</h1>
+<div class="container">
+    <div class="row">
+        <h1>Liste Privilege</h1>
+    </div>
+    <hr>
 
     <table class="table">
         <thead>
@@ -19,17 +23,22 @@
                 <td>{{ privilege.id }}</td>
                 <td>{{ privilege.privilege }}</td>
                 <td>
-                    <a href="{{ path('privilege_show', {'id': privilege.id}) }}">show</a>
-                    <a href="{{ path('privilege_edit', {'id': privilege.id}) }}">edit</a>
+                    <a href="{{ path('privilege_show', {'id': privilege.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('privilege_edit', {'id': privilege.id}) }}" class="btn btn-danger">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun enregistrement trouver!</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('privilege_new') }}">Create new</a>
+    <div class="navigation">
+        {{ knp_pagination_render(privileges) }}
+    </div>
+
+    <a href="{{ path('privilege_new') }}">Créer</a>
+</div>
 {% endblock %}

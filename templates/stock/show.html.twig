@@ -3,7 +3,11 @@
 {% block title %}Stock{% endblock %}
 
 {% block body %}
-    <h1>Stock</h1>
+<div class="container">
+    <div class="row">
+        <h1>Stock</h1>
+    </div>
+    <hr>
 
     <table class="table">
         <tbody>
@@ -42,9 +46,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('stock_index') }}">back to list</a>
-
-    <a href="{{ path('stock_edit', {'id': stock.id}) }}">edit</a>
-
+    <a href="{{ path('stock_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
+    <a href="{{ path('stock_edit', {'id': stock.id}) }}" class="btn btn-warning">Modifier</a>
+    <br><br>
     {{ include('stock/_delete_form.html.twig') }}
+</div>
 {% endblock %}

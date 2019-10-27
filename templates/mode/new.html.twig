@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Mode{% endblock %}
+{% block title %}Nouveau Mode{% endblock %}
 
 {% block body %}
-    <h1>Create new Mode</h1>
+<div class="container">
+    <div class="row">
+        <h1>Créer Mode</h1>
+    </div>
+    <hr>
+
+    <br><br<
 
     {{ include('mode/_form.html.twig') }}
-
-    <a href="{{ path('mode_index') }}">back to list</a>
+    <br>
+    <a href="{{ path('mode_index') }}" class="btn btn-primary">Retour</a>
+</div>
 {% endblock %}

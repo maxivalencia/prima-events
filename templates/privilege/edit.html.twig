@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Privilege{% endblock %}
+{% block title %}Edition Privilege{% endblock %}
 
 {% block body %}
-    <h1>Edit Privilege</h1>
+<div class="container">
+    <div class="row">
+        <h1>Edition Privilege</h1>
+    </div>
+    <hr>
 
-    {{ include('privilege/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('privilege_index') }}">back to list</a>
-
+    {{ include('privilege/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    <a href="{{ path('privilege_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
     {{ include('privilege/_delete_form.html.twig') }}
+</div>
 {% endblock %}

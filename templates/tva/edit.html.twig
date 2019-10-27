@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit TVA{% endblock %}
+{% block title %}Edition TVA{% endblock %}
 
 {% block body %}
-    <h1>Edit TVA</h1>
+<div class="container">
+    <div class="row">
+        <h1>Edition TVA</h1>
+    </div>
+    <hr>
 
-    {{ include('t_v_a/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('t_v_a_index') }}">back to list</a>
-
+    {{ include('t_v_a/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    <a href="{{ path('t_v_a_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
     {{ include('t_v_a/_delete_form.html.twig') }}
+</div>
 {% endblock %}

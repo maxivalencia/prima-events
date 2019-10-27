@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Paye{% endblock %}
+{% block title %}Nouveau Paye{% endblock %}
 
 {% block body %}
-    <h1>Create new Paye</h1>
+<div class="container">
+    <div class="row">
+        <h1>Créer Paye</h1>
+    </div>
+    <hr>
+
+    <br><br>
 
     {{ include('paye/_form.html.twig') }}
-
-    <a href="{{ path('paye_index') }}">back to list</a>
+    <br>
+    <a href="{{ path('paye_index') }}" class="btn btn-primary">Retour</a>
+</div<
 {% endblock %}

@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TVA index{% endblock %}
+{% block title %}Liste TVA{% endblock %}
 
 {% block body %}
-    <h1>TVA index</h1>
+<div class="container">
+    <div class="row">
+        <h1>Liste TVA</h1>
+    </div>
+    <hr>
 
     <table class="table">
         <thead>
@@ -19,17 +23,22 @@
                 <td>{{ t_v_a.id }}</td>
                 <td>{{ t_v_a.tva }}</td>
                 <td>
-                    <a href="{{ path('t_v_a_show', {'id': t_v_a.id}) }}">show</a>
-                    <a href="{{ path('t_v_a_edit', {'id': t_v_a.id}) }}">edit</a>
+                    <a href="{{ path('t_v_a_show', {'id': t_v_a.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('t_v_a_edit', {'id': t_v_a.id}) }}" class="btn btn-danger">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun enregistrement trouver!</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('t_v_a_new') }}">Create new</a>
+    <div class="navigation">
+        {{ knp_pagination_render(t_v_as) }}
+    </div>
+
+    <a href="{{ path('t_v_a_new') }}" class="btn btn-success">Créer</a>
+</div>
 {% endblock %}

@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Payement index{% endblock %}
+{% block title %}Liste Payement{% endblock %}
 
 {% block body %}
-    <h1>Payement index</h1>
+<div class="container">
+    <div class="row">
+        <h1>Liste Payement</h1>
+    </div>
+    <hr>
 
     <table class="table">
         <thead>
@@ -19,17 +23,22 @@
                 <td>{{ payement.id }}</td>
                 <td>{{ payement.mode }}</td>
                 <td>
-                    <a href="{{ path('payement_show', {'id': payement.id}) }}">show</a>
-                    <a href="{{ path('payement_edit', {'id': payement.id}) }}">edit</a>
+                    <a href="{{ path('payement_show', {'id': payement.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('payement_edit', {'id': payement.id}) }}" class="btn btn-danger">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun enregistrement trouver!</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('payement_new') }}">Create new</a>
+    <div class="navigation">
+        {{ knp_pagination_render(payements) }}
+    </div>
+
+    <a href="{{ path('payement_new') }}" class="btn btn-success">Créer</a>
+</div>
 {% endblock %}

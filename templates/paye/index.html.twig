@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Paye index{% endblock %}
+{% block title %}Liste Paye{% endblock %}
 
 {% block body %}
-    <h1>Paye index</h1>
+<div class="container">
+    <div class="row">
+        <h1>Liste Paye</h1>
+    </div>
+    <hr>
 
     <table class="table">
         <thead>
@@ -23,17 +27,22 @@
                 <td>{{ paye.datePayement ? paye.datePayement|date('Y-m-d') : '' }}</td>
                 <td>{{ paye.TVA ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('paye_show', {'id': paye.id}) }}">show</a>
-                    <a href="{{ path('paye_edit', {'id': paye.id}) }}">edit</a>
+                    <a href="{{ path('paye_show', {'id': paye.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('paye_edit', {'id': paye.id}) }}" class="btn btn-danger">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucun enregistrement trouver!</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('paye_new') }}">Create new</a>
+    <div class="navigation">
+        {{ knp_pagination_render(payes) }}
+    </div>
+
+    <a href="{{ path('paye_new') }}" class="btn btn-success">Créer</a>
+</div>
 {% endblock %}

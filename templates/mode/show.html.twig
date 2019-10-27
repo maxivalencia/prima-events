@@ -3,7 +3,11 @@
 {% block title %}Mode{% endblock %}
 
 {% block body %}
-    <h1>Mode</h1>
+<div class="container">
+    <div class="row">
+        <h1>Mode</h1>
+    </div>
+    <hr>
 
     <table class="table">
         <tbody>
@@ -18,9 +22,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('mode_index') }}">back to list</a>
-
-    <a href="{{ path('mode_edit', {'id': mode.id}) }}">edit</a>
-
+    <a href="{{ path('mode_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
+    <a href="{{ path('mode_edit', {'id': mode.id}) }}" class="btn btn-warning">Modifier</a>
+    <br><br<
     {{ include('mode/_delete_form.html.twig') }}
+</div>
 {% endblock %}

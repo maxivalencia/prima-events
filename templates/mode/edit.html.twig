@@ -3,11 +3,16 @@
 {% block title %}Edit Mode{% endblock %}
 
 {% block body %}
-    <h1>Edit Mode</h1>
+<div class="container">
+    <div class="row">
+        <h1>Edit Mode</h1>
+    </div>
+    <hr>
 
-    {{ include('mode/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('mode_index') }}">back to list</a>
-
+    {{ include('mode/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    <a href="{{ path('mode_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
     {{ include('mode/_delete_form.html.twig') }}
+</div>
 {% endblock %}

@@ -3,7 +3,11 @@
 {% block title %}TVA{% endblock %}
 
 {% block body %}
-    <h1>TVA</h1>
+<div class="container">
+    <div class="row">
+        <h1>TVA</h1>
+    </div>
+    <hr>
 
     <table class="table">
         <tbody>
@@ -18,9 +22,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('t_v_a_index') }}">back to list</a>
-
-    <a href="{{ path('t_v_a_edit', {'id': t_v_a.id}) }}">edit</a>
-
+    <a href="{{ path('t_v_a_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
+    <a href="{{ path('t_v_a_edit', {'id': t_v_a.id}) }}" class="btn btn-warning">Modifier</a>
+    <br><br>
     {{ include('t_v_a/_delete_form.html.twig') }}
+</div>
 {% endblock %}

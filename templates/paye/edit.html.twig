@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Paye{% endblock %}
+{% block title %}Edition Paye{% endblock %}
 
 {% block body %}
-    <h1>Edit Paye</h1>
+<div class="container">
+    <div class="row">
+        <h1>Edition Paye</h1>
+    </div>
+    <hr>
 
-    {{ include('paye/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('paye_index') }}">back to list</a>
-
+    {{ include('paye/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    <a href="{{ path('paye_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
     {{ include('paye/_delete_form.html.twig') }}
+</div>
 {% endblock %}

@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Mouvement{% endblock %}
+{% block title %}Nouveau Mouvement{% endblock %}
 
 {% block body %}
-    <h1>Create new Mouvement</h1>
+<div class="container">
+    <div class="row">
+        <h1>Créer Mouvement</h1>
+    </div>
+    <hr>
+
+    <br><br>
 
     {{ include('mouvement/_form.html.twig') }}
-
-    <a href="{{ path('mouvement_index') }}">back to list</a>
+    <br>
+    <a href="{{ path('mouvement_index') }}" class="btn btn-primary">Retour</a>
+</div>
 {% endblock %}
