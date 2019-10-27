@@ -3,16 +3,16 @@
 {% block title %}Nouvel Utilisateur{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <h1>Créer un Utilisateur</h1>
-        </div>
-        <hr>
+<div class="container">
+    <div class="row">
+        <h1>Créer un Utilisateur</h1>
+    </div>
+    <hr>
 
-        <br><br>
+    <br><br>
 
     {{ include('utilisateur/_form.html.twig') }}
     <br>
     <a href="{{ path('utilisateur_index') }}" class="btn btn-primary">Retour</a>
-    </div>
+</div>
 {% endblock %}

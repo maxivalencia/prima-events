@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New TypeClient{% endblock %}
+{% block title %}Nouveau Type de Client{% endblock %}
 
 {% block body %}
-    <h1>Create new TypeClient</h1>
+<div class="container">
+    <div class="row">
+        <h1>Créer Type de Client</h1>
+    </div>
+    <hr>
+
+    <br><br>
 
     {{ include('type_client/_form.html.twig') }}
-
-    <a href="{{ path('type_client_index') }}">back to list</a>
+    <br>
+    <a href="{{ path('type_client_index') }}" class="btn btn-primary">Retour</a>
+</div>
 {% endblock %}

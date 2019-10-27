@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TypeClient index{% endblock %}
+{% block title %}Lisete Type de Client{% endblock %}
 
 {% block body %}
-    <h1>TypeClient index</h1>
+<div class="container">
+    <div class="row">
+        <h1>Liste Type de Client</h1>
+    </div>
+    <hr>
 
     <table class="table">
         <thead>
@@ -19,17 +23,22 @@
                 <td>{{ type_client.id }}</td>
                 <td>{{ type_client.type }}</td>
                 <td>
-                    <a href="{{ path('type_client_show', {'id': type_client.id}) }}">show</a>
-                    <a href="{{ path('type_client_edit', {'id': type_client.id}) }}">edit</a>
+                    <a href="{{ path('type_client_show', {'id': type_client.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('type_client_edit', {'id': type_client.id}) }}" class="btn btn-danger">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun enregistrement trouver!</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('type_client_new') }}">Create new</a>
+    <div class="navigation">
+        {{ knp_pagination_render(type_clients) }}
+    </div>
+
+    <a href="{{ path('type_client_new') }}" class="btn btn-success">Créer</a>
+</div>
 {% endblock %}
