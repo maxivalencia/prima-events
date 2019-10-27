@@ -2,11 +2,270 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>Prima - {% block title %}Gestion d'évènement{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="/images/petit_logo.JPEG" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+        <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.11/uploadfile.css" rel="stylesheet">
+        <link href="/dist/css/select2.css" rel="stylesheet"/>
+        <link href="/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/notif.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper">
+                <a class="navbar-brand brand-logo" href="{{ path('entrer') }}"><img src="/images/logo.JPEG" alt="logo"></a>
+                <a class="navbar-brand brand-logo-mini" href="{{ path('entrer') }}"><img src="/images/profile.svg" alt="profil"></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center">
+                <p class="page-name d-none d-lg-block">PRIMA-EVENT</p>
+                <ul class="navbar-nav ml-lg-auto">
+                <li class="nav-item">
+                    <form class="mt-2 mt-md-0 d-none d-lg-block search-input" action="{{ path('rechercher') }}">
+                    <div class="input-group">
+                        <span class="input-group-addon d-flex align-items-center"><i class="icon-magnifier icons"></i></span>
+                        <input type="text" name="search" class="form-control" placeholder="Search...">
+                    </div>
+                    </form>
+                </li>
+                <li class="nav-item lang-dropdown d-none d-sm-block" class="btn btn-light">
+                    <a class="nav-link" href="{{ path('app_logout') }}">
+                    <p class="mb-0">Déconnexion <i class="flag-icon flag-icon-gb"></i></p>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-block profile-img">
+                    <a class="nav-link profile-image" href="#">
+                    <img src="/images/profile.svg" alt="profile-img">
+                    <span class="online-status online bg-success"></span>
+                    </a>
+                </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center ml-auto" type="button" data-toggle="offcanvas">
+                <span class="icon-menu icons"></span>
+                </button>
+            </div>
+            </nav>
+
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+        <div class="row row-offcanvas row-offcanvas-right">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                {# {% if is_granted('ROLE_SAISISSEUR') %} #} 
+                <li class="nav-item nav-category">
+                <span class="nav-link">GESTION EVENT</span>
+                </li>
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('nouveau') }}">
+                    <span class="menu-title">Nouveau</span>
+                    <i class="icon-speedometer menu-icon"></i>
+                </a>
+                </li> #}
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Sortie</span>
+                    <i class="icon-speedometer menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Retour</span>
+                    <i class="icon-speedometer menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Ajout</span>
+                    <i class="icon-speedometer menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Cassure</span>
+                    <i class="icon-speedometer menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Usure</span>
+                    <i class="icon-speedometer menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Caisse</span>
+                    <i class="icon-speedometer menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Facturation</span>
+                    <i class="icon-speedometer menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Proformat</span>
+                    <i class="icon-speedometer menu-icon"></i>
+                </a>
+                </li>
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Validation<span class="notification_count"><span id="non">0</span></span></span>
+                    <i class="icon-wrench menu-icon"></i>
+                </a>
+                </li> #}
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Historique</span>
+                    <i class="icon-wrench menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('#') }}">
+                    <span class="menu-title">Etat de stock</span>
+                    <i class="icon-wrench menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item nav-category">
+                {# <span class="nav-link">ADMINISTRATION</span> #}
+                <hr>
+                </li>
+                {% if is_granted('ROLE_ADMIN') %}                
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('stocks_index') }}">
+                    <span class="menu-title">Historique</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li> #}
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('user_index') }}">
+                    <span class="menu-title">Utilisateurs</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('username_index') }}">
+                    <span class="menu-title">Compte acces</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li> #}
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('access_index') }}">
+                    <span class="menu-title">Accès</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li> #}
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('clients_index') }}">
+                    <span class="menu-title">Clients</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a> #}
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('projet_index') }}">
+                    <span class="menu-title">Projet</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('unites_index') }}">
+                    <span class="menu-title">Unités</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('conversions_index') }}">
+                    <span class="menu-title">Conversion</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li>
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('autorisations_index') }}">
+                    <span class="menu-title">Autorisation</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li> #}
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('produits_index') }}">
+                    <span class="menu-title">Produit</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li>
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('type_produits_index') }}">
+                    <span class="menu-title">Type de produit</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li> #}
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('mouvements_index') }}">
+                    <span class="menu-title">Mouvement</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li> #}
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('piece_jointe_index') }}">
+                    <span class="menu-title">Pièce-jointe</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li> #}
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('validations_index') }}">
+                    <span class="menu-title">Validation</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li> #}
+                {# <li class="nav-item">
+                <a class="nav-link" href="{{ path('etats_index') }}">
+                    <span class="menu-title">Etat</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li> #}
+                {% endif %}
+            </ul>
+            </nav>
+            <!-- partial -->
+            <!-- partial -->
+            <div class="content-wrapper">
+            <div class="row">
+
+            {% block body %}{% endblock %}
+
+            </div>
+            </div>
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+            <div class="container-fluid clearfix">
+                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2019 <a href="#" target="_blank">A-Z system</a>. All rights reserved.</span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">azsystem2019@gmail.com<i class="mdi mdi-heart text-danger"></i></span>
+            </div>
+            </footer>
+            <!-- partial -->
+        </div>
         {% block body %}{% endblock %}
+        {# <input name="notif_validation" id="notif_validation" type="hidden" value="{{ path('avalider') }}">  #}       
+        {# <input name="upload_file" id="upload_file" type="hidden" value="{{ path('upload_file') }}"> #}
+        {# <input name="notif_restant" id="notif_restant" type="hidden" value="{{ path('quantiterestant') }}"> #}
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.11/jquery.uploadfile.min.js"></script>
+        <script src="/dist/js/select2.js"></script>
+        <script src="/dist/js/up.js"></script>
+        <script src="/dist/js/bootstrap.min.js"></script>
+        <script src="/dist/js/jquery.uploadfile.js"></script>
+        <!-- inject:js -->
+        <script src="/js/off-canvas.js"></script>
+        <script src="/js/misc.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+        <script src="/js/notif.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <script src="/js/dashboard.js"></script>
+        <!-- End custom js for this page-->
         {% block javascripts %}{% endblock %}
     </body>
 </html>
