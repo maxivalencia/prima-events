@@ -60,14 +60,8 @@
                 <li class="nav-item nav-category">
                 <span class="nav-link">GESTION EVENT</span>
                 </li>
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Nouveau</span>
-                    <i class="icon-speedometer menu-icon"></i>
-                </a>
-                </li> #}
                 <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ path('sortie') }}">
                     <span class="menu-title">Sortie</span>
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
@@ -114,12 +108,6 @@
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Validation<span class="notification_count"><span id="non">0</span></span></span>
-                    <i class="icon-wrench menu-icon"></i>
-                </a>
-                </li> #}
                 <li class="nav-item">
                 <a class="nav-link" href="#">
                     <span class="menu-title">Historique</span>
@@ -133,100 +121,84 @@
                 </a>
                 </li>
                 <li class="nav-item nav-category">
-                {# <span class="nav-link">ADMINISTRATION</span> #}
+                <span class="nav-link">ADMINISTRATION</span>
                 <hr>
                 </li>
-                {% if is_granted('ROLE_ADMIN') %}                
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Historique</span>
-                    <i class="icon-grid menu-icon"></i>
-                </a>
-                </li> #}
+                {# {% if is_granted('ROLE_ADMIN') %} #}
                 <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ path('utilisateur_index') }}">
                     <span class="menu-title">Utilisateurs</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Compte acces</span>
-                    <i class="icon-grid menu-icon"></i>
-                </a>
-                </li> #}
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Accès</span>
-                    <i class="icon-grid menu-icon"></i>
-                </a>
-                </li> #}
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Clients</span>
-                    <i class="icon-grid menu-icon"></i>
-                </a> #}
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Projet</span>
+                <a class="nav-link" href="{{ path('article_index') }}">
+                    <span class="menu-title">Article</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Unités</span>
+                <a class="nav-link" href="{{ path('client_index') }}">
+                    <span class="menu-title">Client</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Conversion</span>
+                <a class="nav-link" href="{{ path('mode_index') }}">
+                    <span class="menu-title">Mode</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li>
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Autorisation</span>
-                    <i class="icon-grid menu-icon"></i>
-                </a>
-                </li> #}
                 <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Produit</span>
-                    <i class="icon-grid menu-icon"></i>
-                </a>
-                </li>
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Type de produit</span>
-                    <i class="icon-grid menu-icon"></i>
-                </a>
-                </li> #}
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ path('mouvement_index') }}">
                     <span class="menu-title">Mouvement</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
-                </li> #}
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Pièce-jointe</span>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('paye_index') }}">
+                    <span class="menu-title">Paye</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
-                </li> #}
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Validation</span>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('payement_index') }}">
+                    <span class="menu-title">Payement</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
-                </li> #}
-                {# <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Etat</span>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('privilege_index') }}">
+                    <span class="menu-title">Privilege</span>
                     <i class="icon-grid menu-icon"></i>
                 </a>
-                </li> #}
-                {% endif %}
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('stock_index') }}">
+                    <span class="menu-title">Stock</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('t_v_a_index') }}">
+                    <span class="menu-title">TVA</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('type_client_index') }}">
+                    <span class="menu-title">Type client</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li>
+                
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('type_payement_index') }}">
+                    <span class="menu-title">Type payement</span>
+                    <i class="icon-grid menu-icon"></i>
+                </a>
+                </li>
+                {# {% endif %} #}
             </ul>
             </nav>
             <!-- partial -->
