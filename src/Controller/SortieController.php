@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Stock;
+use App\Entity\Utilisateur;
 use App\Form\SortieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,6 +34,9 @@ class SortieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $userRepository = $entityManager->getRepository(Utilisateur::class);
+            $user = $userRepository->findOneBy(["id" => 1]);
+            $stock->setUser($user);
             $entityManager->persist($stock);
             $entityManager->flush();
 

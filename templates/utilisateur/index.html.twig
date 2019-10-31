@@ -17,7 +17,7 @@
                     <th>Password</th>
                     <th>Nom</th>
                     <th>Prenom</th>
-                    <th>Role</th>
+                    {# <th>Role</th> #}
                     <th>actions</th>
                 </tr>
             </thead>
@@ -29,7 +29,7 @@
                     <td>{{ utilisateur.password }}</td>
                     <td>{{ utilisateur.nom }}</td>
                     <td>{{ utilisateur.prenom }}</td>
-                    <td>{{ utilisateur.role ? utilisateur.role|json_encode : '' }}</td>
+                    {# <td>{{ utilisateur.role ? utilisateur.role|json_encode : '' }}</td> #}
                     <td>
                         <a href="{{ path('utilisateur_show', {'id': utilisateur.id}) }}" class="btn btn-warning">voir</a>
                         <a href="{{ path('utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-danger">edit</a>

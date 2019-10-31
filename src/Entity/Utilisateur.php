@@ -41,7 +41,7 @@ class Utilisateur
     /**
      * @ORM\Column(type="json")
      */
-    private $role = [];
+    /* private $role = []; */
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Stock", inversedBy="user")
