@@ -24,24 +24,24 @@ class Paye
     private $refstock;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Payement", mappedBy="paye")
-     */
-    private $payement;
-
-    /**
      * @ORM\Column(type="date")
      */
     private $datePayement;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypePayement", mappedBy="paye")
-     */
-    private $typePayement;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $TVA;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Payement", inversedBy="payes")
+     */
+    private $payement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypePayement", inversedBy="payes")
+     */
+    private $typepayement;
 
     public function __construct()
     {
@@ -148,6 +148,20 @@ class Paye
     public function setTVA(bool $TVA): self
     {
         $this->TVA = $TVA;
+
+        return $this;
+    }
+
+    public function setPayement(?Payement $payement): self
+    {
+        $this->payement = $payement;
+
+        return $this;
+    }
+
+    public function setTypepayement(?TypePayement $typepayement): self
+    {
+        $this->typepayement = $typepayement;
 
         return $this;
     }

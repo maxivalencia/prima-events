@@ -48,10 +48,16 @@ class Client
      */
     private $stock;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Stock", mappedBy="client")
+     */
+    private $stocks;
+
     public function __construct()
     {
         $this->type = new ArrayCollection();
         $this->privilege = new ArrayCollection();
+        $this->stocks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,5 +182,36 @@ class Client
     public function __toString()
     {
         return $this->getNom();
+    }
+
+    /**
+     * @return Collection|Stock[]
+     */
+    public function getStocks(): Collection
+    {
+        return $this->stocks;
+    }
+
+    public function addStock(Stock $stock): self
+    {
+        if (!$this->stocks->contains($stock)) {
+            $this->stocks[] = $stock;
+            $stock->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStock(Stock $stock): self
+    {
+        if ($this->stocks->contains($stock)) {
+            $this->stocks->removeElement($stock);
+            // set the owning side to null (unless already changed)
+            if ($stock->getClient() === $this) {
+                $stock->setClient(null);
+            }
+        }
+
+        return $this;
     }
 }

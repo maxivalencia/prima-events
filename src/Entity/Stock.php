@@ -19,34 +19,9 @@ class Stock
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Utilisateur", mappedBy="stock")
-     */
-    private $user;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="stock")
-     */
-    private $article;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $quantite;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Mouvement", mappedBy="stock")
-     */
-    private $mouvement;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Client", mappedBy="stock")
-     */
-    private $client;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Mode", mappedBy="stock")
-     */
-    private $mode;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -77,6 +52,31 @@ class Stock
      * @ORM\Column(type="date", nullable=true)
      */
     private $dateRetourEffectif;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="stocks")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="stocks")
+     */
+    private $article;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Mouvement", inversedBy="stocks")
+     */
+    private $mouvement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="stocks")
+     */
+    private $client;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Mode", inversedBy="stocks")
+     */
+    private $mode;
 
     public function __construct()
     {
@@ -327,6 +327,41 @@ class Stock
     public function setDateRetourEffectif(?\DateTimeInterface $dateRetourEffectif): self
     {
         $this->dateRetourEffectif = $dateRetourEffectif;
+
+        return $this;
+    }
+
+    public function setUser(?Utilisateur $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    public function setMouvement(?Mouvement $mouvement): self
+    {
+        $this->mouvement = $mouvement;
+
+        return $this;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function setMode(?Mode $mode): self
+    {
+        $this->mode = $mode;
 
         return $this;
     }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,16 @@ class TypePayement
      * @ORM\ManyToOne(targetEntity="App\Entity\Paye", inversedBy="typePayement")
      */
     private $paye;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Paye", mappedBy="typepayement")
+     */
+    private $payes;
+
+    public function __construct()
+    {
+        $this->payes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -62,5 +74,36 @@ class TypePayement
     public function __toString()
     {
         return $this->getType();
+    }
+
+    /**
+     * @return Collection|Paye[]
+     */
+    public function getPayes(): Collection
+    {
+        return $this->payes;
+    }
+
+    public function addPaye(Paye $paye): self
+    {
+        if (!$this->payes->contains($paye)) {
+            $this->payes[] = $paye;
+            $paye->setTypepayement($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaye(Paye $paye): self
+    {
+        if ($this->payes->contains($paye)) {
+            $this->payes->removeElement($paye);
+            // set the owning side to null (unless already changed)
+            if ($paye->getTypepayement() === $this) {
+                $paye->setTypepayement(null);
+            }
+        }
+
+        return $this;
     }
 }
