@@ -3,11 +3,17 @@
 {% block title %}Sortie d'article{% endblock %}
 
 {% block body %}
+
 <div class="container">
     <div class="row">
-        <h1>Sortie d'article</h1>
+        <h1>Créer Stock</h1>
     </div>
     <hr>
-    
+
+    <br><br>
+
+    {{ include('stock/_form.html.twig') }}
+    <br>
+    <a href="{{ path('stock_index') }}" class="btn btn-primary">Retour</a>
 </div>
 {% endblock %}
