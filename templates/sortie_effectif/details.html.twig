@@ -1,35 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sortie d'article{% endblock %}
+{% block title %}Liste Stock{% endblock %}
 
 {% block body %}
-
 <div class="container">
     <div class="row">
-        <h1>Créer Stock</h1>
+        <h1>Liste des articles de la commande</h1>
     </div>
     <hr>
-
-    <br><br>
-
-    {{ include('stock/_form.html.twig') }}
-    <br>
-    <a href="{{ path('sortie') }}" class="btn btn-primary">Terminer</a>
-    <br><br>
 
     <table class="table">
         <thead>
             <tr>
+                <th>Article</th>
                 <th>Quantite</th>
                 <th>Reference</th>
-                <th>DateCommande</th>
-                <th>DateSortiePrevue</th>
-                <th>DateRetourPrevu</th>
+                <th>Date Commande</th>
+                <th>Date Sortie Prevue</th>
+                <th>Date Retour Prevu</th>
             </tr>
         </thead>
         <tbody>
         {% for stock in stocks %}
             <tr>
+                <td>{{ stock.article }}</td>
                 <td>{{ stock.quantite }}</td>
                 <td>{{ stock.reference }}</td>
                 <td>{{ stock.dateCommande ? stock.dateCommande|date('Y-m-d') : '' }}</td>
@@ -43,5 +37,8 @@
         {% endfor %}
         </tbody>
     </table>
+    <br><br>
+    <a href="{{ path('sortie_effectuer', {'ref': reference}) }}" class="btn btn-success">Sortir</a>
+    <a href="{{ path('sortie_annuler', {'ref': reference}) }}" class="btn btn-success">Annuler</a>
 </div>
 {% endblock %}

@@ -78,6 +78,16 @@ class Stock
      */
     private $mode;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="stocksortie")
+     */
+    private $userSortie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="stockretour")
+     */
+    private $userRetour;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -122,11 +132,8 @@ class Stock
 
         return $this;
     }
-
-    /**
-     * @return Collection|Article[]
-     */
-    public function getArticle(): Collection
+    
+    public function getArticle()
     {
         return $this->article;
     }
@@ -197,10 +204,8 @@ class Stock
         return $this;
     }
 
-    /**
-     * @return Collection|Client[]
-     */
-    public function getClient(): Collection
+    
+    public function getClient()
     {
         return $this->client;
     }
@@ -362,6 +367,30 @@ class Stock
     public function setMode(?Mode $mode): self
     {
         $this->mode = $mode;
+
+        return $this;
+    }
+
+    public function getUserSortie(): ?Utilisateur
+    {
+        return $this->userSortie;
+    }
+
+    public function setUserSortie(?Utilisateur $userSortie): self
+    {
+        $this->userSortie = $userSortie;
+
+        return $this;
+    }
+
+    public function getUserRetour(): ?Utilisateur
+    {
+        return $this->userRetour;
+    }
+
+    public function setUserRetour(?Utilisateur $userRetour): self
+    {
+        $this->userRetour = $userRetour;
 
         return $this;
     }

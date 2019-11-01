@@ -6,7 +6,7 @@ use App\Entity\Mode;
 use App\Entity\Mouvement;
 use App\Entity\Stock;
 use App\Entity\Utilisateur;
-use App\Form\SortieType;
+use App\Form\CassureType;
 use App\Repository\StockRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,16 +16,16 @@ use DateTime;
 //use Symfony\Component\Validator\Constraint\DateTime;
 //use PhpOffice\PhpSpreadsheet\Calculation\DateTime;
 
-class SortieController extends AbstractController
+class CassureController extends AbstractController
 {
     /**
-     * @Route("/sortie", name="sortie")
+     * @Route("/cassure", name="cassure")
      */
     public function index(Request $request, StockRepository $stockRepository): Response
     {
         //il faut ajouter un repository pour ajouter un utilisateur dans la class
         $stock = new Stock();
-        $form = $this->createForm(SortieType::class, $stock);
+        $form = $this->createForm(CassureType::class, $stock);
         $form->handleRequest($request);
         $reference = $form->get('reference')->getData();
         if($reference == ''){
@@ -35,8 +35,8 @@ class SortieController extends AbstractController
             $results = implode("", $krr);
             $stock->setReference($results);
             $stock->setDateCommande(new DateTime());
-            $stock->setDateSortiePrevue($form->get('dateSortiePrevue')->getData());
-            $stock->setDateSortieEffectif($form->get('dateRetourPrevu')->getData());
+            //$stock->setDateSortiePrevue($form->get('dateSortiePrevue')->getData());
+            //$stock->setDateSortieEffectif($form->get('dateRetourPrevu')->getData());
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -46,7 +46,7 @@ class SortieController extends AbstractController
             $stock->setUser($user);
             $stock->setDateCommande(new DateTime());
             $mouvementRepository = $entityManager->getRepository(Mouvement::class);
-            $mouvement = $mouvementRepository->findOneBy(["id" => 1]);
+            $mouvement = $mouvementRepository->findOneBy(["id" => 4]);
             $stock->setMouvement($mouvement);
             $modeRepository = $entityManager->getRepository(Mode::class);
             $mode = $modeRepository->findOneBy(["id" => 1]);
@@ -58,7 +58,7 @@ class SortieController extends AbstractController
         }
 
         $stocks = $stockRepository->findBy(["reference" => $reference]);
-        return $this->render('sortie/index.html.twig', [
+        return $this->render('cassure/index.html.twig', [
             'controller_name' => 'SortieController',
             'form' => $form->createView(),
             'stocks' => $stocks,

@@ -43,6 +43,11 @@ class Paye
      */
     private $typepayement;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypePayement", inversedBy="payements")
+     */
+    private $typePayement;
+
     public function __construct()
     {
         $this->payement = new ArrayCollection();

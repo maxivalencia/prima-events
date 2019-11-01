@@ -13,7 +13,7 @@ class TypeClientType extends AbstractType
     {
         $builder
             ->add('type')
-            ->add('client')
+            //->add('client')
         ;
     }
 

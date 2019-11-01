@@ -53,9 +53,21 @@ class Utilisateur
      */
     private $stocks;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Stock", mappedBy="userSortie")
+     */
+    private $stocksortie;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Stock", mappedBy="userRetour")
+     */
+    private $stockretour;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
+        $this->stocksortie = new ArrayCollection();
+        $this->stockretour = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -169,6 +181,68 @@ class Utilisateur
             // set the owning side to null (unless already changed)
             if ($stock->getUser() === $this) {
                 $stock->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stock[]
+     */
+    public function getStocksortie(): Collection
+    {
+        return $this->stocksortie;
+    }
+
+    public function addStocksortie(Stock $stocksortie): self
+    {
+        if (!$this->stocksortie->contains($stocksortie)) {
+            $this->stocksortie[] = $stocksortie;
+            $stocksortie->setUserSortie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStocksortie(Stock $stocksortie): self
+    {
+        if ($this->stocksortie->contains($stocksortie)) {
+            $this->stocksortie->removeElement($stocksortie);
+            // set the owning side to null (unless already changed)
+            if ($stocksortie->getUserSortie() === $this) {
+                $stocksortie->setUserSortie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stock[]
+     */
+    public function getStockretour(): Collection
+    {
+        return $this->stockretour;
+    }
+
+    public function addStockretour(Stock $stockretour): self
+    {
+        if (!$this->stockretour->contains($stockretour)) {
+            $this->stockretour[] = $stockretour;
+            $stockretour->setUserRetour($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStockretour(Stock $stockretour): self
+    {
+        if ($this->stockretour->contains($stockretour)) {
+            $this->stockretour->removeElement($stockretour);
+            // set the owning side to null (unless already changed)
+            if ($stockretour->getUserRetour() === $this) {
+                $stockretour->setUserRetour(null);
             }
         }
 

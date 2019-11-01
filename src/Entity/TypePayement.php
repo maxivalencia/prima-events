@@ -26,7 +26,7 @@ class TypePayement
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Paye", inversedBy="typePayement")
      */
-    private $paye;
+    /* private $paye; */
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Paye", mappedBy="typepayement")

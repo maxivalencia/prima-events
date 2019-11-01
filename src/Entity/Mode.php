@@ -26,7 +26,7 @@ class Mode
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Stock", inversedBy="mode")
      */
-    private $stock;
+    /* private $stock; */
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Stock", mappedBy="mode")

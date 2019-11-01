@@ -53,6 +53,11 @@ class Client
      */
     private $stocks;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeClient", inversedBy="clients")
+     */
+    private $typeClient;
+
     public function __construct()
     {
         $this->type = new ArrayCollection();
@@ -211,6 +216,18 @@ class Client
                 $stock->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypeClient(): ?TypeClient
+    {
+        return $this->typeClient;
+    }
+
+    public function setTypeClient(?TypeClient $typeClient): self
+    {
+        $this->typeClient = $typeClient;
 
         return $this;
     }

@@ -19,6 +19,23 @@ class StockRepository extends ServiceEntityRepository
         parent::__construct($registry, Stock::class);
     }
 
+    /**
+     * @return Stock[] Returns an array of Stock objects
+     */
+    public function findByGroup($value1, $value2)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.mouvement = :val1')
+            ->andWhere('s.mode = :val2')
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
+            ->groupBy('s.reference')
+            ->orderBy('s.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Stock[] Returns an array of Stock objects
     //  */

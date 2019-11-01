@@ -15,6 +15,7 @@ class PayeType extends AbstractType
             ->add('refstock')
             ->add('datePayement')
             ->add('TVA')
+            ->add('typePayement')
         ;
     }
 
