@@ -48,10 +48,15 @@ class Paye
      */
     private $typePayement;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $montant;
+
     public function __construct()
     {
-        $this->payement = new ArrayCollection();
-        $this->typePayement = new ArrayCollection();
+        //$this->payement = new ArrayCollection();
+        //$this->typePayement = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,10 +76,7 @@ class Paye
         return $this;
     }
 
-    /**
-     * @return Collection|Payement[]
-     */
-    public function getPayement(): Collection
+    public function getPayement()
     {
         return $this->payement;
     }
@@ -114,10 +116,7 @@ class Paye
         return $this;
     }
 
-    /**
-     * @return Collection|TypePayement[]
-     */
-    public function getTypePayement(): Collection
+    public function getTypePayement()
     {
         return $this->typePayement;
     }
@@ -167,6 +166,18 @@ class Paye
     public function setTypepayement(?TypePayement $typepayement): self
     {
         $this->typepayement = $typepayement;
+
+        return $this;
+    }
+
+    public function getMontant(): ?float
+    {
+        return $this->montant;
+    }
+
+    public function setMontant(float $montant): self
+    {
+        $this->montant = $montant;
 
         return $this;
     }

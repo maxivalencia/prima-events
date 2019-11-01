@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Encaissement{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <h1>Créer encaissement</h1>
+    </div>
+    <hr>
+
+    <br><br>
+
+    {{ include('paye/_form.html.twig') }}
+    <br>
+    <a href="{{ path('caisse') }}" class="btn btn-primary">Retour</a>
+    <br><br>
+
+</div>
+{% endblock %}
