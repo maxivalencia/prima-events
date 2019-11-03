@@ -1,42 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sortie d'article{% endblock %}
+{% block title %}Liste Stock{% endblock %}
 
 {% block body %}
-
 <div class="container">
     <div class="row">
-        <h1>Création de commande</h1>
+        <h1>Historique</h1>
     </div>
     <hr>
-
-    <br><br>
-
-    {{ include('stock/_form.html.twig') }}
-    <br>
-    <a href="{{ path('sortie') }}" class="btn btn-primary">Terminer</a>
-    <br><br>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Article</th>
                 <th>Quantite</th>
                 <th>Reference</th>
                 <th>Date Commande</th>
-                <th>Date Sortie Prevue</th>
-                <th>Date Retour Prevu</th>
+                <th>Client</th>
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for stock in stocks %}
             <tr>
-                <td>{{ stock.article.designation }}</td>
                 <td>{{ stock.quantite }}</td>
                 <td>{{ stock.reference }}</td>
                 <td>{{ stock.dateCommande ? stock.dateCommande|date('Y-m-d') : '' }}</td>
-                <td>{{ stock.dateSortiePrevue ? stock.dateSortiePrevue|date('Y-m-d') : '' }}</td>
-                <td>{{ stock.dateRetourPrevu ? stock.dateRetourPrevu|date('Y-m-d') : '' }}</td>
+                <td>{{ stock.client.nom }}</td>
+                <td>
+                    <a href="{{ path('historique_details', {'id': stock.reference}) }}" class="btn btn-warning">voir</a>
+                </td>
             </tr>
         {% else %}
             <tr>
@@ -45,5 +37,11 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(stocks) }}
+    </div>
+
+    
 </div>
 {% endblock %}

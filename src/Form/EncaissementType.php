@@ -12,12 +12,18 @@ class EncaissementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('refstock')
+            ->add('refstock', null, [
+                'label' => 'reférence',
+            ])
             //->add('datePayement')
             //->add('TVA')
-            ->add('montant')
+            ->add('montant', null, [
+                'label' => 'Montant',
+            ])
             //->add('payement')
-            ->add('typepayement')
+            ->add('typepayement', null, [
+                'label' => 'Mode de payement',
+            ])
             //->add('typePayement')
         ;
     }

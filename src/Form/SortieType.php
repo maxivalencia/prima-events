@@ -28,6 +28,8 @@ class SortieType extends AbstractType
             ->add('dateSortiePrevue')
             //->add('dateSortieEffectif')
             ->add('dateRetourPrevu')
+            ->add('Location')
+            ->add('quantiteLouer')
             //->add('dateRetourEffectif')
         ;
     }

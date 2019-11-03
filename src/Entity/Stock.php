@@ -89,6 +89,16 @@ class Stock
      */
     private $userRetour;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Fournisseur", inversedBy="stocks")
+     */
+    private $Location;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $quantiteLouer;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -384,6 +394,30 @@ class Stock
     public function setUserRetour(?Utilisateur $userRetour): self
     {
         $this->userRetour = $userRetour;
+
+        return $this;
+    }
+
+    public function getLocation(): ?Fournisseur
+    {
+        return $this->Location;
+    }
+
+    public function setLocation(?Fournisseur $Location): self
+    {
+        $this->Location = $Location;
+
+        return $this;
+    }
+
+    public function getQuantiteLouer(): ?int
+    {
+        return $this->quantiteLouer;
+    }
+
+    public function setQuantiteLouer(?int $quantiteLouer): self
+    {
+        $this->quantiteLouer = $quantiteLouer;
 
         return $this;
     }
