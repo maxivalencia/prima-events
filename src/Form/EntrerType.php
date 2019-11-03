@@ -5,11 +5,11 @@ namespace App\Form;
 use App\Entity\Stock;
 use DateTime;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class SortieType extends AbstractType
+class EntrerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,17 +18,22 @@ class SortieType extends AbstractType
         $krr = explode('-', $results);
         $results = implode("", $krr);
         $builder
+            ->add('article')
+            ->add('quantite')
             ->add('reference', HiddenType::class, [
                 'data' => $results,
             ])
-            ->add('article')
-            ->add('quantite')
-            ->add('client')
             //->add('dateCommande')
-            ->add('dateSortiePrevue')
+            //->add('dateSortiePrevue')
             //->add('dateSortieEffectif')
-            ->add('dateRetourPrevu')
+            //->add('dateRetourPrevu')
             //->add('dateRetourEffectif')
+            //->add('user')
+            //->add('mouvement')
+            //->add('client')
+            //->add('mode')
+            //->add('userSortie')
+            //->add('userRetour')
         ;
     }
 

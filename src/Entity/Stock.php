@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\MouvementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -92,7 +93,7 @@ class Stock
     {
         $this->user = new ArrayCollection();
         $this->article = new ArrayCollection();
-        $this->mouvement = new ArrayCollection();
+        //$this->mouvement = new ArrayCollection();
         $this->client = new ArrayCollection();
         $this->mode = new ArrayCollection();
     }
@@ -102,10 +103,8 @@ class Stock
         return $this->id;
     }
 
-    /**
-     * @return Collection|Utilisateur[]
-     */
-    public function getUser(): Collection
+    
+    public function getUser()
     {
         return $this->user;
     }
@@ -173,15 +172,12 @@ class Stock
         return $this;
     }
 
-    /**
-     * @return Collection|Mouvement[]
-     */
-    public function getMouvement(): Collection
+    public function getMouvement(): ?Mouvement
     {
         return $this->mouvement;
     }
 
-    public function addMouvement(Mouvement $mouvement): self
+    /* public function addMouvement(Mouvement $mouvement): self
     {
         if (!$this->mouvement->contains($mouvement)) {
             $this->mouvement[] = $mouvement;
@@ -189,9 +185,9 @@ class Stock
         }
 
         return $this;
-    }
+    } */
 
-    public function removeMouvement(Mouvement $mouvement): self
+    /* public function removeMouvement(Mouvement $mouvement): self
     {
         if ($this->mouvement->contains($mouvement)) {
             $this->mouvement->removeElement($mouvement);
@@ -202,7 +198,7 @@ class Stock
         }
 
         return $this;
-    }
+    } */
 
     
     public function getClient()
@@ -233,10 +229,7 @@ class Stock
         return $this;
     }
 
-    /**
-     * @return Collection|Mode[]
-     */
-    public function getMode(): Collection
+    public function getMode()
     {
         return $this->mode;
     }

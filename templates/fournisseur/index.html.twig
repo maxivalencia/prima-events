@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Fournisseur{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Liste Fournisseur</h1>
+    </div>
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Telephone</th>
+                <th>Adresse</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fournisseur in fournisseurs %}
+            <tr>
+                <td>{{ fournisseur.id }}</td>
+                <td>{{ fournisseur.nom }}</td>
+                <td>{{ fournisseur.telephone }}</td>
+                <td>{{ fournisseur.adresse }}</td>
+                <td>
+                    <a href="{{ path('fournisseur_show', {'id': fournisseur.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('fournisseur_edit', {'id': fournisseur.id}) }}" class="btn btn-danger">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement trouver!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(fournisseurs) }}
+    </div>
+
+    <a href="{{ path('fournisseur_new') }}" class="btn btn-success">Créer</a>
+</div>
+{% endblock %}

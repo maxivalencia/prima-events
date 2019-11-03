@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sortie d'article{% endblock %}
+{% block title %}Entrée d'article{% endblock %}
 
 {% block body %}
 
 <div class="container">
     <div class="row">
-        <h1>Sortie de Stock</h1>
+        <h1>Entrer de Stock</h1>
     </div>
     <hr>
 
@@ -23,9 +23,7 @@
                 <th>Article</th>
                 <th>Quantite</th>
                 <th>Reference</th>
-                <th>Date Commande</th>
-                <th>Date Sortie Prevue</th>
-                <th>Date Retour Prevu</th>
+                <th>Date</th>
             </tr>
         </thead>
         <tbody>
@@ -35,8 +33,6 @@
                 <td>{{ stock.quantite }}</td>
                 <td>{{ stock.reference }}</td>
                 <td>{{ stock.dateCommande ? stock.dateCommande|date('Y-m-d') : '' }}</td>
-                <td>{{ stock.dateSortiePrevue ? stock.dateSortiePrevue|date('Y-m-d') : '' }}</td>
-                <td>{{ stock.dateRetourPrevu ? stock.dateRetourPrevu|date('Y-m-d') : '' }}</td>
             </tr>
         {% else %}
             <tr>
