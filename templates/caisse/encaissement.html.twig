@@ -14,8 +14,36 @@
 
     {{ include('paye/_form.html.twig') }}
     <br>
-    <a href="{{ path('caisse') }}" class="btn btn-primary">Retour</a>
+    <a href="{{ path('caisse') }}" class="btn btn-primary">Terminer</a>
     <br><br>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Reférence</th>
+                <th>Date</th>
+                <th>TVA</th>
+                <th>Mode de payement</th>                
+                <th>Motif de payement</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for paye in payes %}
+            <tr>
+                <td>{{ paye.refstock }}</td>
+                <td>{{ paye.datePayement ? paye.datePayement|date('Y-m-d') : '' }}</td>
+                <td>{{ paye.TVA ? 'Oui' : 'Non' }}</td>
+                <td>{{ paye.typepayement }}</td>
+                <td>{{ paye.motifPayement }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement trouver!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
 
 </div>
 {% endblock %}

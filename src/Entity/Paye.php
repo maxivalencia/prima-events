@@ -53,6 +53,11 @@ class Paye
      */
     private $montant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\MotifPayement", inversedBy="payes")
+     */
+    private $motifPayement;
+
     public function __construct()
     {
         //$this->payement = new ArrayCollection();
@@ -178,6 +183,18 @@ class Paye
     public function setMontant(float $montant): self
     {
         $this->montant = $montant;
+
+        return $this;
+    }
+
+    public function getMotifPayement(): ?MotifPayement
+    {
+        return $this->motifPayement;
+    }
+
+    public function setMotifPayement(?MotifPayement $motifPayement): self
+    {
+        $this->motifPayement = $motifPayement;
 
         return $this;
     }

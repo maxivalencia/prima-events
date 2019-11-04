@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition  Motif de Payement{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Edition Motif de Payement</h1>
+    </div>
+    <hr>
+
+    {{ include('motif_payement/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    <a href="{{ path('motif_payement_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
+    {{ include('motif_payement/_delete_form.html.twig') }}
+</div>
+{% endblock %}

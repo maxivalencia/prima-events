@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Motif de Payement{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Motif de Payement</h1>
+    </div>
+    <hr>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ motif_payement.id }}</td>
+            </tr>
+            <tr>
+                <th>Motif</th>
+                <td>{{ motif_payement.motif }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('motif_payement_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
+    <a href="{{ path('motif_payement_edit', {'id': motif_payement.id}) }}" class="btn btn-warning">Modifier</a>
+    <br><br>
+    {{ include('motif_payement/_delete_form.html.twig') }}
+</div>
+{% endblock %}

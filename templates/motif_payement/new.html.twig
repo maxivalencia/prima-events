@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Motif de Payement{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Créer nouveau Motif de Payement</h1>
+    </div>
+    <hr>
+
+    <br><br>
+
+    {{ include('motif_payement/_form.html.twig') }}
+    <br>
+    <a href="{{ path('motif_payement_index') }}" class="btn btn-primary">Retour</a>
+</div>
+{% endblock %}

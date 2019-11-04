@@ -24,6 +24,9 @@ class EncaissementType extends AbstractType
             ->add('typepayement', null, [
                 'label' => 'Mode de payement',
             ])
+            ->add('motifPayement', null, [
+                'label' => 'Motif de payement',
+            ])
             //->add('typePayement')
         ;
     }

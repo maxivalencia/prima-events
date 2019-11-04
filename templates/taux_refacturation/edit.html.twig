@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition Taux de Refacturation{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Edition Taux de Refacturation</h1>
+    </div>
+    <hr>
+
+    {{ include('taux_refacturation/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    <a href="{{ path('taux_refacturation_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
+    {{ include('taux_refacturation/_delete_form.html.twig') }}
+</div>
+{% endblock %}

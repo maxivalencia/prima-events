@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Motif de Payement{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Liste Motif de Payement</h1>
+    </div>
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Motif</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for motif_payement in motif_payements %}
+            <tr>
+                <td>{{ motif_payement.id }}</td>
+                <td>{{ motif_payement.motif }}</td>
+                <td>
+                    <a href="{{ path('motif_payement_show', {'id': motif_payement.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('motif_payement_edit', {'id': motif_payement.id}) }}" class="btn btn-danger">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun enregistrement trouver!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(motif_payements) }}
+    </div>
+
+    <a href="{{ path('motif_payement_new') }}" class="btn btn-success">Créer</a>
+</div>
+{% endblock %}

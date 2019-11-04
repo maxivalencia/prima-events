@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de commande{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Liste de commande</h1>
+    </div>
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Reférence</th>
+                <th>Désignation</th>
+                <th>Quantite</th>
+                <th>NB Jour</th>
+                <th>P.U</th>
+                <th>Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.reference }}</td>
+                <td>{{ stock.article.designation }}</td>
+                <td>{{ stock.quantite }}</td>
+                <td>
+                    {% set difference = date(stock.dateRetourPrevu).diff(date(stock.dateSortiePrevue)) %}
+                    {% set leftDays = difference.days %}
+                    {{ leftDays  }}
+                </td>
+                <td>{{ stock.article.prixunitaire }}</td>
+                <td>{{ stock.quantite * stock.article.prixunitaire }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">Aucun enregistrement trouver!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <a href="{{ path('proformat_pdf', {'ref': reference}) }}" class="btn btn-success">Imprimer</a>
+</div>
+{% endblock %}

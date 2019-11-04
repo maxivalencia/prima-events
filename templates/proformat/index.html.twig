@@ -27,7 +27,7 @@
                 <td>{{ stock.dateCommande ? stock.dateCommande|date('Y-m-d') : '' }}</td>
                 <td>{{ stock.client.nom }}</td>
                 <td>
-                    <a href="{{ path('historique_details', {'id': stock.reference}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('proformat_details', {'ref': stock.reference}) }}" class="btn btn-warning">voir</a>
                 </td>
             </tr>
         {% else %}

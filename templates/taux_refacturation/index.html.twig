@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Taux Refacturation{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Taux de Refacturation</h1>
+    </div>
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Taux</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for taux_refacturation in taux_refacturations %}
+            <tr>
+                <td>{{ taux_refacturation.id }}</td>
+                <td>{{ taux_refacturation.taux }}</td>
+                <td>
+                    <a href="{{ path('taux_refacturation_show', {'id': taux_refacturation.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('taux_refacturation_edit', {'id': taux_refacturation.id}) }}" class="btn btn-danger">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun enregistrement trouver!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(taux_refacturations) }}
+    </div>
+
+    <a href="{{ path('taux_refacturation_new') }}" class="btn btn-success">Créer</a>
+</div>
+{% endblock %}

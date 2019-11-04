@@ -1,0 +1,126 @@
+
+        <style>
+            /** Define the margins of your page **/
+            @page {
+                margin: 100px 25px;
+            }
+            table thead tr th {
+                border: 0;
+            }
+
+            table tbody tr td {
+                border: 1px solid #ccc;
+            }
+
+            .tableau {
+                border-collapse: collapse;
+                border-spacing: 0px;
+                border: 1px solid black;
+            }
+
+            .tableau thead tr th,
+            .tableau tbody tr td {
+                border: 1px solid black;
+            }
+
+            th {
+                background: rgb(130, 130, 130);
+                height: 30px;
+                vertical-align: middle;
+                align: center;
+            }
+
+             header {
+                position: fixed;
+                top: -60px;
+                left: 0px;
+                right: 0px;
+                height: 50px;
+
+                /** Extra personal styles **/
+                background-color: #03a9f4;
+                color: white;
+                text-align: center;
+                line-height: 35px;
+            }
+
+            footer {
+                position: fixed; 
+                bottom: -60px; 
+                left: 0px; 
+                right: 0px;
+                height: 50px; 
+
+                /** Extra personal styles **/
+                background-color: white;
+                color: black;
+                text-align: center;
+                line-height: 10px;
+                font-size: 10px;
+            }
+        </style>
+  
+ {% block body %}
+        <div class="container" style="margin-left:20px">
+            
+                <div class="row" align="center">
+                    <img src="{{ logo }}" alt="logo" height="150px" type="image/png">
+                </div>
+            
+            <div class="row">
+                Référence&nbsp;&nbsp;&nbsp;&nbsp;
+                FACTURE PROFORMA N° {{ reference }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Date: {{ "now"|date('d F Y') }}
+            </div>
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Reférence</th>
+                            <th>Désignation</th>
+                            <th>Quantite</th>
+                            <th>NB Jour</th>
+                            <th>P.U</th>
+                            <th>Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for stock in stocks %}
+                        <tr>
+                            <td>{{ stock.reference }}</td>
+                            <td>{{ stock.article.designation }}</td>
+                            <td>{{ stock.quantite }}</td>
+                            <td>
+                                {% set difference = date(stock.dateRetourPrevu).diff(date(stock.dateSortiePrevue)) %}
+                                {% set leftDays = difference.days %}
+                                {{ leftDays  }}
+                            </td>
+                            <td>{{ stock.article.prixunitaire }}</td>
+                            <td>{{ stock.quantite * stock.article.prixunitaire }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9">Aucun enregistrement trouver!</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" align="center">
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+            </div>
+            <div class="row" align="center">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Le Responsable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Le Client
+            </div>
+            <footer>
+                <div class="row" align="center">
+                    PRIMA-CE<br>
+                    Société à Responsabilité limitée Unipersonnelle au capital de 1 000 000 Ariary<br>
+                    NIF : 6002986663 - STAT : 42201-11-2018-0-10341 - RCS : 2018B00325<br>
+                    Mail : events@prima.mg - Tél.: 034 28 222 04 / 034 58 738 31
+                </div>
+            </footer>
+        </div>
+ {% endblock %}
