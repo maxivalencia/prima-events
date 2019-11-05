@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transport{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>liste de Transport</h1>
+    </div>
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reference</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for transport in transports %}
+            <tr>
+                <td>{{ transport.id }}</td>
+                <td>{{ transport.reference }}</td>
+                <td>{{ transport.prix }}</td>
+                <td>
+                    <a href="{{ path('transport_show', {'id': transport.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('transport_edit', {'id': transport.id}) }}" class="btn btn-danger">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun enregistrement trouver!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(transports) }}
+    </div>
+
+    <a href="{{ path('transport_new') }}" class="btn btn-success">Créer</a>
+</div>
+{% endblock %}

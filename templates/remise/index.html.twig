@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Remise{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Liste Remise</h1>
+    </div>
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reference</th>
+                <th>Taux</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for remise in remises %}
+            <tr>
+                <td>{{ remise.id }}</td>
+                <td>{{ remise.reference }}</td>
+                <td>{{ remise.taux }}</td>
+                <td>
+                    <a href="{{ path('remise_show', {'id': remise.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('remise_edit', {'id': remise.id}) }}" class="btn btn-danger">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun enregistrement trouver!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(remises) }}
+    </div>
+
+    <a href="{{ path('remise_new') }}" class="btn btn-success">Créer</a>
+</div>
+{% endblock %}

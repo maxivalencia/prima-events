@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition Remise{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Edition Remise</h1>
+    </div>
+    <hr>
+
+    {{ include('remise/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    <a href="{{ path('remise_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
+    {{ include('remise/_delete_form.html.twig') }}
+</div>
+{% endblock %}

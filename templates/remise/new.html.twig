@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Remise{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Création Remise</h1>
+    </div>
+    <hr>
+
+    <br><br>
+
+    {{ include('remise/_form.html.twig') }}
+    <br>
+    <a href="{{ path('remise_index') }}" class="btn btn-primary">Retour</a>
+</div>
+{% endblock %}
