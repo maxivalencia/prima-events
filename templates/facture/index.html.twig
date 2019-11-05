@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Stock{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Historique</h1>
+    </div>
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Quantite</th>
+                <th>Reference</th>
+                <th>Date Commande</th>
+                <th>Client</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.quantite }}</td>
+                <td>{{ stock.reference }}</td>
+                <td>{{ stock.dateCommande ? stock.dateCommande|date('Y-m-d') : '' }}</td>
+                <td>{{ stock.client.nom }}</td>
+                <td>
+                    <a href="{{ path('facture_details', {'ref': stock.reference}) }}" class="btn btn-warning">voir</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">Aucun enregistrement trouver!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(stocks) }}
+    </div>
+
+    
+</div>
+{% endblock %}
