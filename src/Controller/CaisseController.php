@@ -49,44 +49,39 @@ class CaisseController extends AbstractController
         $form2->handleRequest($request);    
         $reference = $form->get('refstock')->getData();
         if($reference == ''){
+            $reference = $form1->get('reference')->getData();
+        }
+        if($reference == ''){
+            $reference = $form2->get('reference')->getData();
+        }
+        if($reference == ''){
             $daty = new DateTime();
             $results = $daty->format('Y-m-d-H-i-s');
             $krr = explode('-', $results);
             $results = implode("", $krr);
-            $paye->setRefstock($results);
-            $trans->setReference($results);
-            $remi->setReference($results);
-            //$stock->setDateCommande(new DateTime());
-            //$stock->setDateSortiePrevue($form->get('dateSortiePrevue')->getData());
-            //$stock->setDateSortieEffectif($form->get('dateRetourPrevu')->getData());
+            $reference = $results;
         }
+        $paye->setRefstock($reference);
+        $trans->setReference($reference);
+        $remi->setReference($reference);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $paye->setDatePayement(new DateTime());
-            //$tVARepository = $entityManager->getRepository(Mouvement::class);
-            //$tva = $tVARepository->findOneBy(["id" => 1]);
-            //$tVARepository = $entityManager->getRepository(Mouvement::class);
             $mode = $payementRepository->findOneBy(["id" => 1]);
             $paye->setPayement($mode);
             $paye->setTVA(true);
             $entityManager->persist($paye);
             $entityManager->flush();
-
-            //return $this->redirectToRoute('caisse');
         }
         if ($form1->isSubmitted() && $form1->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($transport);
+            $entityManager->persist($trans);
             $entityManager->flush();
-
-            //return $this->redirectToRoute('transport_index');
         }
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form2->isSubmitted() && $form2->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($remise);
+            $entityManager->persist($remi);
             $entityManager->flush();
-
-            //return $this->redirectToRoute('remise_index');
         }
 
         $payes = $payeRepository->findBy(["refstock" => $reference]);

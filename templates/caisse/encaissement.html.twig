@@ -28,14 +28,18 @@
                 <th>Motif de payement</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody>        	
+        {% set Total = 0 %}
+        {% set netapayer = 0 %}
         {% for paye in payes %}
+            {% set Total = Total + paye.montant %}
+            {% set netapayer = netapayer + paye.montant %}
             <tr>
                 <td>{{ paye.refstock }}</td>
                 <td>{{ paye.datePayement ? paye.datePayement|date('Y-m-d') : '' }}</td>
                 <td>{{ paye.montant }} Ar</td>
                 <td>{{ paye.TVA ? 'Oui' : 'Non' }}</td>
-                <td>{{ paye.typepayement }}</td>
+                <td>{{ paye.payement }}</td>
                 <td>{{ paye.motifPayement }}</td>
             </tr>
         {% else %}
@@ -43,18 +47,34 @@
                 <td colspan="6">Aucun enregistrement trouver!</td>
             </tr>
         {% endfor %}
-        {% for transp in transport %}
             <tr>                
-                <td colspan="6">Transport : </td>
+                <td colspan="5" align="right">Total des commandes : </td>
+                <td>{{ Total }} Ar</td>
+            </tr>
+        {% for transp in transport %}
+            {% set netapayer = netapayer + transport.prix %}
+            <tr>                
+                <td colspan="5" align="right">Transport : </td>
                 <td>{{ transport.prix }} Ar</td>
             </tr>
         {% endfor %}
-        {% for remi in remise %}
+        {% set Caution = Total / 2 %}
+        {% set netapayer = netapayer + Caution %}
             <tr>                
-                <td colspan="6">Remise : </td>
+                <td colspan="5" align="right">Caution : </td>
+                <td>{{ Caution }} Ar</td>
+            </tr>
+        {% for remi in remise %}
+            {% set netapayer = netapayer + remi.prix %}
+            <tr>                
+                <td colspan="5" align="right">Remise : </td>
                 <td>{{ remi.prix }} Ar</td>
             </tr>
         {% endfor %}
+            <tr>                
+                <td colspan="5" align="right">Net à payer : </td>
+                <td>{{ netapayer }} Ar</td>
+            </tr>
         </tbody>
     </table>
 
