@@ -48,13 +48,13 @@ class CaisseController extends AbstractController
         $form1->handleRequest($request);  
         $form2->handleRequest($request);    
         $reference = $form->get('refstock')->getData();
-        if($reference == ''){
+        if($reference == null){
             $reference = $form1->get('reference')->getData();
         }
-        if($reference == ''){
+        if($reference == null){
             $reference = $form2->get('reference')->getData();
         }
-        if($reference == ''){
+        if($reference == null){
             $daty = new DateTime();
             $results = $daty->format('Y-m-d-H-i-s');
             $krr = explode('-', $results);
@@ -83,7 +83,10 @@ class CaisseController extends AbstractController
             $entityManager->persist($remi);
             $entityManager->flush();
         }
-
+        $paye = $payeRepository->findOneBy(["refstock" => $reference]);
+        $trans = $transportRepository->findOneBy(["reference" => $reference]);        
+        $remi = $remiseRepository->findOneBy(["reference" => $reference]);
+        
         $payes = $payeRepository->findBy(["refstock" => $reference]);
         $transp = $transportRepository->findOneBy(["reference" => $reference]);
         $remis = $remiseRepository->findOneBy(["reference" => $reference]);
@@ -125,6 +128,76 @@ class CaisseController extends AbstractController
         return $this->render('caisse/decaissement.html.twig', [
             'controller_name' => 'CaisseController',
             'form' => $form->createView(),
+        ]);
+    }
+
+    
+    /**
+     * @Route("/refacturation/{ref}", name="refacturation", methods={"GET", "POST"})
+     */
+    public function refacturation(int $ref, Request $request, TVARepository $tVARepository, PayementRepository $payementRepository, PayeRepository $payeRepository, TransportRepository $transportRepository, RemiseRepository $remiseRepository)
+    {
+        $paye = new Paye();
+        $trans = new Transport();
+        $remi = new Remise();
+        $form = $this->createForm(EncaissementType::class, $paye);
+        $form1 = $this->createForm(TransType::class, $trans);
+        $form2 = $this->createForm(RemType::class, $remi);
+        $form->handleRequest($request);   
+        $form1->handleRequest($request);  
+        $form2->handleRequest($request);    
+        $reference = $ref;
+        if($reference == null){
+            $reference = $form1->get('reference')->getData();
+        }
+        if($reference == null){
+            $reference = $form2->get('reference')->getData();
+        }
+        if($reference == null){
+            $daty = new DateTime();
+            $results = $daty->format('Y-m-d-H-i-s');
+            $krr = explode('-', $results);
+            $results = implode("", $krr);
+            $reference = $results;
+        }
+        $paye->setRefstock($reference);
+        $trans->setReference($reference);
+        $remi->setReference($reference);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $paye->setDatePayement(new DateTime());
+            $mode = $payementRepository->findOneBy(["id" => 1]);
+            $paye->setPayement($mode);
+            $paye->setTVA(true);
+            $entityManager->persist($paye);
+            $entityManager->flush();
+        }
+        if ($form1->isSubmitted() && $form1->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($trans);
+            $entityManager->flush();
+        }
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($remi);
+            $entityManager->flush();
+        }
+        $paye = $payeRepository->findOneBy(["refstock" => $reference]);
+        $trans = $transportRepository->findOneBy(["reference" => $reference]);        
+        $remi = $remiseRepository->findOneBy(["reference" => $reference]);
+        
+        $payes = $payeRepository->findBy(["refstock" => $reference]);
+        $transp = $transportRepository->findOneBy(["reference" => $reference]);
+        $remis = $remiseRepository->findOneBy(["reference" => $reference]);
+        return $this->render('caisse/encaissement.html.twig', [
+            'controller_name' => 'CaisseController',
+            'form' => $form->createView(),
+            'form1' => $form1->createView(),
+            'form2' => $form2->createView(),
+            'payes' => $payes,
+            'transport' => $transp,
+            'remise' => $remis,
+            'reference' => $reference,
         ]);
     }
 }

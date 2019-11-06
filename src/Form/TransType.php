@@ -18,7 +18,7 @@ class TransType extends AbstractType
         $krr = explode('-', $results);
         $results = implode("", $krr);
         $builder
-            ->add('reference', HiddenType::class)
+            ->add('reference')//, HiddenType::class)
             ->add('prix')
         ;
     }

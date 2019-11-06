@@ -51,26 +51,26 @@
                 <td colspan="5" align="right">Total des commandes : </td>
                 <td>{{ Total }} Ar</td>
             </tr>
-        {% for transp in transport %}
+        {% if transport is not null and transport is defined %}
             {% set netapayer = netapayer + transport.prix %}
             <tr>                
                 <td colspan="5" align="right">Transport : </td>
                 <td>{{ transport.prix }} Ar</td>
             </tr>
-        {% endfor %}
+        {% endif %}
         {% set Caution = Total / 2 %}
         {% set netapayer = netapayer + Caution %}
             <tr>                
                 <td colspan="5" align="right">Caution : </td>
                 <td>{{ Caution }} Ar</td>
             </tr>
-        {% for remi in remise %}
-            {% set netapayer = netapayer + remi.prix %}
+        {% if remise is not null and remise is defined %}
+            {% set netapayer = netapayer - (Total * remise.taux /100) %}
             <tr>                
                 <td colspan="5" align="right">Remise : </td>
-                <td>{{ remi.prix }} Ar</td>
+                <td>{{ Total * remise.taux / 100 }} Ar</td>
             </tr>
-        {% endfor %}
+        {% endif %}
             <tr>                
                 <td colspan="5" align="right">Net à payer : </td>
                 <td>{{ netapayer }} Ar</td>

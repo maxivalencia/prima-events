@@ -72,37 +72,71 @@
                 FACTURE PROFORMA N° {{ reference }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Date: {{ "now"|date('d F Y') }}
             </div>
+
+            <div><u>Objet :</u> PROFORMAT</div>
             <div class="row">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Reférence</th>
-                            <th>Désignation</th>
-                            <th>Quantite</th>
-                            <th>NB Jour</th>
-                            <th>P.U</th>
-                            <th>Montant</th>
+                            <th width="150px">Reférence</th>
+                            <th width="200px">Désignation</th>
+                            <th width="50px">Quantite</th>
+                            <th width="50px">NB Jour</th>
+                            <th width="100px">P.U</th>
+                            <th width="100px">Montant</th>
                         </tr>
                     </thead>
                     <tbody>
+                    {% set Total = 0 %}
+                    {% set Caution = 0 %}
+                    {% set TotalFacture = 0 %}
                     {% for stock in stocks %}
                         <tr>
                             <td>{{ stock.reference }}</td>
                             <td>{{ stock.article.designation }}</td>
-                            <td>{{ stock.quantite }}</td>
-                            <td>
+                            <td align="center">{{ stock.quantite }}</td>
+                            <td align="center">
                                 {% set difference = date(stock.dateRetourPrevu).diff(date(stock.dateSortiePrevue)) %}
                                 {% set leftDays = difference.days %}
                                 {{ leftDays  }}
                             </td>
-                            <td>{{ stock.article.prixunitaire }}</td>
-                            <td>{{ stock.quantite * stock.article.prixunitaire }}</td>
+                            <td align="right">{{ stock.article.prixunitaire }} Ar</td>
+                            <td align="right">{{ stock.quantite * stock.article.prixunitaire }} Ar</td>
+                            {% set Total = Total + (stock.quantite * stock.article.prixunitaire) %}
                         </tr>
                     {% else %}
                         <tr>
                             <td colspan="9">Aucun enregistrement trouver!</td>
                         </tr>
-                    {% endfor %}
+                    {% endfor %}     
+                        <tr>           
+                            <td colspan="5" align="right">TOTAL COMMANDE : </td>
+                            <td align="right">{{ Total }} Ar</td>
+                        </tr>                        
+                    {% set Caution = Total / 2 %}
+                    {% set TotalFacture = Total + Caution %}    
+                        <tr>           
+                            <td colspan="5" align="right">CAUTION 50% : </td>
+                            <td align="right">{{ Caution }} Ar</td>
+                        </tr> 
+                    {% if transport is not null and transport is defined %}
+                        <tr>                
+                            <td colspan="5" align="right">TRANSPORT : </td>
+                            <td align="right">{{ transport.prix }} Ar</td>
+                            {% set TotalFacture = TotalFacture + transport.prix %}
+                        </tr>
+                    {% endif %}
+                    {% if remise is not null and remise is defined %}
+                        {% set TotalFacture = TotalFacture - (Total * remise.taux /100) %}
+                        <tr>                
+                            <td colspan="5" align="right">Remise : </td>
+                            <td align="right">{{ Total * remise.taux / 100 }} Ar</td>
+                        </tr>
+                    {% endif %}     
+                        <tr>           
+                            <td colspan="5" align="right">TOTAL FACTURE : </td>
+                            <td align="right">{{ TotalFacture }} Ar</td>
+                        </tr>  
                     </tbody>
                 </table>
             </div>
@@ -110,9 +144,14 @@
                 <div class="col-3"></div>
                 <div class="col-3"></div>
             </div>
-            <div class="row" align="center">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Le Responsable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Le Client
+            <br><br>
+            <div class="row">
+                <table cellspacing="0" cellpadding="0" style="border-width: 0px; border:solid 1px #fff; width:700px; border-spacing: 0px;border-collapse:collapse;">
+                    <tr border="none">
+                        <td align="center" width="50%" border="0"> Le Responsable </td>
+                        <td align="center" width="50%" border="0"> Le Client </td>
+                    </tr>
+                </table>
             </div>
             <footer>
                 <div class="row" align="center">
