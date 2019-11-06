@@ -22,6 +22,7 @@
             <tr>
                 <th>Reférence</th>
                 <th>Date</th>
+                <th>Montant</th>
                 <th>TVA</th>
                 <th>Mode de payement</th>                
                 <th>Motif de payement</th>
@@ -32,18 +33,38 @@
             <tr>
                 <td>{{ paye.refstock }}</td>
                 <td>{{ paye.datePayement ? paye.datePayement|date('Y-m-d') : '' }}</td>
+                <td>{{ paye.montant }} Ar</td>
                 <td>{{ paye.TVA ? 'Oui' : 'Non' }}</td>
                 <td>{{ paye.typepayement }}</td>
                 <td>{{ paye.motifPayement }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">Aucun enregistrement trouver!</td>
+                <td colspan="6">Aucun enregistrement trouver!</td>
+            </tr>
+        {% endfor %}
+        {% for transp in transport %}
+            <tr>                
+                <td colspan="6">Transport : </td>
+                <td>{{ transport.prix }} Ar</td>
+            </tr>
+        {% endfor %}
+        {% for remi in remise %}
+            <tr>                
+                <td colspan="6">Remise : </td>
+                <td>{{ remi.prix }} Ar</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
+    <br><br><br>
+    <h3>Transport</h3>
+    {{ include('transport/_form.html.twig') }}
+
+    <br><br><br>
+    <h3>Remise</h3>
+    {{ include('remise/_form.html.twig') }}
 
 </div>
 {% endblock %}

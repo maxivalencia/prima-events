@@ -50,7 +50,7 @@ class RemiseController extends AbstractController
 
         return $this->render('remise/new.html.twig', [
             'remise' => $remise,
-            'form' => $form->createView(),
+            'form2' => $form->createView(),
         ]);
     }
 
@@ -80,7 +80,7 @@ class RemiseController extends AbstractController
 
         return $this->render('remise/edit.html.twig', [
             'remise' => $remise,
-            'form' => $form->createView(),
+            'form2' => $form->createView(),
         ]);
     }
 

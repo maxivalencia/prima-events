@@ -50,7 +50,7 @@ class TransportController extends AbstractController
 
         return $this->render('transport/new.html.twig', [
             'transport' => $transport,
-            'form' => $form->createView(),
+            'form1' => $form->createView(),
         ]);
     }
 
@@ -80,7 +80,7 @@ class TransportController extends AbstractController
 
         return $this->render('transport/edit.html.twig', [
             'transport' => $transport,
-            'form' => $form->createView(),
+            'form1' => $form->createView(),
         ]);
     }
 

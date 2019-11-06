@@ -6,7 +6,9 @@ use App\Entity\Mode;
 use App\Entity\Mouvement;
 use App\Entity\Stock;
 use App\Entity\Utilisateur;
+use App\Entity\Transport;
 use App\Form\SortieType;
+use App\Form\TransType;
 use App\Repository\StockRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,12 +58,12 @@ class SortieController extends AbstractController
 
             //return $this->redirectToRoute('stock_index');
         }
-
         $stocks = $stockRepository->findBy(["reference" => $reference]);
         return $this->render('sortie/index.html.twig', [
             'controller_name' => 'SortieController',
             'form' => $form->createView(),
             'stocks' => $stocks,
+            'reference' => $reference,
         ]);
     }
 }
