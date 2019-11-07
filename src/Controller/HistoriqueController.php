@@ -40,4 +40,15 @@ class HistoriqueController extends AbstractController
             'stocks' => $stockRepository->findHistoriqueDetails($id),
         ]);
     }
+
+    /**
+     * @Route("/", name="base")
+     */
+    public function rediriger(){
+        if(!empty($_SESSION['username'])){
+            return $this->redirectToRoute('sortie');
+        }else{
+            return $this->redirectToRoute('app_login');
+        }
+    }
 }

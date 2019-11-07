@@ -25,15 +25,15 @@
                 <p class="page-name d-none d-lg-block">PRIMA-EVENT</p>
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                    <form class="mt-2 mt-md-0 d-none d-lg-block search-input" action="#">
+                    {# <form class="mt-2 mt-md-0 d-none d-lg-block search-input" action="#">
                     <div class="input-group">
                         <span class="input-group-addon d-flex align-items-center"><i class="icon-magnifier icons"></i></span>
                         <input type="text" name="search" class="form-control" placeholder="Search...">
                     </div>
-                    </form>
+                    </form> #}
                 </li>
                 <li class="nav-item lang-dropdown d-none d-sm-block" class="btn btn-light">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ path('app_logout') }}">
                     <p class="mb-0">Déconnexion <i class="flag-icon flag-icon-gb"></i></p>
                     </a>
                 </li>
@@ -56,7 +56,7 @@
             <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
-                {# {% if is_granted('ROLE_SAISISSEUR') %} #} 
+                {# {% if is_granted('ROLE_USER') %} #} 
                 <li class="nav-item nav-category">
                 <span class="nav-link">GESTION EVENT</span>
                 </li>
@@ -144,11 +144,11 @@
                     <i class="icon-wrench menu-icon"></i>
                 </a>
                 </li>
+                {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item nav-category">
                 <span class="nav-link">ADMINISTRATION</span>
                 <hr>
                 </li>
-                {# {% if is_granted('ROLE_ADMIN') %} #}
                 <li class="nav-item">
                 <a class="nav-link" href="{{ path('utilisateur_index') }}">
                     <span class="menu-title">Utilisateurs</span>
@@ -245,7 +245,7 @@
                     <i class="icon-grid menu-icon"></i>
                 </a>
                 </li>
-                {# {% endif %} #}
+                {% endif %}
             </ul>
             </nav>
             <!-- partial -->
