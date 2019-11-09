@@ -22,6 +22,17 @@ use DateTime;
 
 class CaisseController extends AbstractController
 {
+
+    /**
+     * @Route("/", name="base")
+     */
+    public function rediriger(){
+        if(!empty($_SESSION['username'])){
+            return $this->redirectToRoute('sortie');
+        }else{
+            return $this->redirectToRoute('app_login');
+        }
+    }
     /**
      * @Route("/caisse", name="caisse")
      */

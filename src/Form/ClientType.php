@@ -15,6 +15,10 @@ class ClientType extends AbstractType
             ->add('nom')
             ->add('telephone')
             ->add('adresse')
+            ->add('CIN', null, [
+                'label' => 'CIN ou NIF',
+            ])
+            ->add('STAT')
             ->add('typeClient')
         ;
     }

@@ -58,6 +58,16 @@ class Client
      */
     private $typeClient;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $CIN;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $STAT;
+
     public function __construct()
     {
         $this->type = new ArrayCollection();
@@ -228,6 +238,30 @@ class Client
     public function setTypeClient(?TypeClient $typeClient): self
     {
         $this->typeClient = $typeClient;
+
+        return $this;
+    }
+
+    public function getCIN(): ?string
+    {
+        return $this->CIN;
+    }
+
+    public function setCIN(?string $CIN): self
+    {
+        $this->CIN = $CIN;
+
+        return $this;
+    }
+
+    public function getSTAT(): ?string
+    {
+        return $this->STAT;
+    }
+
+    public function setSTAT(?string $STAT): self
+    {
+        $this->STAT = $STAT;
 
         return $this;
     }
