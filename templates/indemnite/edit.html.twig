@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition Indemnite{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Edition Indemnite</h1>
+    </div>
+    <hr>
+
+    {{ include('indemnite/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    <a href="{{ path('indemnite_index') }}" class="btn btn-primary">Retour</a>
+    <br><br>
+    {{ include('indemnite/_delete_form.html.twig') }}
+</div>
+{% endblock %}

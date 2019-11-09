@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition Stock{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Edition Stock</h1>
+    </div>
+
+    {{ include('stock/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+</div>
+{% endblock %}

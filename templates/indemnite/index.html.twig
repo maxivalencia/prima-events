@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Indemnite{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Liste Indemnite</h1>
+    </div>
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Refence</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for indemnite in indemnites %}
+            <tr>
+                <td>{{ indemnite.id }}</td>
+                <td>{{ indemnite.refence }}</td>
+                <td>{{ indemnite.prix }}</td>
+                <td>
+                    <a href="{{ path('indemnite_show', {'id': indemnite.id}) }}" class="btn btn-warning">voir</a>
+                    <a href="{{ path('indemnite_edit', {'id': indemnite.id}) }}" class="btn btn-danger">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun enregistrement trouver!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(modes) }}
+    </div>
+
+    <a href="{{ path('indemnite_new') }}" class="btn btn-success">Créer</a>
+</div>
+{% endblock %}

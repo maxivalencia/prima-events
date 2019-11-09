@@ -44,6 +44,24 @@ class StockRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.client IS NOT NULL')
+            ->andWhere('s.dateDeValidationProformat IS NULL')
+            ->andWhere('s.mode = :val1')
+            ->groupBy('s.reference')
+            ->orderBy('s.id', 'DESC')
+            ->setParameter('val1', 1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Stock[] Returns an array of Stock objects
+     */
+    public function findFacture()
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.client IS NOT NULL')
+            ->andWhere('s.dateDeValidationProformat IS NOT NULL')
             ->andWhere('s.mode = :val1')
             ->groupBy('s.reference')
             ->orderBy('s.id', 'DESC')

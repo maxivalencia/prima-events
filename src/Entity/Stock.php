@@ -99,6 +99,16 @@ class Stock
      */
     private $quantiteLouer;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbJour;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateDeValidationProformat;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -418,6 +428,30 @@ class Stock
     public function setQuantiteLouer(?int $quantiteLouer): self
     {
         $this->quantiteLouer = $quantiteLouer;
+
+        return $this;
+    }
+
+    public function getNbJour(): ?int
+    {
+        return $this->nbJour;
+    }
+
+    public function setNbJour(?int $nbJour): self
+    {
+        $this->nbJour = $nbJour;
+
+        return $this;
+    }
+
+    public function getDateDeValidationProformat(): ?\DateTimeInterface
+    {
+        return $this->dateDeValidationProformat;
+    }
+
+    public function setDateDeValidationProformat(?\DateTimeInterface $dateDeValidationProformat): self
+    {
+        $this->dateDeValidationProformat = $dateDeValidationProformat;
 
         return $this;
     }

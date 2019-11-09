@@ -57,6 +57,25 @@ class ProformatController extends AbstractController
     }
 
     /**
+     * @Route("/proformat/valider/{ref}", name="proformat_Valider")
+     */
+    public function proformatValider(int $ref, StockRepository $stockRepository, Request $request, PaginatorInterface $paginator)
+    {
+        $stoks  = $stockRepository->findBy(["reference" => $ref]);        
+        $entityManager = $this->getDoctrine()->getManager();
+        foreach($stoks as $sto){
+            $sto->setDateDeValidationProformat(new DateTime());
+            $entityManager->persist($sto);
+        }
+        $entityManager->flush();
+        return $this->redirectToRoute('caisse');
+        /* return $this->render('proformat/details.html.twig', [
+            'stocks' => $stoks,
+            'reference' => $ref,
+        ]); */
+    }
+
+    /**
      * @Route("/proformat/{ref}/pdf", name="proformat_pdf")
      */
     public function proformatPdf(int $ref, StockRepository $stockRepository, Request $request, PaginatorInterface $paginator, TVARepository $tVARepository, PayementRepository $payementRepository, PayeRepository $payeRepository, TransportRepository $transportRepository, RemiseRepository $remiseRepository)

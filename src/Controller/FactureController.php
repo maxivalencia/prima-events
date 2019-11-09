@@ -35,7 +35,7 @@ class FactureController extends AbstractController
     public function index(StockRepository $stockRepository, Request $request, PaginatorInterface $paginator)
     {
         $pagination = $paginator->paginate(
-            $stockRepository->findProformat(), /* query NOT result */
+            $stockRepository->findFacture(), /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             10/*limit per page*/
         );

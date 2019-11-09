@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition Caution{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Edition Caution</h1>
+    </div>
+    <hr>
+
+    {{ include('caution/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    <a href="{{ path('caution_index') }}" class="btn btn-primary">retour</a>
+    <br><br>
+    {{ include('caution/_delete_form.html.twig') }}
+</div>
+{% endblock %}
