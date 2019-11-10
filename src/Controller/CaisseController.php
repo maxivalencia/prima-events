@@ -2,19 +2,27 @@
 
 namespace App\Controller;
 
+use App\Entity\Indemnite;
+use App\Entity\Caution;
 use App\Entity\Paye;
 use App\Entity\Transport;
 use App\Entity\Remise;
-use App\Form\TransportType;
+use App\Entity\SortieArticle;
+use App\Entity\Article;
+use App\Form\CautType;
 use App\Form\EncaissementType;
-use App\Form\DecaissementType;
+use App\Form\IndeType;
 use App\Form\TransType;
 use App\Form\RemType;
+use App\Repository\CautionRepository;
+use App\Repository\IndemniteRepository;
 use App\Repository\PayementRepository;
 use App\Repository\PayeRepository;
 use App\Repository\TVARepository;
 use App\Repository\TransportRepository;
 use App\Repository\RemiseRepository;
+use App\Repository\StockRepository;
+use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,6 +41,8 @@ class CaisseController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
     }
+
+
     /**
      * @Route("/caisse", name="caisse")
      */
@@ -47,23 +57,35 @@ class CaisseController extends AbstractController
     /**
      * @Route("/encaissement", name="encaissement", methods={"GET", "POST"})
      */
-    public function encaissement(Request $request, TVARepository $tVARepository, PayementRepository $payementRepository, PayeRepository $payeRepository, TransportRepository $transportRepository, RemiseRepository $remiseRepository)
+    public function encaissement(Request $request, TVARepository $tVARepository, PayementRepository $payementRepository, PayeRepository $payeRepository, TransportRepository $transportRepository, RemiseRepository $remiseRepository, CautionRepository $cautionRepository, IndemniteRepository $indemniteRepository)
     {
         $paye = new Paye();
         $trans = new Transport();
         $remi = new Remise();
+        $inde = new Indemnite();
+        $caut = new Caution();
         $form = $this->createForm(EncaissementType::class, $paye);
         $form1 = $this->createForm(TransType::class, $trans);
         $form2 = $this->createForm(RemType::class, $remi);
+        $form3 = $this->createForm(IndeType::class, $inde);
+        $form4 = $this->createForm(CautType::class, $caut);
         $form->handleRequest($request);   
         $form1->handleRequest($request);  
         $form2->handleRequest($request);    
+        $form3->handleRequest($request);    
+        $form4->handleRequest($request);    
         $reference = $form->get('refstock')->getData();
         if($reference == null){
             $reference = $form1->get('reference')->getData();
         }
         if($reference == null){
             $reference = $form2->get('reference')->getData();
+        }
+        if($reference == null){
+            $reference = $form3->get('refence')->getData();
+        }
+        if($reference == null){
+            $reference = $form4->get('reference')->getData();
         }
         if($reference == null){
             $daty = new DateTime();
@@ -75,6 +97,8 @@ class CaisseController extends AbstractController
         $paye->setRefstock($reference);
         $trans->setReference($reference);
         $remi->setReference($reference);
+        $inde->setRefence($reference);
+        $caut->setReference($reference);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $paye->setDatePayement(new DateTime());
@@ -94,6 +118,16 @@ class CaisseController extends AbstractController
             $entityManager->persist($remi);
             $entityManager->flush();
         }
+        if ($form3->isSubmitted() && $form3->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($inde);
+            $entityManager->flush();
+        }
+        if ($form4->isSubmitted() && $form4->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($caut);
+            $entityManager->flush();
+        }
         $paye = $payeRepository->findOneBy(["refstock" => $reference]);
         $trans = $transportRepository->findOneBy(["reference" => $reference]);        
         $remi = $remiseRepository->findOneBy(["reference" => $reference]);
@@ -106,6 +140,8 @@ class CaisseController extends AbstractController
             'form' => $form->createView(),
             'form1' => $form1->createView(),
             'form2' => $form2->createView(),
+            'form3' => $form3->createView(),
+            'form4' => $form4->createView(),
             'payes' => $payes,
             'transport' => $transp,
             'remise' => $remis,
@@ -210,5 +246,32 @@ class CaisseController extends AbstractController
             'remise' => $remis,
             'reference' => $reference,
         ]);
+    }
+
+    
+
+    
+    /**
+     * @Route("/caisse/encaissement/terminer/{ref}", name="encaissement_terminer")
+     */
+    public function encaissementTerminer(string $ref, StockRepository $stockRepository, ArticleRepository $articleRepository)
+    {
+        $reference = $ref;
+        $stocks = $stockRepository->findBy(["reference" => $reference]);
+        $entityManager = $this->getDoctrine()->getManager();        
+        foreach($stocks as $sto){
+            $sortie = new SortieArticle();
+            $article = new Article();
+            $article = $sto->getArticle();
+            $sortie->setRefernce($reference);
+            $sortie->setArticle($article);
+            $sortie->setQuantiteCommander($sto->getQuantite());
+            $sortie->setDate(new DateTime());
+            $sortie->setQuantiteSortie(0);
+            $sortie->setReste($sortie->getQuantiteCommander() - $sortie->getQuantiteSortie());
+            $entityManager->persist($sortie);
+        }
+        $entityManager->flush();
+        return $this->redirectToRoute('caisse');
     }
 }

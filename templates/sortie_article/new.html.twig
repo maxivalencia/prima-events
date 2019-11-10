@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SortieArticle{% endblock %}
+
+{% block body %}
+    <h1>Create new SortieArticle</h1>
+
+    {{ include('sortie_article/_form.html.twig') }}
+
+    <a href="{{ path('sortie_article_index') }}">back to list</a>
+{% endblock %}

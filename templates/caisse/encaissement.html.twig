@@ -14,7 +14,7 @@
 
     {{ include('paye/_form.html.twig') }}
     <br>
-    <a href="{{ path('caisse') }}" class="btn btn-primary">Terminer</a>
+    <a href="{{ path('encaissement_terminer', {'ref': reference}) }}" class="btn btn-primary">Terminer</a>
     <br><br>
 
     <table class="table">
@@ -79,12 +79,20 @@
     </table>
 
     <br><br><br>
-    <h3>Transport</h3>
-    {{ include('transport/_form.html.twig') }}
+    <h3>Caution</h3>
+    {{ include('caution/_form.html.twig') }}
 
     <br><br><br>
     <h3>Remise</h3>
     {{ include('remise/_form.html.twig') }}
+
+    <br><br><br>
+    <h3>Transport</h3>
+    {{ include('transport/_form.html.twig') }}
+
+    <br><br><br>
+    <h3>Hors Catalogue</h3>
+    {{ include('indemnite/_form.html.twig') }}
 
 </div>
 {% endblock %}

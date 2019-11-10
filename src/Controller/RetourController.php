@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Stock;
 use App\Entity\Utilisateur;
 use App\Entity\Mode;
+use App\Entity\RetourArticle;
 use App\Repository\MouvementRepository;
 use App\Repository\StockRepository;
 use App\Entity\Mouvement;
+use App\Entity\Retour;
 use App\Repository\ModeRepository;
+use App\Repository\RetourArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
@@ -23,15 +26,32 @@ class RetourController extends AbstractController
     /**
      * @Route("/effectif", name="retour_effectif")
      */
-    public function index(StockRepository $stockRepository, MouvementRepository $mouvementRepository, PaginatorInterface $paginator, Request $request, ModeRepository $modeRepository)
+    public function index(StockRepository $stockRepository, MouvementRepository $mouvementRepository, PaginatorInterface $paginator, Request $request, ModeRepository $modeRepository, RetourArticleRepository $retourArticleRepository)
     {
-        //$stocks = new Stock();
+        $stock[] = new Stock();
+        $retour[] = new RetourArticle();
+        $retours = $retourArticleRepository->findAll();
+        $i = 0;
+        $j = 0;
+        foreach($retours as $ret){
+            if($ret->getReste() != 0){
+                $retour[] = $ret;
+            }
+        }
         $mouvement = new Mouvement();
         $mode = new Mode();
         $mouvement = $mouvementRepository->findOneBy(["id" => 1]);
         $mode = $modeRepository->findOneBy(["id" => 2]);
+        $stocks = $stockRepository->findByGroup($mouvement->getId(), $mode->getId());        
+        foreach($retour as $ret){
+            foreach($stocks as $sto){
+                if($sto->getReference() == $ret->getReference()){
+                    $stock[] = $sto;
+                }
+            }
+        }
         $pagination = $paginator->paginate(
-            $stockRepository->findByGroup($mouvement->getId(), $mode->getId()),
+            $stock,//$stockRepository->findByGroup($mouvement->getId(), $mode->getId()),
             $request->query->getInt('page', 1),
             10
         );

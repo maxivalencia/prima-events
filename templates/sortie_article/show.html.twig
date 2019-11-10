@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SortieArticle{% endblock %}
+
+{% block body %}
+    <h1>SortieArticle</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sortie_article.id }}</td>
+            </tr>
+            <tr>
+                <th>Refernce</th>
+                <td>{{ sortie_article.refernce }}</td>
+            </tr>
+            <tr>
+                <th>QuantiteCommander</th>
+                <td>{{ sortie_article.quantiteCommander }}</td>
+            </tr>
+            <tr>
+                <th>QuantiteSortie</th>
+                <td>{{ sortie_article.quantiteSortie }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ sortie_article.date ? sortie_article.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Reste</th>
+                <td>{{ sortie_article.reste }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('sortie_article_index') }}">back to list</a>
+
+    <a href="{{ path('sortie_article_edit', {'id': sortie_article.id}) }}">edit</a>
+
+    {{ include('sortie_article/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RetourArticle index{% endblock %}
+
+{% block body %}
+    <h1>RetourArticle index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quantitesortie</th>
+                <th>Reference</th>
+                <th>DateRetour</th>
+                <th>QuatiteRetourner</th>
+                <th>Cassure</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for retour_article in retour_articles %}
+            <tr>
+                <td>{{ retour_article.id }}</td>
+                <td>{{ retour_article.quantitesortie }}</td>
+                <td>{{ retour_article.reference }}</td>
+                <td>{{ retour_article.dateRetour ? retour_article.dateRetour|date('Y-m-d') : '' }}</td>
+                <td>{{ retour_article.quatiteRetourner }}</td>
+                <td>{{ retour_article.cassure }}</td>
+                <td>{{ retour_article.prix }}</td>
+                <td>
+                    <a href="{{ path('retour_article_show', {'id': retour_article.id}) }}">show</a>
+                    <a href="{{ path('retour_article_edit', {'id': retour_article.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('retour_article_new') }}">Create new</a>
+{% endblock %}

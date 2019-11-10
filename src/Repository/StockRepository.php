@@ -31,7 +31,7 @@ class StockRepository extends ServiceEntityRepository
             ->setParameter('val1', $value1)
             ->setParameter('val2', $value2)
             ->groupBy('s.reference')
-            ->orderBy('s.id', 'ASC')
+            ->orderBy('s.dateSortiePrevue', 'ASC')
             ->getQuery()
             ->getResult()
         ;

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SortieArticle index{% endblock %}
+
+{% block body %}
+    <h1>SortieArticle index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Refernce</th>
+                <th>QuantiteCommander</th>
+                <th>QuantiteSortie</th>
+                <th>Date</th>
+                <th>Reste</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sortie_article in sortie_articles %}
+            <tr>
+                <td>{{ sortie_article.id }}</td>
+                <td>{{ sortie_article.refernce }}</td>
+                <td>{{ sortie_article.quantiteCommander }}</td>
+                <td>{{ sortie_article.quantiteSortie }}</td>
+                <td>{{ sortie_article.date ? sortie_article.date|date('Y-m-d') : '' }}</td>
+                <td>{{ sortie_article.reste }}</td>
+                <td>
+                    <a href="{{ path('sortie_article_show', {'id': sortie_article.id}) }}">show</a>
+                    <a href="{{ path('sortie_article_edit', {'id': sortie_article.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('sortie_article_new') }}">Create new</a>
+{% endblock %}

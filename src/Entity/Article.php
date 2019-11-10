@@ -43,9 +43,27 @@ class Article
      */
     private $stocks;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SortieArticle", mappedBy="article")
+     */
+    private $sortieArticles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Retour", mappedBy="article")
+     */
+    private $retours;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RetourArticle", mappedBy="article")
+     */
+    private $retourArticles;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
+        $this->sortieArticles = new ArrayCollection();
+        $this->retours = new ArrayCollection();
+        $this->retourArticles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,6 +153,99 @@ class Article
             // set the owning side to null (unless already changed)
             if ($stock->getArticle() === $this) {
                 $stock->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SortieArticle[]
+     */
+    public function getSortieArticles(): Collection
+    {
+        return $this->sortieArticles;
+    }
+
+    public function addSortieArticle(SortieArticle $sortieArticle): self
+    {
+        if (!$this->sortieArticles->contains($sortieArticle)) {
+            $this->sortieArticles[] = $sortieArticle;
+            $sortieArticle->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortieArticle(SortieArticle $sortieArticle): self
+    {
+        if ($this->sortieArticles->contains($sortieArticle)) {
+            $this->sortieArticles->removeElement($sortieArticle);
+            // set the owning side to null (unless already changed)
+            if ($sortieArticle->getArticle() === $this) {
+                $sortieArticle->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Retour[]
+     */
+    public function getRetours(): Collection
+    {
+        return $this->retours;
+    }
+
+    public function addRetour(Retour $retour): self
+    {
+        if (!$this->retours->contains($retour)) {
+            $this->retours[] = $retour;
+            $retour->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRetour(Retour $retour): self
+    {
+        if ($this->retours->contains($retour)) {
+            $this->retours->removeElement($retour);
+            // set the owning side to null (unless already changed)
+            if ($retour->getArticle() === $this) {
+                $retour->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RetourArticle[]
+     */
+    public function getRetourArticles(): Collection
+    {
+        return $this->retourArticles;
+    }
+
+    public function addRetourArticle(RetourArticle $retourArticle): self
+    {
+        if (!$this->retourArticles->contains($retourArticle)) {
+            $this->retourArticles[] = $retourArticle;
+            $retourArticle->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRetourArticle(RetourArticle $retourArticle): self
+    {
+        if ($this->retourArticles->contains($retourArticle)) {
+            $this->retourArticles->removeElement($retourArticle);
+            // set the owning side to null (unless already changed)
+            if ($retourArticle->getArticle() === $this) {
+                $retourArticle->setArticle(null);
             }
         }
 

@@ -112,7 +112,7 @@ class Stock
     public function __construct()
     {
         $this->user = new ArrayCollection();
-        $this->article = new ArrayCollection();
+        //$this->article = new ArrayCollection();
         //$this->mouvement = new ArrayCollection();
         $this->client = new ArrayCollection();
         $this->mode = new ArrayCollection();

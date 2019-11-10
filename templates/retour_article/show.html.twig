@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RetourArticle{% endblock %}
+
+{% block body %}
+    <h1>RetourArticle</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ retour_article.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantitesortie</th>
+                <td>{{ retour_article.quantitesortie }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ retour_article.reference }}</td>
+            </tr>
+            <tr>
+                <th>DateRetour</th>
+                <td>{{ retour_article.dateRetour ? retour_article.dateRetour|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>QuatiteRetourner</th>
+                <td>{{ retour_article.quatiteRetourner }}</td>
+            </tr>
+            <tr>
+                <th>Cassure</th>
+                <td>{{ retour_article.cassure }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ retour_article.prix }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('retour_article_index') }}">back to list</a>
+
+    <a href="{{ path('retour_article_edit', {'id': retour_article.id}) }}">edit</a>
+
+    {{ include('retour_article/_delete_form.html.twig') }}
+{% endblock %}
