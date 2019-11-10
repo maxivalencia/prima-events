@@ -13,22 +13,28 @@
         <thead>
             <tr>
                 <th>Article</th>
-                <th>Quantite</th>
+                <th>Quantité</th>
                 <th>Reference</th>
-                <th>Date Commande</th>
-                <th>Date Sortie Prevue</th>
+                <th>Date Retour</th>
+                <th>Quantité Retourner</th>
                 <th>Date Retour Prevu</th>
+                <th>Prix</th>
+                <th>Reste</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
         {% for stock in stocks %}
             <tr>
                 <td>{{ stock.article }}</td>
-                <td>{{ stock.quantite }}</td>
+                <td>{{ stock.quantitesortie }}</td>
                 <td>{{ stock.reference }}</td>
-                <td>{{ stock.dateCommande ? stock.dateCommande|date('Y-m-d') : '' }}</td>
-                <td>{{ stock.dateSortiePrevue ? stock.dateSortiePrevue|date('Y-m-d') : '' }}</td>
-                <td>{{ stock.dateRetourPrevu ? stock.dateRetourPrevu|date('Y-m-d') : '' }}</td>
+                <td>{{ stock.dateRetour ? stock.dateRetour|date('d/m/Y') : '' }}</td>
+                <td>{{ stock.quatiteRetourner }}</td>
+                <td>{{ stock.cassure }}</td>
+                <td>{{ stock.prix }}</td>
+                <td>{{ stock.reste }}</td>
+                <td><a href="{{ path('retour_edit', {'id': stock.id}) }}" class="btn btn-danger">edit</a></td>
             </tr>
         {% else %}
             <tr>

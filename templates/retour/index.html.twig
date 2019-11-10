@@ -14,9 +14,7 @@
             <tr>
                 <th>Client</th>
                 <th>Date Commande</th>
-                <th>Date Sortie Prevue</th>
-                <th>Date Sortie Effectif</th>
-                <th>Date Retour Prevu</th>
+                <th>Date Retour</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -25,11 +23,9 @@
             <tr>
                 <td>{{ stock.client }}</td>
                 <td>{{ stock.dateCommande ? stock.dateCommande|date('d/m/Y') : '' }}</td>
-                <td>{{ stock.dateSortiePrevue ? stock.dateSortiePrevue|date('d/m/Y') : '' }}</td>
-                <td>{{ stock.dateSortieEffectif ? stock.dateSortieEffectif|date('d/m/Y') : '' }}</td>
                 <td>{{ stock.dateRetourPrevu ? stock.dateRetourPrevu|date('d/m/Y') : '' }}</td>
                 <td>
-                    {# <a href="{{ path('retour_effectif_details', {'ref': stock.reference}) }}" class="btn btn-warning">voir</a> #}
+                    <a href="{{ path('retour_effectif_details', {'ref': stock.reference}) }}" class="btn btn-warning">voir</a>
                 </td>
             </tr>
         {% else %}
@@ -39,10 +35,10 @@
         {% endfor %}
         </tbody>
     </table>
-{# 
+
     <div class="navigation">
         {{ knp_pagination_render(stocks) }}
-    </div> #}
+    </div>
 
     
 </div>

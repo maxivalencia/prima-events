@@ -23,6 +23,21 @@ class StockRepository extends ServiceEntityRepository
     /**
      * @return Stock[] Returns an array of Stock objects
      */
+    public function findRetour($value1)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.reference = :val1')
+            ->setParameter('val1', $value1)
+            ->groupBy('s.reference')
+            ->orderBy('s.dateSortiePrevue', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Stock[] Returns an array of Stock objects
+     */
     public function findByGroup($value1, $value2)
     {
         return $this->createQueryBuilder('s')

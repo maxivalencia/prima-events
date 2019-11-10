@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition Retour{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Edition Retour</h1>
+    </div>
+
+    {{ include('sortie_article/_form.html.twig', {'button_label': 'Sortir'}) }}
+    <br>
+</div>
+{% endblock %}
