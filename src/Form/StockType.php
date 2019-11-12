@@ -19,6 +19,7 @@ class StockType extends AbstractType
             ->add('dateSortieEffectif')
             ->add('dateRetourPrevu')
             ->add('dateRetourEffectif')
+            ->add('commentaire')
         ;
     }
 

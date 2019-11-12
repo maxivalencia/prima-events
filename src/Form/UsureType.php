@@ -23,6 +23,7 @@ class UsureType extends AbstractType
             ->add('reference', HiddenType::class, [
                 'data' => $results,
             ])
+            ->add('commentaire')
             //->add('dateCommande')
             //->add('dateSortiePrevue')
             //->add('dateSortieEffectif')

@@ -23,6 +23,7 @@ class CassureType extends AbstractType
             ->add('reference', HiddenType::class, [
                 'data' => $results,
             ])
+            ->add('commentaire')
             //->add('dateCommande')
             //->add('dateSortiePrevue')
             //->add('dateSortieEffectif')
@@ -30,7 +31,7 @@ class CassureType extends AbstractType
             //->add('dateRetourEffectif')
             //->add('user')
             //->add('mouvement')
-            ->add('client')
+            //->add('client')
             //->add('mode')
             //->add('userSortie')
             //->add('userRetour')

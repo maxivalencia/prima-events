@@ -114,6 +114,11 @@ class Stock
      */
     private $commentaire;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $remise;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -469,6 +474,18 @@ class Stock
     public function setCommentaire(?string $commentaire): self
     {
         $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getRemise(): ?float
+    {
+        return $this->remise;
+    }
+
+    public function setRemise(?float $remise): self
+    {
+        $this->remise = $remise;
 
         return $this;
     }

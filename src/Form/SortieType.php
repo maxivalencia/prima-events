@@ -31,9 +31,10 @@ class SortieType extends AbstractType
             ->add('nbJour', null, [
                 'label' => 'nombre de jour',
             ])
+            ->add('remise')
             ->add('Location')
             ->add('quantiteLouer')
-            //->add('dateRetourEffectif')
+            ->add('commentaire')
         ;
     }
 
