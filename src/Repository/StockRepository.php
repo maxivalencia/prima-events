@@ -57,13 +57,18 @@ class StockRepository extends ServiceEntityRepository
      */
     public function findProformat()
     {
+        $effectiveDate = new DateTime();
+        //$effectiveDate = date('Y-m-d', strtotime("+3 months", strtotime($effectiveDate)));
+        $effectiveDate->modify('-3 month');
         return $this->createQueryBuilder('s')
             ->andWhere('s.client IS NOT NULL')
             ->andWhere('s.dateDeValidationProformat IS NULL')
+            ->andWhere('s.dateCommande > :val2')
             ->andWhere('s.mode = :val1')
             ->groupBy('s.reference')
             ->orderBy('s.id', 'DESC')
             ->setParameter('val1', 1)
+            ->setParameter('val2', $effectiveDate)
             ->getQuery()
             ->getResult()
         ;
