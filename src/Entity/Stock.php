@@ -109,6 +109,11 @@ class Stock
      */
     private $dateDeValidationProformat;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $commentaire;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -452,6 +457,18 @@ class Stock
     public function setDateDeValidationProformat(?\DateTimeInterface $dateDeValidationProformat): self
     {
         $this->dateDeValidationProformat = $dateDeValidationProformat;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }
