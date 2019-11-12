@@ -3,14 +3,20 @@
 namespace App\Form;
 
 use App\Entity\Paye;
+use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class DecaissementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $daty = new DateTime();
+        $results = $daty->format('Y-m-d-H-i-s');
+        $krr = explode('-', $results);
+        $results = implode("", $krr);
         $builder
             ->add('refstock')
             //->add('datePayement')
@@ -18,7 +24,9 @@ class DecaissementType extends AbstractType
             ->add('montant')
             //->add('payement')
             ->add('typepayement')
-            //->add('typePayement')
+            ->add('refPayement', HiddenType::class, [
+                'data' => $results,
+            ])
         ;
     }
 

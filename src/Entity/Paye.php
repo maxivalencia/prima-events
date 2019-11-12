@@ -58,6 +58,11 @@ class Paye
      */
     private $motifPayement;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $refPayement;
+
     public function __construct()
     {
         //$this->payement = new ArrayCollection();
@@ -195,6 +200,18 @@ class Paye
     public function setMotifPayement(?MotifPayement $motifPayement): self
     {
         $this->motifPayement = $motifPayement;
+
+        return $this;
+    }
+
+    public function getRefPayement(): ?string
+    {
+        return $this->refPayement;
+    }
+
+    public function setRefPayement(?string $refPayement): self
+    {
+        $this->refPayement = $refPayement;
 
         return $this;
     }
