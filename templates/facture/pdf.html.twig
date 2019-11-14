@@ -61,105 +61,121 @@
         </style>
   
  {% block body %}
-        <div class="container" style="margin-left:20px">
-            
-                <div class="row" align="center">
-                    <img src="{{ logo }}" alt="logo" height="150px" type="image/png">
-                </div>
-            
-            <div class="row">
-                Référence&nbsp;&nbsp;&nbsp;&nbsp;
-                FACTURE N° {{ reference }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Date: {{ "now"|date('d F Y') }}
+    <div class="container" style="margin-left:20px">
+        
+            <div class="row" align="center">
+                <img src="{{ logo }}" alt="logo" height="150px" type="image/png">
             </div>
+        
+        <div class="row">
+            Référence&nbsp;&nbsp;&nbsp;&nbsp;
+            FACTURE N° {{ reference }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Date: {{ "now"|date('d F Y') }}
+        </div>
 
-            <div><u>Objet :</u> FACTURE</div>
-            <div class="row">
-                <table class="table">
-                    <thead>
+        <div><u>Objet :</u> FACTURE</div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="150px">Reférence</th>
+                        <th width="200px">Désignation</th>
+                        <th width="50px">Quantite</th>
+                        <th width="50px">NB Jour</th>
+                        <th width="100px">P.U</th>
+                        <th width="50px">Remise</th>
+                        <th width="100px">Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% set Total = 0 %}
+                {% set Caution = 0 %}
+                {% set TotalFacture = 0 %}
+                {% for stock in stocks %}
+                    <tr>
+                        <td>{{ stock.reference }}</td>
+                        <td>{{ stock.article.designation }}</td>
+                        <td align="center">{{ stock.quantite }}</td>
+                        <td align="center">
+                            {% set difference = date(stock.dateRetourPrevu).diff(date(stock.dateSortiePrevue)) %}
+                            {% set leftDays = difference.days %}
+                            {{ leftDays  }}
+                        </td>
+                        <td align="right">{{ stock.article.prixunitaire }} Ar</td>
+                        <td align="right">{{ stock.remise }} Ar</td>
+                        <td align="right">{{ stock.quantite * stock.article.prixunitaire }} Ar</td>
+                        {% set Total = Total + (stock.quantite * stock.article.prixunitaire) %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">Aucun enregistrement trouver!</td>
+                    </tr>
+                {% endfor %}
+                    {% if caution != 0 %}
+                    <tr>
+                        <td colspan="6" align="right">Caution</td>
+                        <td>{{ caution }}  Ar</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td colspan="6" align="right">Total</td>
+                        <td>{{ total }}</td>
+                    </tr>
+                    {% if tvaCollecter != 0 %}
+                    <tr>
+                        <td colspan="6" align="right">TVA</td>
+                        <td>{{ tvaCollecter }}  Ar</td>
+                    </tr>
+                    {% endif %}
+                    {% if transport != 0 %}
+                    <tr>
+                        <td colspan="6" align="right">Transport</td>
+                        <td>{{ transport }}  Ar</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td colspan="6" align="right">TTC</td>
+                        <td>{{ ttc }}  Ar</td>
+                    </tr>
+                    {% if remise != 0 %}
+                    <tr>
+                        <td colspan="6" align="right">Remise</td>
+                        <td>{{ remise }}  Ar</td>
+                    </tr>
+                    {% endif %}
+                    {% if indemnite != 0 %}
                         <tr>
-                            <th width="150px">Reférence</th>
-                            <th width="200px">Désignation</th>
-                            <th width="50px">Quantite</th>
-                            <th width="50px">NB Jour</th>
-                            <th width="100px">P.U</th>
-                            <th width="100px">Montant</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% set Total = 0 %}
-                    {% set Caution = 0 %}
-                    {% set TotalFacture = 0 %}
-                    {% for stock in stocks %}
-                        <tr>
-                            <td>{{ stock.reference }}</td>
-                            <td>{{ stock.article.designation }}</td>
-                            <td align="center">{{ stock.quantite }}</td>
-                            <td align="center">
-                                {% set difference = date(stock.dateRetourPrevu).diff(date(stock.dateSortiePrevue)) %}
-                                {% set leftDays = difference.days %}
-                                {{ leftDays  }}
-                            </td>
-                            <td align="right">{{ stock.article.prixunitaire }} Ar</td>
-                            <td align="right">{{ stock.quantite * stock.article.prixunitaire }} Ar</td>
-                            {% set Total = Total + (stock.quantite * stock.article.prixunitaire) %}
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="9">Aucun enregistrement trouver!</td>
-                        </tr>
-                    {% endfor %}     
-                        <tr>           
-                            <td colspan="5" align="right">TOTAL COMMANDE : </td>
-                            <td align="right">{{ Total }} Ar</td>
-                        </tr>                        
-                    {% set Caution = Total / 2 %}
-                    {% set TotalFacture = Total + Caution %}    
-                        <tr>           
-                            <td colspan="5" align="right">CAUTION 50% : </td>
-                            <td align="right">{{ Caution }} Ar</td>
-                        </tr> 
-                    {% if transport is not null and transport is defined %}
-                        <tr>                
-                            <td colspan="5" align="right">TRANSPORT : </td>
-                            <td align="right">{{ transport.prix }} Ar</td>
-                            {% set TotalFacture = TotalFacture + transport.prix %}
+                            <td colspan="6" align="right">Indeminté</td>
+                            <td>{{ indemnite }}  Ar</td>
                         </tr>
                     {% endif %}
-                    {% if remise is not null and remise is defined %}
-                        {% set TotalFacture = TotalFacture - (Total * remise.taux /100) %}
-                        <tr>                
-                            <td colspan="5" align="right">Remise : </td>
-                            <td align="right">{{ Total * remise.taux / 100 }} Ar</td>
-                        </tr>
-                    {% endif %}     
-                        <tr>           
-                            <td colspan="5" align="right">TOTAL FACTURE : </td>
-                            <td align="right">{{ TotalFacture }} Ar</td>
-                        </tr>  
-                    </tbody>
-                </table>
-            </div>
-            <div class="row" align="center">
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-            </div>
-            <br><br>
-            <div class="row">
-                <table cellspacing="0" cellpadding="0" style="border-width: 0px; border:solid 1px #fff; width:700px; border-spacing: 0px;border-collapse:collapse;">
-                    <tr border="none">
-                        <td align="center" width="50%" border="0"> Le Responsable </td>
-                        <td align="center" width="50%" border="0"> Le Client </td>
-                    </tr>
-                </table>
-            </div>
-            <footer>
-                <div class="row" align="center">
-                    PRIMA-CE<br>
-                    Société à Responsabilité limitée Unipersonnelle au capital de 1 000 000 Ariary<br>
-                    NIF : 6002986663 - STAT : 42201-11-2018-0-10341 - RCS : 2018B00325<br>
-                    Mail : events@prima.mg - Tél.: 034 28 222 04 / 034 58 738 31
-                </div>
-            </footer>
+                    <tr>
+                        <td colspan="6" align="right">Net à Payer</td>
+                        <td>{{ netapayer }}  Ar</td>
+                    </tr>   
+                </tbody>
+            </table>
         </div>
+        <div class="row" align="center">
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+        </div>
+        <br><br>
+        <div class="row">
+            <table cellspacing="0" cellpadding="0" style="border-width: 0px; border:solid 1px #fff; width:700px; border-spacing: 0px;border-collapse:collapse;">
+                <tr border="none">
+                    <td align="center" width="50%" border="0"> Le Responsable </td>
+                    <td align="center" width="50%" border="0"> Le Client </td>
+                </tr>
+            </table>
+        </div>
+        <footer>
+            <div class="row" align="center">
+                PRIMA-CE<br>
+                Société à Responsabilité limitée Unipersonnelle au capital de 1 000 000 Ariary<br>
+                NIF : 6002986663 - STAT : 42201-11-2018-0-10341 - RCS : 2018B00325<br>
+                Mail : events@prima.mg - Tél.: 034 28 222 04 / 034 58 738 31
+            </div>
+        </footer>
+    </div>
  {% endblock %}

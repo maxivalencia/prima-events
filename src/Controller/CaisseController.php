@@ -99,7 +99,7 @@ class CaisseController extends AbstractController
         $remi->setReference($reference);
         $inde->setRefence($reference);
         $caut->setReference($reference);
-        $caut->setRefPayement($reference);
+        //$caut->setRefPayement($reference);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $paye->setDatePayement(new DateTime());

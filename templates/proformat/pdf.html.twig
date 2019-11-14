@@ -83,6 +83,7 @@
                             <th width="50px">Quantite</th>
                             <th width="50px">NB Jour</th>
                             <th width="100px">P.U</th>
+                            <th width="50px">Remise</th>
                             <th width="100px">Montant</th>
                         </tr>
                     </thead>
@@ -101,6 +102,7 @@
                                 {{ leftDays  }}
                             </td>
                             <td align="right">{{ stock.article.prixunitaire }} Ar</td>
+                            <td align="right">{{ stock.remise }} Ar</td>
                             <td align="right">{{ stock.quantite * stock.article.prixunitaire }} Ar</td>
                             {% set Total = Total + (stock.quantite * stock.article.prixunitaire) %}
                         </tr>
@@ -108,34 +110,48 @@
                         <tr>
                             <td colspan="9">Aucun enregistrement trouver!</td>
                         </tr>
-                    {% endfor %}     
-                        <tr>           
-                            <td colspan="5" align="right">TOTAL COMMANDE : </td>
-                            <td align="right">{{ Total }} Ar</td>
-                        </tr>                        
-                    {% set Caution = Total / 2 %}
-                    {% set TotalFacture = Total + Caution %}    
-                        <tr>           
-                            <td colspan="5" align="right">CAUTION 50% : </td>
-                            <td align="right">{{ Caution }} Ar</td>
-                        </tr> 
-                    {% if transport is not null and transport is defined %}
-                        <tr>                
-                            <td colspan="5" align="right">TRANSPORT : </td>
-                            <td align="right">{{ transport.prix }} Ar</td>
-                            {% set TotalFacture = TotalFacture + transport.prix %}
+                    {% endfor %}
+                        {% if caution != 0 %}
+                        <tr>
+                            <td colspan="6" align="right">Caution</td>
+                            <td>{{ caution }} Ar</td>
                         </tr>
-                    {% endif %}
-                    {% if remise is not null and remise is defined %}
-                        {% set TotalFacture = TotalFacture - (Total * remise.taux /100) %}
-                        <tr>                
-                            <td colspan="5" align="right">Remise : </td>
-                            <td align="right">{{ Total * remise.taux / 100 }} Ar</td>
+                        {% endif %}
+                        <tr>
+                            <td colspan="6" align="right">Total</td>
+                            <td>{{ total }} Ar</td>
                         </tr>
-                    {% endif %}     
-                        <tr>           
-                            <td colspan="5" align="right">TOTAL FACTURE : </td>
-                            <td align="right">{{ TotalFacture }} Ar</td>
+                        {% if tvaCollecter != 0 %}
+                        <tr>
+                            <td colspan="6" align="right">TVA</td>
+                            <td>{{ tvaCollecter }} Ar</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td colspan="6" align="right">TTC</td>
+                            <td>{{ ttc }} Ar</td>
+                        </tr>
+                        {% if transport != 0 %}
+                        <tr>
+                            <td colspan="6" align="right">Transport</td>
+                            <td>{{ transport }} Ar</td>
+                        </tr>
+                        {% endif %}
+                        {% if remise != 0 %}
+                        <tr>
+                            <td colspan="6" align="right">Remise</td>
+                            <td>{{ remise }} Ar</td>
+                        </tr>
+                        {% endif %}
+                        {% if indemnite != 0 %}
+                            <tr>
+                                <td colspan="6" align="right">Indeminté</td>
+                                <td>{{ indemnite }} Ar</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td colspan="6" align="right">Net à Payer</td>
+                            <td>{{ netapayer }} Ar</td>
                         </tr>  
                     </tbody>
                 </table>

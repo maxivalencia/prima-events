@@ -27,7 +27,9 @@ class StockRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.reference = :val1')
+            //->orWhere('s.client.typeClient = :val2')
             ->setParameter('val1', $value1)
+            //->setParameter('val2', 3)
             ->groupBy('s.reference')
             ->orderBy('s.dateSortiePrevue', 'DESC')
             ->getQuery()
@@ -69,6 +71,25 @@ class StockRepository extends ServiceEntityRepository
             ->orderBy('s.id', 'DESC')
             ->setParameter('val1', 1)
             ->setParameter('val2', $effectiveDate)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Stock[] Returns an array of Stock objects
+     */
+    public function findFacturePaye($value1)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.client IS NOT NULL')
+            ->andWhere('s.dateDeValidationProformat IS NOT NULL')
+            ->andWhere('s.mode = :val1')
+            ->andWhere('s.reference = :val2')
+            ->groupBy('s.reference')
+            ->orderBy('s.id', 'DESC')
+            ->setParameter('val1', 1)
+            ->setParameter('val2', $value1)
             ->getQuery()
             ->getResult()
         ;

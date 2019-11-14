@@ -19,6 +19,21 @@ class PayeRepository extends ServiceEntityRepository
         parent::__construct($registry, Paye::class);
     }
 
+    /**
+     * @return Paye[] Returns an array of Paye objects
+     */
+    public function findGroup()
+    {
+        return $this->createQueryBuilder('p')
+            //->andWhere('p.exampleField = :val')
+            //->setParameter('val', $value)
+            ->groupBy('p.refstock')
+            ->orderBy('p.id', 'DESC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     // /**
     //  * @return Paye[] Returns an array of Paye objects
     //  */
