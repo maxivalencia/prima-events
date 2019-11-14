@@ -25,15 +25,14 @@ class PayeRepository extends ServiceEntityRepository
     public function findGroup()
     {
         return $this->createQueryBuilder('p')
-            //->andWhere('p.exampleField = :val')
-            //->setParameter('val', $value)
+            ->where('p.refstock IS NOT NULL')
             ->groupBy('p.refstock')
             ->orderBy('p.id', 'DESC')
-            //->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
+
     // /**
     //  * @return Paye[] Returns an array of Paye objects
     //  */

@@ -23,7 +23,7 @@
             <tr>
                 <td>{{ stock.reference }}</td>
                 <td>{{ stock.dateCommande ? stock.dateCommande|date('Y-m-d') : '' }}</td>
-                <td>{{ stock.client.nom }}</td>
+                <td>{{ stock.client.nom }} {{ iteration }}</td>
                 <td>
                     <a href="{{ path('facture_details', {'ref': stock.reference}) }}" class="btn btn-warning">voir</a>
                 </td>

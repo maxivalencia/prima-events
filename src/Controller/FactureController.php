@@ -41,9 +41,11 @@ class FactureController extends AbstractController
         $i = 0;
         foreach($facturepayers as $fact){
             //$facture = $stockRepository->findBy(["reference" => $fact->getRefstock()]);
-            $facture[$i] = $stockRepository->findBy(["reference" => "20191103090930"]);
-            //$facture[$i] = $stockRepository->findFacturePaye(["reference" => "20191103090930"]);
-            $i++;
+            //if($stockRepository->findOneBy(["reference" => $fact->getRefstock()])){ 
+                //$facture[$i] = $stockRepository->findBy(["reference" => $fact->getRefstock()]);
+                $facture[$i] = $stockRepository->findOneBy(["reference" => "20191103090930"]);
+                $i = $fact->getRefstock();
+            //}
         }
         $pagination = $paginator->paginate(
             $facture, //$stockRepository->findFacture(), /* query NOT result */
