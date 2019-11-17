@@ -11,8 +11,7 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Quantite</th>
+            <tr>                
                 <th>Reference</th>
                 <th>Date Commande</th>
                 <th>Client</th>
@@ -22,7 +21,6 @@
         <tbody>
         {% for stock in stocks %}
             <tr>
-                <td>{{ stock.quantite }}</td>
                 <td>{{ stock.reference }}</td>
                 <td>{{ stock.dateCommande ? stock.dateCommande|date('Y-m-d') : '' }}</td>
                 <td>{{ stock.client.nom }}</td>
@@ -41,7 +39,7 @@
     <div class="navigation">
         {{ knp_pagination_render(stocks) }}
     </div>
-
-    
+    <br>
+    <a href="{{ path('historique_excel') }}" class="btn btn-success">Export</a>
 </div>
 {% endblock %}

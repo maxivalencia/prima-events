@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Utilisateur;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RoleRepository")
@@ -28,9 +29,15 @@ class Role
      */
     private $utilisateurs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Utilisateur", mappedBy="role")
+     */
+    private $utilisateurid;
+
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
+        $this->utilisateurid = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -40,12 +47,12 @@ class Role
 
     public function getRole(): ?string
     {
-        return $this->role;
+        return strtoupper($this->role);
     }
 
     public function setRole(string $role): self
     {
-        $this->role = $role;
+        $this->role = strtoupper($role);
 
         return $this;
     }
@@ -88,5 +95,36 @@ class Role
     public function __toString()
     {
         return $this->getRole();
+    }
+
+    /**
+     * @return Collection|Utilisateur[]
+     */
+    public function getUtilisateurid(): Collection
+    {
+        return $this->utilisateurid;
+    }
+
+    public function addUtilisateurid(Utilisateur $utilisateurid): self
+    {
+        if (!$this->utilisateurid->contains($utilisateurid)) {
+            $this->utilisateurid[] = $utilisateurid;
+            $utilisateurid->setRole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUtilisateurid(Utilisateur $utilisateurid): self
+    {
+        if ($this->utilisateurid->contains($utilisateurid)) {
+            $this->utilisateurid->removeElement($utilisateurid);
+            // set the owning side to null (unless already changed)
+            if ($utilisateurid->getRole() === $this) {
+                $utilisateurid->setRole(null);
+            }
+        }
+
+        return $this;
     }
 }

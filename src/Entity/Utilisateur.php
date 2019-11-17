@@ -39,11 +39,6 @@ class Utilisateur
     private $prenom;
 
     /**
-     * @ORM\Column(type="json")
-     */
-    /* private $role = []; */
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Stock", inversedBy="user")
      */
     private $stock;
@@ -64,7 +59,7 @@ class Utilisateur
     private $stockretour;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\role", inversedBy="utilisateurs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="utilisateurid")
      */
     private $role;
 
@@ -124,18 +119,6 @@ class Utilisateur
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
 
         return $this;
     }
@@ -250,6 +233,18 @@ class Utilisateur
                 $stockretour->setUserRetour(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRole(): ?Role
+    {
+        return $this->role;
+    }
+
+    public function setRole(?Role $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }

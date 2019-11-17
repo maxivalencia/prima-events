@@ -103,6 +103,7 @@ class ProformatController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         foreach($stoks as $sto){
             $sto->setDateDeValidationProformat(new DateTime());
+            //$sto->set
             $entityManager->persist($sto);
         }
         $entityManager->flush();

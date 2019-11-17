@@ -59,7 +59,8 @@ class UtilisateurController extends AbstractController
                 $user,
                 $user->getPassword()
             ));
-            $user->setRoles(['ROLE_USER']);
+            //$user->setRoles(["ROLE_USER"]);
+            $user->setRoles(['ROLE_'.$utilisateur->getRole()]);
             $utilisateur->setPassword('argoni2');
             $entityManager->persist($utilisateur);
             $entityManager->persist($user);
@@ -112,7 +113,10 @@ class UtilisateurController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $userRepository = $entityManager->getRepository(User::class);
+            $user = $userRepository->findOneBy(['username' => $utilisateur->getLogin()]);
             $entityManager->remove($utilisateur);
+            $entityManager->remove($user);
             $entityManager->flush();
         }
 
