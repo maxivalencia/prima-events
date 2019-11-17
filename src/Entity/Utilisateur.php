@@ -63,6 +63,11 @@ class Utilisateur
      */
     private $stockretour;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\role", inversedBy="utilisateurs")
+     */
+    private $role;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
@@ -123,12 +128,12 @@ class Utilisateur
         return $this;
     }
 
-    public function getRole(): ?array
+    public function getRole(): ?string
     {
         return $this->role;
     }
 
-    public function setRole(array $role): self
+    public function setRole(string $role): self
     {
         $this->role = $role;
 
@@ -153,7 +158,7 @@ class Utilisateur
      */
     public function __toString()
     {
-        return $this->getLogin()();
+        return $this->getLogin();
     }
 
     /**

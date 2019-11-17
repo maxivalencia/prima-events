@@ -36,7 +36,7 @@ class FactureController extends AbstractController
      */
     public function index(StockRepository $stockRepository, Request $request, PaginatorInterface $paginator, PayeRepository $payeRepository)
     {
-        $facturepayers = $payeRepository->findGroup();
+        /* $facturepayers = $payeRepository->findGroup();
         $facture[] = new Stock();
         $i = 0;
         foreach($facturepayers as $fact){
@@ -46,15 +46,14 @@ class FactureController extends AbstractController
                 $facture[$i] = $stockRepository->findOneBy(["reference" => "20191103090930"]);
                 $i = $fact->getRefstock();
             //}
-        }
+        } */
         $pagination = $paginator->paginate(
-            $facture, //$stockRepository->findFacture(), /* query NOT result */
+            $stockRepository->findFacture(), /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             10/*limit per page*/
         );
         return $this->render('facture/index.html.twig', [
             'stocks' => $pagination,
-            'iteration' => $i,
         ]);
     }
 

@@ -6,6 +6,7 @@ use App\Entity\Mode;
 use App\Entity\Mouvement;
 use App\Entity\Stock;
 use App\Entity\Utilisateur;
+use App\Entity\Role;
 use App\Entity\Transport;
 use App\Form\SortieType;
 use App\Form\TransType;

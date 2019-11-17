@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Stock;
+use App\Entity\Role;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;

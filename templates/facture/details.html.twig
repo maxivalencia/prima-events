@@ -32,9 +32,9 @@
                     {% set leftDays = difference.days %}
                     {{ leftDays  }}
                 </td>
-                <td>{{ stock.article.prixunitaire }} Ar</td>
-                <td>{{ stock.remise }} Ar</td>
-                <td>{{ stock.quantite * stock.article.prixunitaire }} Ar</td>
+                <td>{{ (stock.article.prixunitaire)|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ (stock.remise)|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ (stock.quantite * stock.article.prixunitaire)|number_format(2, ',', '.') }} Ar</td>
             </tr>
         {% else %}
             <tr>
@@ -44,44 +44,44 @@
             {% if caution != 0 %}
             <tr>
                 <td colspan="6" align="right">Caution</td>
-                <td>{{ caution }} Ar</td>
+                <td>{{ caution|number_format(2, ',', '.') }} Ar</td>
             </tr>
             {% endif %}
             <tr>
                 <td colspan="6" align="right">Total</td>
-                <td>{{ total }} Ar</td>
+                <td>{{ total|number_format(2, ',', '.') }} Ar</td>
             </tr>
             {% if tvaCollecter != 0 %}
             <tr>
                 <td colspan="6" align="right">TVA</td>
-                <td>{{ tvaCollecter }} Ar</td>
+                <td>{{ tvaCollecter|number_format(2, ',', '.') }} Ar</td>
             </tr>
             {% endif %}
             <tr>
                 <td colspan="6" align="right">TTC</td>
-                <td>{{ ttc }} Ar</td>
+                <td>{{ ttc|number_format(2, ',', '.') }} Ar</td>
             </tr>
             {% if transport != 0 %}
             <tr>
                 <td colspan="6" align="right">Transport</td>
-                <td>{{ transport }} Ar</td>
+                <td>{{ transport|number_format(2, ',', '.') }} Ar</td>
             </tr>
             {% endif %}
             {% if remise != 0 %}
             <tr>
                 <td colspan="6" align="right">Remise</td>
-                <td>{{ remise }} Ar</td>
+                <td>{{ remise|number_format(2, ',', '.') }} Ar</td>
             </tr>
             {% endif %}
             {% if indemnite != 0 %}
                 <tr>
                     <td colspan="6" align="right">Indeminté</td>
-                    <td>{{ indemnite }} Ar</td>
+                    <td>{{ indemnite|number_format(2, ',', '.') }} Ar</td>
                 </tr>
             {% endif %}
             <tr>
                 <td colspan="6" align="right">Net à Payer</td>
-                <td>{{ netapayer }} Ar</td>
+                <td>{{ netapayer|number_format(2, ',', '.') }} Ar</td>
             </tr>
         </tbody>
     </table>

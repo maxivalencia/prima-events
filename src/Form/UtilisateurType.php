@@ -23,7 +23,7 @@ class UtilisateurType extends AbstractType
             ])
             ->add('nom')
             ->add('prenom')
-            //->add('role')
+            ->add('role')
         ;
     }
 

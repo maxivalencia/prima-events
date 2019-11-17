@@ -37,7 +37,7 @@
             <tr>
                 <td>{{ paye.refstock }}</td>
                 <td>{{ paye.datePayement ? paye.datePayement|date('Y-m-d') : '' }}</td>
-                <td>{{ paye.montant }} Ar</td>
+                <td>{{ (paye.montant)|number_format(2, ',', '.') }} Ar</td>
                 <td>{{ paye.TVA ? 'Oui' : 'Non' }}</td>
                 <td>{{ paye.payement }}</td>
                 <td>{{ paye.motifPayement }}</td>
@@ -49,31 +49,31 @@
         {% endfor %}
             <tr>                
                 <td colspan="5" align="right">Total des commandes : </td>
-                <td>{{ Total }} Ar</td>
+                <td>{{ (Total)|number_format(2, ',', '.') }} Ar</td>
             </tr>
         {% if transport is not null and transport is defined %}
             {% set netapayer = netapayer + transport.prix %}
             <tr>                
                 <td colspan="5" align="right">Transport : </td>
-                <td>{{ transport.prix }} Ar</td>
+                <td>{{ (transport.prix)|number_format(2, ',', '.') }} Ar</td>
             </tr>
         {% endif %}
         {% set Caution = Total / 2 %}
         {% set netapayer = netapayer + Caution %}
             <tr>                
                 <td colspan="5" align="right">Caution : </td>
-                <td>{{ Caution }} Ar</td>
+                <td>{{ Caution|number_format(2, ',', '.') }} Ar</td>
             </tr>
         {% if remise is not null and remise is defined %}
             {% set netapayer = netapayer - (Total * remise.taux /100) %}
             <tr>                
                 <td colspan="5" align="right">Remise : </td>
-                <td>{{ Total * remise.taux / 100 }} Ar</td>
+                <td>{{ (Total * remise.taux / 100)|number_format(2, ',', '.') }} Ar</td>
             </tr>
         {% endif %}
             <tr>                
                 <td colspan="5" align="right">Net à payer : </td>
-                <td>{{ netapayer }} Ar</td>
+                <td>{{ netapayer|number_format(2, ',', '.') }} Ar</td>
             </tr>
         </tbody>
     </table>
