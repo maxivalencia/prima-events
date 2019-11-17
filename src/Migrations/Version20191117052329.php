@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191112092332 extends AbstractMigration
+final class Version20191117052329 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,9 @@ final class Version20191112092332 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('CREATE TABLE retour_client (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE paye ADD ref_payement VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE stock ADD commentaire LONGTEXT DEFAULT NULL, ADD remise DOUBLE PRECISION DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +32,8 @@ final class Version20191112092332 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('DROP TABLE retour_client');
         $this->addSql('ALTER TABLE paye DROP ref_payement');
+        $this->addSql('ALTER TABLE stock DROP commentaire, DROP remise');
     }
 }
