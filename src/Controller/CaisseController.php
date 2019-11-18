@@ -157,6 +157,7 @@ class CaisseController extends AbstractController
     public function decaissement(Request $request, TVARepository $tVARepository, PayementRepository $payementRepository)
     {
         $paye = new Paye();
+        $caut = new Caution();
         $form = $this->createForm(EncaissementType::class, $paye);
         $form->handleRequest($request);
         $daty = new DateTime();
@@ -164,7 +165,7 @@ class CaisseController extends AbstractController
         $krr = explode('-', $results);
         $results = implode("", $krr);
         $reference = $results;        
-        $caut->setRefPayement($reference);
+        $paye->setRefPayement($reference);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $paye->setDatePayement(new DateTime());

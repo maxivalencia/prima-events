@@ -71,7 +71,8 @@ class SortieEffectifController extends AbstractController
         foreach($stocks as $sto){
             $userRepository = $entityManager->getRepository(Utilisateur::class);
             //$user = $userRepository->findOneBy(["id" => 1]);
-            $user = $this->getUser();
+            //$user = $this->getUser();
+            $user = $userRepository->findOneBy(["id" => $this->getUser()->getId()]);
             $sto->setUserSortie($user);
             $modeRepository = $entityManager->getRepository(Mode::class);
             $mode = $modeRepository->findOneBy(["id" => 2]);

@@ -95,7 +95,8 @@ class RetourController extends AbstractController
         foreach($stocks as $sto){
             $userRepository = $entityManager->getRepository(Utilisateur::class);
             //$user = $userRepository->findOneBy(["id" => 1]);
-            $user = $this->getUser();
+            //$user = $this->getUser();
+            $user = $userRepository->findOneBy(["id" => $this->getUser()->getId()]);
             $sto->setUserRetour($user);
             $mouvementRepository = $entityManager->getRepository(Mouvement::class);
             $mouvement = $mouvementRepository->findOneBy(["id" => 3]);

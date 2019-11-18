@@ -41,7 +41,8 @@ class EntrerController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $userRepository = $entityManager->getRepository(Utilisateur::class);
             //$user = $userRepository->findOneBy(["id" => 1]);
-            $user = $this->getUser();
+            //$user = $this->getUser();
+            $user = $userRepository->findOneBy(["id" => $this->getUser()->getId()]);
             $stock->setUser($user);
             $stock->setDateCommande(new DateTime());
             $mouvementRepository = $entityManager->getRepository(Mouvement::class);
