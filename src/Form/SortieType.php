@@ -21,7 +21,11 @@ class SortieType extends AbstractType
             ->add('reference', HiddenType::class, [
                 'data' => $results,
             ])
-            ->add('article')
+            ->add('article', null, [
+                'attr' => [
+                    'class' => 'restante',
+                ]
+            ])
             ->add('quantite')
             ->add('client')
             //->add('dateCommande')

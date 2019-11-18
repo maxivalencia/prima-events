@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Knp\Component\Pager\PaginatorInterface;
 use DateTime;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/etat/stock")
@@ -68,7 +69,7 @@ class EtatStockController extends AbstractController
     public function quantiterestant($prod = 1, StockRepository $stocksRepository, Request $request, ArticleRepository $articleRepository, MouvementRepository $mouvementRepository, ModeRepository $modeRepository)
     {
         $i = $request->query->getInt('prod');
-        $article = $articleRepository->findOneBy(["id" => $prod]);
+        $article = $articleRepository->findOneBy(["id" => $i]);
         $etat = new Stock(); 
         $art = $article->getId();
         $stockPlus = $stocksRepository->findEtatStock($art, 2);
