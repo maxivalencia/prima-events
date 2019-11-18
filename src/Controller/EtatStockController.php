@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Stock;
 use App\Entity\Mouvement;
 use App\Repository\ArticleRepository;
+use App\Repository\ModeRepository;
 use App\Repository\MouvementRepository;
 use App\Repository\StockRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +23,7 @@ class EtatStockController extends AbstractController
     /**
      * @Route("/", name="etat_stock")
      */
-    public function index(StockRepository $stockRepository, Request $request, PaginatorInterface $paginator, ArticleRepository $articleRepository, MouvementRepository $mouvementRepository): Response
+    public function index(StockRepository $stockRepository, Request $request, PaginatorInterface $paginator, ArticleRepository $articleRepository, MouvementRepository $mouvementRepository, ModeRepository $modeRepository): Response
     {
         $articles[] = $articleRepository->findAll();
         $etat[] = new Stock(); 
@@ -33,10 +34,10 @@ class EtatStockController extends AbstractController
             $st = $stockRepository->findOneBy(['article' => $article]);
             $st->setQuantite(0);
             foreach($stockPlus as $sto){
-                if($sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 1]) || $sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 4]) || $sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 5])){
+                if(($sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 1]) || $sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 4]) || $sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 5])) && $sto->getMode() == $modeRepository->findOneBy(["id" => 2])){
                     $st->setQuantite($st->getQuantite() - $sto->getQuantite());
                 }
-                if($sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 2])/*  || $sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 3]) */){
+                if(($sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 2]) || $sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 3])) && $sto->getMode() == $modeRepository->findOneBy(["id" => 2])/*  || $sto->getMouvement() == $mouvementRepository->findOneBy(["id" => 3]) */){
                     $st->setQuantite($st->getQuantite() + $sto->getQuantite());
                 }
             }
