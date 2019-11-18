@@ -21,6 +21,7 @@ use App\Repository\PayeRepository;
 use App\Repository\TVARepository;
 use App\Repository\TransportRepository;
 use App\Repository\RemiseRepository;
+use App\Repository\TypeClientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,7 +110,7 @@ class FactureController extends AbstractController
     /**
      * @Route("/facture/{ref}/pdf", name="facture_pdf")
      */
-    public function facturePdf(int $ref, ClientRepository $clientRepository, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
+    public function facturePdf(int $ref, TypeClientRepository $typeClientRepository, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
     {
         $pdfOption = new Options();
         $pdfOption->set('defaultFont', 'Arial');
@@ -128,7 +129,7 @@ class FactureController extends AbstractController
         $caution = 0;
         $total = 0;
         $type_client = '';
-        $type_client_reference = $clientRepository->findOneBy(["id" => 3]);
+        $type_client_reference = $typeClientRepository->findOneBy(["id" => 3]);
         foreach($indemnites as $inde){
             $indemnite += $inde->getPrix();
         }
@@ -164,7 +165,7 @@ class FactureController extends AbstractController
             'ttc' => $ttc,
             'netapayer' => $netapayer,
             'typeclient' => $type_client,
-            'typeclientreference' => $type_client_reference,
+            'typeclientreference' => $type_client_reference->getType(),
         ]);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portait');
