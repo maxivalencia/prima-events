@@ -18,6 +18,9 @@ class SortieArticleEditionType extends AbstractType
             ])
             ->add('article', null, [
                 'disabled' => true,
+                'attr' => [
+                    'class' => 'restante',
+                ],
             ])
             ->add('quantiteCommander', null, [
                 'disabled' => true,

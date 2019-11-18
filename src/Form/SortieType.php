@@ -24,7 +24,7 @@ class SortieType extends AbstractType
             ->add('article', null, [
                 'attr' => [
                     'class' => 'restante',
-                ]
+                ],
             ])
             ->add('quantite')
             ->add('client')
