@@ -82,9 +82,11 @@
                         <th width="200px">Désignation</th>
                         <th width="50px">Quantite</th>
                         <th width="50px">NB Jour</th>
+                        {% if typeclient != typeclientreference %}
                         <th width="100px">P.U</th>
                         <th width="50px">Remise</th>
                         <th width="100px">Montant</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -101,9 +103,11 @@
                             {% set leftDays = difference.days %}
                             {{ leftDays  }}
                         </td>
+                        {% if typeclient != typeclientreference %}
                         <td align="right">{{ (stock.article.prixunitaire)|number_format(2, ',', '.') }} Ar</td>
                         <td align="right">{{ (stock.remise)|number_format(2, ',', '.') }} Ar</td>
                         <td align="right">{{ (stock.quantite * stock.article.prixunitaire)|number_format(2, ',', '.') }} Ar</td>
+                        {% endif %}
                         {% set Total = Total + (stock.quantite * stock.article.prixunitaire) %}
                     </tr>
                 {% else %}
@@ -111,6 +115,7 @@
                         <td colspan="9">Aucun enregistrement trouver!</td>
                     </tr>
                 {% endfor %}
+                {% if typeclient != typeclientreference %}
                     {% if caution != 0 %}
                     <tr>
                         <td colspan="6" align="right">Caution</td>
@@ -152,7 +157,8 @@
                     <tr>
                         <td colspan="6" align="right">Net à Payer</td>
                         <td>{{ netapayer|number_format(2, ',', '.') }}  Ar</td>
-                    </tr>   
+                    </tr>  
+                {% endif %} 
                 </tbody>
             </table>
         </div>

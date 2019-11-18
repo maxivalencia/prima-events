@@ -13,6 +13,7 @@ use App\Form\DecaissementType;
 use App\Form\TransType;
 use App\Form\RemType;
 use App\Repository\CautionRepository;
+use App\Repository\ClientRepository;
 use App\Repository\IndemniteRepository;
 use App\Repository\StockRepository;
 use App\Repository\PayementRepository;
@@ -108,7 +109,7 @@ class FactureController extends AbstractController
     /**
      * @Route("/facture/{ref}/pdf", name="facture_pdf")
      */
-    public function facturePdf(int $ref, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
+    public function facturePdf(int $ref, ClientRepository $clientRepository, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
     {
         $pdfOption = new Options();
         $pdfOption->set('defaultFont', 'Arial');
@@ -126,6 +127,8 @@ class FactureController extends AbstractController
         $transport = 0;
         $caution = 0;
         $total = 0;
+        $type_client = '';
+        $type_client_reference = $clientRepository->findOneBy(["id" => 3]);
         foreach($indemnites as $inde){
             $indemnite += $inde->getPrix();
         }
@@ -140,6 +143,7 @@ class FactureController extends AbstractController
         }
         foreach($stoks as $sto){
             $total = $total + (($sto->getArticle()->getPrixUnitaire() * $sto->getQuantite()) - $sto->getRemise());
+            $type_client = $sto->getClient()->getTypeClient();
         }
         $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
         $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
@@ -159,6 +163,8 @@ class FactureController extends AbstractController
             'tvaCollecter' => $tvaCollecter,
             'ttc' => $ttc,
             'netapayer' => $netapayer,
+            'typeclient' => $type_client,
+            'typeclientreference' => $type_client_reference,
         ]);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portait');
