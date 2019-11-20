@@ -135,6 +135,7 @@ class ProformatController extends AbstractController
         $transport = 0;
         $caution = 0;
         $total = 0;
+        $client = '';
         foreach($indemnites as $inde){
             $indemnite += $inde->getPrix();
         }
@@ -149,6 +150,7 @@ class ProformatController extends AbstractController
         }
         foreach($stoks as $sto){
             $total = $total + (($sto->getArticle()->getPrixUnitaire() * $sto->getQuantite()) - $sto->getRemise());
+            $client = $sto->getClient()->getNom();
         }
         $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
         $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
@@ -175,6 +177,7 @@ class ProformatController extends AbstractController
             'tvaCollecter' => $tvaCollecter,
             'ttc' => $ttc,
             'netapayer' => $netapayer,
+            'client' => $client,
         ]);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portait');

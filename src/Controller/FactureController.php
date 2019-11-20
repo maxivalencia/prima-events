@@ -130,6 +130,7 @@ class FactureController extends AbstractController
         $total = 0;
         $type_client = '';
         $type_client_reference = $typeClientRepository->findOneBy(["id" => 3]);
+        $client = '';
         foreach($indemnites as $inde){
             $indemnite += $inde->getPrix();
         }
@@ -145,6 +146,7 @@ class FactureController extends AbstractController
         foreach($stoks as $sto){
             $total = $total + (($sto->getArticle()->getPrixUnitaire() * $sto->getQuantite()) - $sto->getRemise());
             $type_client = $sto->getClient()->getTypeClient();
+            $client = $sto->getClient()->getNom();
         }
         $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
         $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
@@ -166,6 +168,7 @@ class FactureController extends AbstractController
             'netapayer' => $netapayer,
             'typeclient' => $type_client,
             'typeclientreference' => $type_client_reference->getType(),
+            'client' => $client,
         ]);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portait');

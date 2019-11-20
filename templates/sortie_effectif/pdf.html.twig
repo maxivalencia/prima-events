@@ -1,0 +1,119 @@
+
+        <style>
+            /** Define the margins of your page **/
+            @page {
+                margin: 100px 25px;
+            }
+            table thead tr th {
+                border: 0;
+            }
+
+            table tbody tr td {
+                border: 1px solid #ccc;
+            }
+
+            .tableau {
+                border-collapse: collapse;
+                border-spacing: 0px;
+                border: 1px solid black;
+            }
+
+            .tableau thead tr th,
+            .tableau tbody tr td {
+                border: 1px solid black;
+            }
+
+            th {
+                background: rgb(130, 130, 130);
+                height: 30px;
+                vertical-align: middle;
+                align: center;
+            }
+
+             header {
+                position: fixed;
+                top: -60px;
+                left: 0px;
+                right: 0px;
+                height: 50px;
+
+                /** Extra personal styles **/
+                background-color: #03a9f4;
+                color: white;
+                text-align: center;
+                line-height: 35px;
+            }
+
+            footer {
+                position: fixed; 
+                bottom: -60px; 
+                left: 0px; 
+                right: 0px;
+                height: 50px; 
+
+                /** Extra personal styles **/
+                background-color: white;
+                color: black;
+                text-align: center;
+                line-height: 10px;
+                font-size: 10px;
+            }
+        </style>
+  
+ {% block body %}
+    <div class="container" style="margin-left:20px">
+        
+        <div class="row" align="center">
+            <img src="{{ logo }}" alt="logo" height="150px" type="image/png">
+        </div>
+        <div align="center"><h1>BONS DE SORTIE</h1></div>
+        <div class="row">Référence : {{ reference }}</div>
+        <div>Date: {{ "now"|date('d F Y') }}</div>
+        <div>Client : {{ client }}</div>
+        
+        <div class="row">
+            <table class="tableau">
+                <thead>
+                    <tr>
+                        <th width="200px">Désignation</th>
+                        <th width="200px">Quantite</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for stock in stocks %}
+                    {% if stock.quantiteSortie > 0 or stock.reste <= 0 %}
+                        <tr>
+                            <td>{{ stock.article.designation }}</td>
+                            <td align="center">{{ stock.quantiteSortie }}</td>
+                        </tr>
+                    {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="9">Aucun enregistrement trouver!</td>
+                    </tr>
+                {% endfor %}                
+                </tbody>
+            </table>
+        </div>
+        <div class="row" align="center">
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+        </div>
+        <br><br>
+        <div class="row">
+            <table cellspacing="0" cellpadding="0" style="border-width: 0px; border:solid 1px #fff; width:700px; border-spacing: 0px;border-collapse:collapse;">
+                <tr border="none">
+                    <td align="center" width="50%" border="0"> Le Responsable stock <br> {{ responsable }}</td>
+                </tr>
+            </table>
+        </div>
+        <footer>
+            <div class="row" align="center">
+                PRIMA-CE<br>
+                Société à Responsabilité limitée Unipersonnelle au capital de 1 000 000 Ariary<br>
+                NIF : 6002986663 - STAT : 42201-11-2018-0-10341 - RCS : 2018B00325<br>
+                Mail : events@prima.mg - Tél.: 034 28 222 04 - 034 28 222 80 - 034 28 222 81
+            </div>
+        </footer>
+    </div>
+ {% endblock %}

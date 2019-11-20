@@ -13,11 +13,15 @@ use App\Repository\StockRepository;
 use App\Entity\Mouvement;
 use App\Repository\ModeRepository;
 use App\Repository\SortieArticleRepository;
+use App\Repository\UserRepository;
+use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use DateTime;
 
 /**
@@ -162,6 +166,44 @@ class SortieEffectifController extends AbstractController
         return $this->render('sortie_effectif/edition.html.twig', [
             //'stock' => $sortieArticle,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/imprimer/{ref}", name="sortie_imprimer", methods={"GET", "POST"})
+     */
+    public function imprimer(int $ref, UtilisateurRepository $utilisateurRepository, StockRepository $stockRepository, SortieArticleRepository $sortieArticleRepository, UserRepository $userRepository)
+    {
+        $pdfOption = new Options();
+        $pdfOption->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($pdfOption);
+        //il faut ajouter un repository pour ajouter un utilisateur dans la class
+        $reference = $ref; 
+        $user = $userRepository->findOneBy(["id" => $this->getUser()->getId()]);
+        $responsable = $utilisateurRepository->findOneBy(["id" => $this->getUser()->getId()]);
+        $client = $stockRepository->findOneBy(["reference" => $reference])->getClient()->getNom();
+        $logo = $this->getParameter('image').'/LOGOFINAL.GIF';
+        $html = $this->renderView('sortie_effectif/pdf.html.twig', [
+            'stocks' => $sortieArticleRepository->findBy(['refernce' => $reference]),
+            'logo' => $logo,
+            'reference' => $reference,
+            'responsable' => $responsable->getNom(),
+            'client' => $client,
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portait');
+        $dompdf->render();
+        $dompdf->stream("bons_de_sortie_".$reference.".pdf", [
+            "Attachement" => true,
+        ]);
+        
+        
+        
+        
+        
+        return $this->render('sortie_effectif/details.html.twig',[
+            'stocks' => $sortieArticleRepository->findBy(["refernce" => $reference]),
+            'reference' => $reference,
         ]);
     }
 }

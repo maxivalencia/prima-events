@@ -68,14 +68,16 @@
             </div>
         
         <div class="row">
-            Référence&nbsp;&nbsp;&nbsp;&nbsp;
+            Référence :&nbsp;&nbsp;&nbsp;&nbsp;
             FACTURE N° {{ reference }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Date: {{ "now"|date('d F Y') }}
         </div>
-
+        <div>
+            <div>Client : {{ client }}</div>
+        </div>
         <div><u>Objet :</u> FACTURE</div>
         <div class="row">
-            <table class="table">
+            <table class="tableau">
                 <thead>
                     <tr>
                         <th width="150px">Reférence</th>
