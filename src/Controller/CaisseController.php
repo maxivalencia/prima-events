@@ -190,17 +190,23 @@ class CaisseController extends AbstractController
     /**
      * @Route("/refacturation/{ref}", name="refacturation", methods={"GET", "POST"})
      */
-    public function refacturation(int $ref, Request $request, TVARepository $tVARepository, PayementRepository $payementRepository, PayeRepository $payeRepository, TransportRepository $transportRepository, RemiseRepository $remiseRepository)
+    public function refacturation(int $ref, CautionRepository $cautionRepository, Request $request, TVARepository $tVARepository, PayementRepository $payementRepository, PayeRepository $payeRepository, TransportRepository $transportRepository, RemiseRepository $remiseRepository)
     {
         $paye = new Paye();
         $trans = new Transport();
         $remi = new Remise();
+        $caut = new Caution();
+        $inde = new Indemnite();
         $form = $this->createForm(EncaissementType::class, $paye);
         $form1 = $this->createForm(TransType::class, $trans);
         $form2 = $this->createForm(RemType::class, $remi);
+        $form3 = $this->createForm(IndeType::class, $inde);
+        $form4 = $this->createForm(CautType::class, $caut);
         $form->handleRequest($request);   
         $form1->handleRequest($request);  
         $form2->handleRequest($request);    
+        $form3->handleRequest($request);    
+        $form4->handleRequest($request);    
         $reference = $ref;
         if($reference == null){
             $reference = $form1->get('reference')->getData();
@@ -249,6 +255,8 @@ class CaisseController extends AbstractController
             'form' => $form->createView(),
             'form1' => $form1->createView(),
             'form2' => $form2->createView(),
+            'form3' => $form3->createView(),
+            'form4' => $form4->createView(),
             'payes' => $payes,
             'transport' => $transp,
             'remise' => $remis,
