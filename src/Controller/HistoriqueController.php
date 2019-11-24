@@ -57,16 +57,18 @@ class HistoriqueController extends AbstractController
         $sheet->setCellValue('A1', 'Reference');
         $sheet->setCellValue('B1', 'Date Commande');
         $sheet->setCellValue('C1', 'Client');
-        $sheet->setCellValue('D1', 'Date Sortie Prévue');
-        $sheet->setCellValue('E1', 'Date Sortie Effectif');
-        $sheet->setCellValue('F1', 'Date Retour Prévue');
-        $sheet->setCellValue('G1', 'Date Retour Effectif');
-        $sheet->setCellValue('H1', 'Nombre Jour');
-        $sheet->setCellValue('I1', 'Saisie Commande');
-        $sheet->setCellValue('J1', 'Mouvement');
-        $sheet->setCellValue('K1', 'Sortie Commande');
-        $sheet->setCellValue('L1', 'Retour Commande');
-        $sheet->setCellValue('M1', 'Commentaire');
+        $sheet->setCellValue('D1', 'Article');
+        $sheet->setCellValue('E1', 'Quantité');
+        $sheet->setCellValue('F1', 'Date Sortie Prévue');
+        $sheet->setCellValue('G1', 'Date Sortie Effectif');
+        $sheet->setCellValue('H1', 'Date Retour Prévue');
+        $sheet->setCellValue('I1', 'Date Retour Effectif');
+        $sheet->setCellValue('J1', 'Nombre Jour');
+        $sheet->setCellValue('K1', 'Saisie Commande');
+        $sheet->setCellValue('L1', 'Mouvement');
+        $sheet->setCellValue('M1', 'Sortie Commande');
+        $sheet->setCellValue('N1', 'Retour Commande');
+        $sheet->setCellValue('O1', 'Commentaire');
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('B1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('C1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
@@ -80,6 +82,8 @@ class HistoriqueController extends AbstractController
         $sheet->getStyle('K1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('L1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('M1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('N1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('O1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A1')->getFont()->setBold(true);
         $sheet->getStyle('B1')->getFont()->setBold(true);
         $sheet->getStyle('C1')->getFont()->setBold(true);
@@ -93,24 +97,28 @@ class HistoriqueController extends AbstractController
         $sheet->getStyle('K1')->getFont()->setBold(true);
         $sheet->getStyle('L1')->getFont()->setBold(true);
         $sheet->getStyle('M1')->getFont()->setBold(true);
+        $sheet->getStyle('N1')->getFont()->setBold(true);
+        $sheet->getStyle('O1')->getFont()->setBold(true);
         $sheet->setTitle("Historique");
-        $hitoriques = $stockRepository->findHistorique();
+        $hitoriques = $stockRepository->findHistoriqueExcel();
         $i = 1;
         foreach($hitoriques as $hist){
             $i++;
             $sheet->setCellValue('A'.$i, $hist->getReference(), \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC);
             $sheet->setCellValue('B'.$i, $hist->getDateCommande());
             $sheet->setCellValue('C'.$i, $hist->getClient());            
-            $sheet->setCellValue('D'.$i, $hist->getDateSortiePrevue());            
-            $sheet->setCellValue('E'.$i, $hist->getDateSortieEffectif());            
-            $sheet->setCellValue('F'.$i, $hist->getDateRetourPrevu());            
-            $sheet->setCellValue('G'.$i, $hist->getDateRetourEffectif());            
-            $sheet->setCellValue('H'.$i, $hist->getNbJour());            
-            $sheet->setCellValue('I'.$i, $hist->getUser());            
-            $sheet->setCellValue('J'.$i, $hist->getMouvement());            
-            $sheet->setCellValue('K'.$i, $hist->getUserSortie());            
-            $sheet->setCellValue('L'.$i, $hist->getUserRetour());            
-            $sheet->setCellValue('M'.$i, $hist->getCommentaire());            
+            $sheet->setCellValue('D'.$i, $hist->getArticle()->getDesignation());    
+            $sheet->setCellValue('E'.$i, $hist->getQuantite());         
+            $sheet->setCellValue('F'.$i, $hist->getDateSortiePrevue());            
+            $sheet->setCellValue('G'.$i, $hist->getDateSortieEffectif());            
+            $sheet->setCellValue('H'.$i, $hist->getDateRetourPrevu());            
+            $sheet->setCellValue('I'.$i, $hist->getDateRetourEffectif());            
+            $sheet->setCellValue('J'.$i, $hist->getNbJour());            
+            $sheet->setCellValue('K'.$i, $hist->getUser());            
+            $sheet->setCellValue('L'.$i, $hist->getMouvement());            
+            $sheet->setCellValue('M'.$i, $hist->getUserSortie());            
+            $sheet->setCellValue('N'.$i, $hist->getUserRetour());            
+            $sheet->setCellValue('O'.$i, $hist->getCommentaire());            
             $sheet->getStyle('A'.$i)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER);
         }
         $sheet->getStyle('A')->getNumberFormat();
@@ -127,6 +135,8 @@ class HistoriqueController extends AbstractController
         $sheet->getColumnDimension('K')->setAutoSize(true);
         $sheet->getColumnDimension('L')->setAutoSize(true);
         $sheet->getColumnDimension('M')->setAutoSize(true);
+        $sheet->getColumnDimension('M')->setAutoSize(true);
+        $sheet->getColumnDimension('O')->setAutoSize(true);
         // Create your Office 2007 Excel (XLSX Format)
         $writer = new Xlsx($spreadsheet);
         

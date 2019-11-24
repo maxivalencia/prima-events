@@ -131,6 +131,21 @@ class StockRepository extends ServiceEntityRepository
     /**
      * @return Stock[] Returns an array of Stock objects
      */
+    public function findHistoriqueExcel()
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.client IS NOT NULL')
+            //->groupBy('s.reference')
+            ->orderBy('s.id', 'DESC')
+            //->setParameter('val1', null)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Stock[] Returns an array of Stock objects
+     */
     public function findHistoriqueDetails($value)
     {
         return $this->createQueryBuilder('s')
