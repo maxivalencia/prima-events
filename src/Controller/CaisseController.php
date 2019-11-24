@@ -46,10 +46,20 @@ class CaisseController extends AbstractController
     /**
      * @Route("/caisse", name="caisse")
      */
-    public function index()
+    public function index(PayeRepository $payeRepository, PayementRepository $payementRepository)
     {
+        $en_caisse = 0;
+        $payejournaliere = $payeRepository->findtotal();
+        foreach($payejournaliere as $journaliere){
+            if($journaliere->getPayement()->getMode() == $payementRepository->findOneBy(["id" => 1])->getMode()){
+                $en_caisse += $journaliere->getMontant();
+            }else{
+                $en_caisse -= $journaliere->getMontant();
+            }
+        }
         return $this->render('caisse/index.html.twig', [
             'controller_name' => 'CaisseController',
+            'caisse' => $en_caisse,
         ]);
     }
 

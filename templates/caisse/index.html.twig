@@ -8,6 +8,7 @@
         <h1>Action de caisse</h1>
     </div>
     <hr>
+        <h2>somme en caisse : {{ caisse|number_format(0, ',', '.') }}</h2>
 
     
         <a href="{{ path('encaissement') }}" class="btn btn-success">Encaissement</a>

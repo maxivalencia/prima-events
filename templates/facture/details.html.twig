@@ -5,7 +5,7 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <h1>Liste de commande</h1>
+        <h1>Liste de commande {{ client }}</h1>
     </div>
     <hr>
 
@@ -32,9 +32,9 @@
                     {% set leftDays = difference.days %}
                     {{ leftDays  }}
                 </td>
-                <td>{{ (stock.article.prixunitaire)|number_format(2, ',', '.') }} Ar</td>
-                <td>{{ (stock.remise)|number_format(2, ',', '.') }} Ar</td>
-                <td>{{ (stock.quantite * stock.article.prixunitaire)|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ (stock.article.prixunitaire)|number_format(0, ',', '.') }} Ar</td>
+                <td>{{ (stock.remise)|number_format(0, ',', '.') }} Ar</td>
+                <td>{{ (stock.quantite * stock.article.prixunitaire)|number_format(0, ',', '.') }} Ar</td>
             </tr>
         {% else %}
             <tr>
@@ -44,44 +44,46 @@
             {% if caution != 0 %}
             <tr>
                 <td colspan="6" align="right">Caution</td>
-                <td>{{ caution|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ caution|number_format(0, ',', '.') }} Ar</td>
             </tr>
             {% endif %}
             <tr>
                 <td colspan="6" align="right">Total HT</td>
-                <td>{{ total|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ total|number_format(0, ',', '.') }} Ar</td>
             </tr>
             {% if tvaCollecter != 0 %}
             <tr>
                 <td colspan="6" align="right">TVA</td>
-                <td>{{ tvaCollecter|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ tvaCollecter|number_format(0, ',', '.') }} Ar</td>
             </tr>
             {% endif %}
+            {% if ttc != 0 %}
             <tr>
                 <td colspan="6" align="right">TTC</td>
-                <td>{{ ttc|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ ttc|number_format(0, ',', '.') }} Ar</td>
             </tr>
+            {% endif %}            
             {% if transport != 0 %}
             <tr>
                 <td colspan="6" align="right">Transport</td>
-                <td>{{ transport|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ transport|number_format(0, ',', '.') }} Ar</td>
             </tr>
             {% endif %}
             {% if remise != 0 %}
             <tr>
                 <td colspan="6" align="right">Remise</td>
-                <td>{{ remise|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ remise|number_format(0, ',', '.') }} Ar</td>
             </tr>
             {% endif %}
             {% if indemnite != 0 %}
                 <tr>
                     <td colspan="6" align="right">Indeminté</td>
-                    <td>{{ indemnite|number_format(2, ',', '.') }} Ar</td>
+                    <td>{{ indemnite|number_format(0, ',', '.') }} Ar</td>
                 </tr>
             {% endif %}
             <tr>
                 <td colspan="6" align="right">Net à Payer</td>
-                <td>{{ netapayer|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ netapayer|number_format(0, ',', '.') }} Ar</td>
             </tr>
         </tbody>
     </table>

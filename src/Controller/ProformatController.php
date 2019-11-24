@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Stock;
 use App\Form\StockType;
 use App\Entity\Paye;
@@ -20,6 +21,7 @@ use App\Repository\PayeRepository;
 use App\Repository\TVARepository;
 use App\Repository\TransportRepository;
 use App\Repository\RemiseRepository;
+use App\Repository\TypeClientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +30,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use DateTime;
+use Proxies\__CG__\App\Entity\TypeClient;
 
 class ProformatController extends AbstractController
 {
@@ -49,7 +52,7 @@ class ProformatController extends AbstractController
     /**
      * @Route("/proformat/{ref}", name="proformat_details")
      */
-    public function proformatDetails(int $ref, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
+    public function proformatDetails(int $ref, TypeClientRepository $typeClientRepository, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
     {
         $stoks  = $stockRepository->findBy(["reference" => $ref]);
         $indemnites = $indemniteRepository->findBy(["refence" => $ref]);
@@ -62,6 +65,8 @@ class ProformatController extends AbstractController
         $transport = 0;
         $caution = 0;
         $total = 0;
+        $client = '';
+        $typeclient = new TypeClient();
         foreach($indemnites as $inde){
             $indemnite += $inde->getPrix();
         }
@@ -76,10 +81,23 @@ class ProformatController extends AbstractController
         }
         foreach($stoks as $sto){
             $total = $total + (($sto->getArticle()->getPrixUnitaire() * $sto->getQuantite()) - $sto->getRemise());
+            $client = $sto->getClient();
+            $typeclient = $sto->getClient();
         }
-        $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
+        $clientType = $typeClientRepository->findOneBy(["id" => 1]);
+        $tvaCollecter = 0;
+        if(strcmp($typeclient->getTypeClient(), $clientType->getType()) == 0){
+            $tvaCollecter = 0;
+        }else{
+            $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
+        }
         $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
-        $ttc = $tvaCollecter + $total;
+        $ttc = 0;
+        if(strcmp($typeclient->getTypeClient(), $clientType->getType()) != 0){
+            $ttc = $tvaCollecter + $total;
+        }else{
+            $ttc = 0;
+        }
         return $this->render('proformat/details.html.twig', [
             'stocks' => $stoks,
             'reference' => $ref,
@@ -90,6 +108,7 @@ class ProformatController extends AbstractController
             'total' => $total,
             'tvaCollecter' => $tvaCollecter,
             'ttc' => $ttc,
+            'client' => $client,
             'netapayer' => $netapayer,
         ]);
     }
@@ -117,7 +136,7 @@ class ProformatController extends AbstractController
     /**
      * @Route("/proformat/{ref}/pdf", name="proformat_pdf")
      */
-    public function proformatPdf(int $ref, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
+    public function proformatPdf(int $ref, TypeClientRepository $typeClientRepository, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
     {
         $pdfOption = new Options();
         $pdfOption->set('defaultFont', 'Arial');
@@ -136,6 +155,7 @@ class ProformatController extends AbstractController
         $caution = 0;
         $total = 0;
         $client = '';
+        $typeclient = new TypeClient();
         foreach($indemnites as $inde){
             $indemnite += $inde->getPrix();
         }
@@ -151,10 +171,25 @@ class ProformatController extends AbstractController
         foreach($stoks as $sto){
             $total = $total + (($sto->getArticle()->getPrixUnitaire() * $sto->getQuantite()) - $sto->getRemise());
             $client = $sto->getClient()->getNom();
+            $typeclient = $sto->getClient();
         }
-        $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
+        /* $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
         $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
-        $ttc = $tvaCollecter + $total;
+        $ttc = $tvaCollecter + $total; */
+        $clientType = $typeClientRepository->findOneBy(["id" => 1]);
+        $tvaCollecter = 0;
+        if(strcmp($typeclient->getTypeClient(), $clientType->getType()) == 0){
+            $tvaCollecter = 0;
+        }else{
+            $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
+        }
+        $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
+        $ttc = 0;
+        if(strcmp($typeclient->getTypeClient(), $clientType->getType()) != 0){
+            $ttc = $tvaCollecter + $total;
+        }else{
+            $ttc = 0;
+        }
         
         //$paye = $payeRepository->findOneBy(["refstock" => $reference]);
         //$trans = $transportRepository->findOneBy(["reference" => $reference]);        

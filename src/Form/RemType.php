@@ -19,7 +19,9 @@ class RemType extends AbstractType
         $results = implode("", $krr);
         $builder
             ->add('reference')//, HiddenType::class)
-            ->add('taux')
+            ->add('taux', null, [
+                'label' => 'Prix',
+            ])
         ;
     }
 

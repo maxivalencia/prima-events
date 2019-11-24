@@ -98,15 +98,7 @@
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
-                {% endif %}  
-                {% if is_granted('ROLE_CAISSE') %}              
-                <li class="nav-item">
-                <a class="nav-link" href="{{ path('caisse') }}">
-                    <span class="menu-title">Caisse</span>
-                    <i class="icon-speedometer menu-icon"></i>
-                </a>
-                </li>
-                {% endif %}                
+                {% endif %}                  
                 {% if is_granted('ROLE_COMMERCIALE') or is_granted('ROLE_CAISSE') %}
                 <li class="nav-item">
                 <a class="nav-link" href="{{ path('facture') }}">
@@ -114,7 +106,15 @@
                     <i class="icon-speedometer menu-icon"></i>
                 </a>
                 </li>
-                {% endif %}       
+                {% endif %} 
+                {% if is_granted('ROLE_CAISSE') %}              
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('caisse') }}">
+                    <span class="menu-title">Caisse</span>
+                    <i class="icon-speedometer menu-icon"></i>
+                </a>
+                </li>
+                {% endif %}      
                 {% if is_granted('ROLE_STOCK') %}                       
                 <li class="nav-item">
                 <a class="nav-link" href="{{ path('sortie_effectif') }}">

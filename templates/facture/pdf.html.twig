@@ -106,9 +106,9 @@
                             {{ leftDays  }}
                         </td>
                         {% if typeclient != typeclientreference %}
-                        <td align="right">{{ (stock.article.prixunitaire)|number_format(2, ',', '.') }} Ar</td>
-                        <td align="right">{{ (stock.remise)|number_format(2, ',', '.') }} Ar</td>
-                        <td align="right">{{ (stock.quantite * stock.article.prixunitaire)|number_format(2, ',', '.') }} Ar</td>
+                        <td align="right">{{ (stock.article.prixunitaire)|number_format(0, ',', '.') }} Ar</td>
+                        <td align="right">{{ (stock.remise)|number_format(0, ',', '.') }} Ar</td>
+                        <td align="right">{{ (stock.quantite * stock.article.prixunitaire)|number_format(0, ',', '.') }} Ar</td>
                         {% endif %}
                         {% set Total = Total + (stock.quantite * stock.article.prixunitaire) %}
                     </tr>
@@ -121,44 +121,46 @@
                     {% if caution != 0 %}
                     <tr>
                         <td colspan="6" align="right">Caution</td>
-                        <td>{{ caution|number_format(2, ',', '.') }}  Ar</td>
+                        <td>{{ caution|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                     {% endif %}
                     <tr>
                         <td colspan="6" align="right">Total HT</td>
-                        <td>{{ total|number_format(2, ',', '.') }}</td>
+                        <td>{{ total|number_format(0, ',', '.') }}</td>
                     </tr>
                     {% if tvaCollecter != 0 %}
                     <tr>
                         <td colspan="6" align="right">TVA</td>
-                        <td>{{ tvaCollecter|number_format(2, ',', '.') }}  Ar</td>
+                        <td>{{ tvaCollecter|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                     {% endif %}
                     {% if transport != 0 %}
                     <tr>
                         <td colspan="6" align="right">Transport</td>
-                        <td>{{ transport|number_format(2, ',', '.') }}  Ar</td>
+                        <td>{{ transport|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                     {% endif %}
+                    {% if ttc != 0 %}
                     <tr>
                         <td colspan="6" align="right">TTC</td>
-                        <td>{{ ttc|number_format(2, ',', '.') }}  Ar</td>
+                        <td>{{ ttc|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
+                    {% endif %}                    
                     {% if remise != 0 %}
                     <tr>
                         <td colspan="6" align="right">Remise</td>
-                        <td>{{ remise|number_format(2, ',', '.') }}  Ar</td>
+                        <td>{{ remise|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                     {% endif %}
                     {% if indemnite != 0 %}
                         <tr>
                             <td colspan="6" align="right">Indeminté</td>
-                            <td>{{ indemnite|number_format(2, ',', '.') }}  Ar</td>
+                            <td>{{ indemnite|number_format(0, ',', '.') }}  Ar</td>
                         </tr>
                     {% endif %}
                     <tr>
                         <td colspan="6" align="right">Net à Payer</td>
-                        <td>{{ netapayer|number_format(2, ',', '.') }}  Ar</td>
+                        <td>{{ netapayer|number_format(0, ',', '.') }}  Ar</td>
                     </tr>  
                 {% endif %} 
                 </tbody>

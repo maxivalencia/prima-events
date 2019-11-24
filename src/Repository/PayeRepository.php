@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Paye;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use DateTime;
+//use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @method Paye|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,6 +34,23 @@ class PayeRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return Paye[] Returns an array of Paye objects
+     */
+    public function findtotal()
+    {
+        $effectiveDate = new DateTime();
+        return $this->createQueryBuilder('p')
+            ->where('p.datePayement = :val1')
+            //->groupBy('p.refstock')
+            //->orderBy('p.id', 'DESC')
+            ->setParameter('val1', $effectiveDate->format('Y-m-d'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
     // /**
     //  * @return Paye[] Returns an array of Paye objects

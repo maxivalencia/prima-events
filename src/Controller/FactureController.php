@@ -6,6 +6,7 @@ use App\Entity\Stock;
 use App\Form\StockType;
 use App\Entity\Paye;
 use App\Entity\Transport;
+use App\Entity\TypeClient;
 use App\Entity\Remise;
 use App\Form\TransportType;
 use App\Form\EncaissementType;
@@ -62,7 +63,7 @@ class FactureController extends AbstractController
     /**
      * @Route("/facture/{ref}", name="facture_details")
      */
-    public function factureDetails(int $ref, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
+    public function factureDetails(int $ref, TypeClientRepository $typeClientRepository, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
     {
         $stoks  = $stockRepository->findBy(["reference" => $ref]);
         $indemnites = $indemniteRepository->findBy(["refence" => $ref]);
@@ -75,6 +76,8 @@ class FactureController extends AbstractController
         $transport = 0;
         $caution = 0;
         $total = 0;
+        $client = '';
+        $typeclient = new TypeClient();
         foreach($indemnites as $inde){
             $indemnite += $inde->getPrix();
         }
@@ -89,10 +92,26 @@ class FactureController extends AbstractController
         }
         foreach($stoks as $sto){
             $total = $total + (($sto->getArticle()->getPrixUnitaire() * $sto->getQuantite()) - $sto->getRemise());
+            $client = $sto->getClient();
+            $typeclient = $sto->getClient();
         }
-        $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
+        /* $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
         $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
-        $ttc = $tvaCollecter + $total;
+        $ttc = $tvaCollecter + $total; */
+        $clientType = $typeClientRepository->findOneBy(["id" => 1]);
+        $tvaCollecter = 0;
+        if(strcmp($typeclient->getTypeClient(), $clientType->getType()) == 0){
+            $tvaCollecter = 0;
+        }else{
+            $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
+        }
+        $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
+        $ttc = 0;
+        if(strcmp($typeclient->getTypeClient(), $clientType->getType()) != 0){
+            $ttc = $tvaCollecter + $total;
+        }else{
+            $ttc = 0;
+        }
         return $this->render('facture/details.html.twig', [
             'stocks' => $stoks,
             'reference' => $ref,
@@ -103,6 +122,7 @@ class FactureController extends AbstractController
             'total' => $total,
             'tvaCollecter' => $tvaCollecter,
             'ttc' => $ttc,
+            'client' => $client,
             'netapayer' => $netapayer,
         ]);
     }
@@ -131,6 +151,7 @@ class FactureController extends AbstractController
         $type_client = '';
         $type_client_reference = $typeClientRepository->findOneBy(["id" => 3]);
         $client = '';
+        $typeclient = new TypeClient();
         foreach($indemnites as $inde){
             $indemnite += $inde->getPrix();
         }
@@ -147,10 +168,25 @@ class FactureController extends AbstractController
             $total = $total + (($sto->getArticle()->getPrixUnitaire() * $sto->getQuantite()) - $sto->getRemise());
             $type_client = $sto->getClient()->getTypeClient();
             $client = $sto->getClient()->getNom();
+            $typeclient = $sto->getClient();
         }
-        $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
+        /* $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
         $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
-        $ttc = $tvaCollecter + $total;
+        $ttc = $tvaCollecter + $total; */
+        $clientType = $typeClientRepository->findOneBy(["id" => 1]);
+        $tvaCollecter = 0;
+        if(strcmp($typeclient->getTypeClient(), $clientType->getType()) == 0){
+            $tvaCollecter = 0;
+        }else{
+            $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
+        }
+        $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
+        $ttc = 0;
+        if(strcmp($typeclient->getTypeClient(), $clientType->getType()) != 0){
+            $ttc = $tvaCollecter + $total;
+        }else{
+            $ttc = 0;
+        }
         //$trans = $transportRepository->findOneBy(["reference" => $reference]);        
         //$remi = $remiseRepository->findOneBy(["reference" => $reference]);
         $logo = $this->getParameter('image').'/LOGOFINAL.GIF';
