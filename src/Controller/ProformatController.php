@@ -107,7 +107,7 @@ class ProformatController extends AbstractController
             $entityManager->persist($sto);
         }
         $entityManager->flush();
-        return $this->redirectToRoute('caisse');
+        return $this->redirectToRoute('facture');
         /* return $this->render('proformat/details.html.twig', [
             'stocks' => $stoks,
             'reference' => $ref,

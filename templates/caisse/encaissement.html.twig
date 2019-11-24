@@ -29,11 +29,11 @@
             </tr>
         </thead>
         <tbody>        	
-        {% set Total = 0 %}
-        {% set netapayer = 0 %}
+        {# {% set Total = 0 %}
+        {% set netapayer = 0 %} #}
         {% for paye in payes %}
-            {% set Total = Total + paye.montant %}
-            {% set netapayer = netapayer + paye.montant %}
+            {# {% set Total = Total + paye.montant %}
+            {% set netapayer = netapayer + paye.montant %} #}
             <tr>
                 <td>{{ paye.refstock }}</td>
                 <td>{{ paye.datePayement ? paye.datePayement|date('Y-m-d') : '' }}</td>
@@ -49,26 +49,40 @@
         {% endfor %}
             <tr>                
                 <td colspan="5" align="right">Total des commandes : </td>
-                <td>{{ (Total)|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ total|number_format(2, ',', '.') }} Ar</td>
             </tr>
-        {% if transport is not null and transport is defined %}
-            {% set netapayer = netapayer + transport.prix %}
+        {# {% set Caution = Total / 2 %}
+        {% set netapayer = netapayer + Caution %} #}
             <tr>                
-                <td colspan="5" align="right">Transport : </td>
-                <td>{{ (transport.prix)|number_format(2, ',', '.') }} Ar</td>
+                <td colspan="5" align="right">TVA : </td>
+                <td>{{ tva|number_format(2, ',', '.') }} Ar</td>
             </tr>
-        {% endif %}
-        {% set Caution = Total / 2 %}
-        {% set netapayer = netapayer + Caution %}
+            {% if caution is not null and caution is defined and caution > 0 %}
+                
             <tr>                
                 <td colspan="5" align="right">Caution : </td>
-                <td>{{ Caution|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ caution|number_format(2, ',', '.') }} Ar</td>
             </tr>
-        {% if remise is not null and remise is defined %}
-            {% set netapayer = netapayer - (Total * remise.taux /100) %}
+            {% endif %}
+        {% if transport is not null and transport is defined and transport > 0 %}
+            {# {% set netapayer = netapayer + transport.prix %} #}
+            <tr>                
+                <td colspan="5" align="right">Transport : </td>
+                <td>{{ transport|number_format(2, ',', '.') }} Ar</td>
+            </tr>
+        {% endif %}
+        {% if remise is not null and remise is defined and remise > 0 %}
+            {# {% set netapayer = netapayer - (remise.taux /100) %} #}
             <tr>                
                 <td colspan="5" align="right">Remise : </td>
-                <td>{{ (Total * remise.taux / 100)|number_format(2, ',', '.') }} Ar</td>
+                <td>{{ (remise)|number_format(2, ',', '.') }} Ar</td>
+            </tr>
+        {% endif %}
+        {% if indemnite is not null and indemnite is defined and indemnite > 0 %}
+            {# {% set netapayer = netapayer - (remise.taux /100) %} #}
+            <tr>                
+                <td colspan="5" align="right">Indemnité : </td>
+                <td>{{ (indemnite)|number_format(2, ',', '.') }} Ar</td>
             </tr>
         {% endif %}
             <tr>                

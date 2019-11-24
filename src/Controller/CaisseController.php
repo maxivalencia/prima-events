@@ -57,7 +57,7 @@ class CaisseController extends AbstractController
     /**
      * @Route("/encaissement", name="encaissement", methods={"GET", "POST"})
      */
-    public function encaissement(Request $request, TVARepository $tVARepository, PayementRepository $payementRepository, PayeRepository $payeRepository, TransportRepository $transportRepository, RemiseRepository $remiseRepository, CautionRepository $cautionRepository, IndemniteRepository $indemniteRepository)
+    public function encaissement(Request $request, StockRepository $stockRepository, TVARepository $tVARepository, PayementRepository $payementRepository, PayeRepository $payeRepository, TransportRepository $transportRepository, RemiseRepository $remiseRepository, CautionRepository $cautionRepository, IndemniteRepository $indemniteRepository)
     {
         $paye = new Paye();
         $trans = new Transport();
@@ -132,10 +132,42 @@ class CaisseController extends AbstractController
         $paye = $payeRepository->findOneBy(["refstock" => $reference]);
         $trans = $transportRepository->findOneBy(["reference" => $reference]);        
         $remi = $remiseRepository->findOneBy(["reference" => $reference]);
+        $caut = $cautionRepository->findOneBy(["reference" => $reference]);
         
         $payes = $payeRepository->findBy(["refstock" => $reference]);
         $transp = $transportRepository->findOneBy(["reference" => $reference]);
         $remis = $remiseRepository->findOneBy(["reference" => $reference]);
+
+        $ref = $reference;
+        $stoks  = $stockRepository->findBy(["reference" => $ref]);
+        $indemnites = $indemniteRepository->findBy(["refence" => $ref]);
+        $remises = $remiseRepository->findBy(["reference" => $ref]);
+        $transports = $transportRepository->findBy(["reference" => $ref]);
+        $cautions = $cautionRepository->findBy(["reference" => $ref]);
+        $tva = $tVARepository->findOneBy(["id" => 1]);
+        $indemnite = 0;
+        $remise = 0;
+        $transport = 0;
+        $caution = 0;
+        $total = 0;
+        foreach($indemnites as $inde){
+            $indemnite += $inde->getPrix();
+        }
+        foreach($remises as $remi){
+            $remise += $remi->getTaux();
+        }
+        foreach($transports as $trans){
+            $transport += $trans->getPrix();
+        }
+        foreach($cautions as $caut){
+            $caution += $caut->getPrix();
+        }
+        foreach($stoks as $sto){
+            $total = $total + (($sto->getArticle()->getPrixUnitaire() * $sto->getQuantite()) - $sto->getRemise());
+        }
+        $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
+        $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
+        $ttc = $tvaCollecter + $total;
         return $this->render('caisse/encaissement.html.twig', [
             'controller_name' => 'CaisseController',
             'form' => $form->createView(),
@@ -144,9 +176,15 @@ class CaisseController extends AbstractController
             'form3' => $form3->createView(),
             'form4' => $form4->createView(),
             'payes' => $payes,
-            'transport' => $transp,
-            'remise' => $remis,
+            'transport' => $transport,
+            'remise' => $remise,
             'reference' => $reference,
+            'caution' => $caution,
+            'indemnite' => $indemnite,
+            'netapayer' => $netapayer,
+            'ttc' => $ttc,
+            'total' => $total,
+            'tva' => $tvaCollecter,
         ]);
     }
 
