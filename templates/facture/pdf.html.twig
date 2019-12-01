@@ -80,13 +80,14 @@
             <table class="tableau">
                 <thead>
                     <tr>
-                        <th width="150px">Reférence</th>
-                        <th width="200px">Désignation</th>
+                        <th width="125px">Reférence</th>
+                        <th width="125px">Désignation</th>
                         <th width="50px">Quantite</th>
                         <th width="50px">NB Jour</th>
                         {% if typeclient != typeclientreference %}
-                        <th width="100px">P.U</th>
-                        <th width="50px">Remise</th>
+                        <th width="75px">P.U</th>
+                        <th width="75px">Prix de casse</th>
+                        <th width="75px">Remise</th>
                         <th width="100px">Montant</th>
                         {% endif %}
                     </tr>
@@ -107,6 +108,7 @@
                         </td>
                         {% if typeclient != typeclientreference %}
                         <td align="right">{{ (stock.article.prixunitaire)|number_format(0, ',', '.') }} Ar</td>
+                        <td align="right">{{ (stock.article.prixcasse)|number_format(0, ',', '.') }} Ar</td>
                         <td align="right">{{ (stock.remise)|number_format(0, ',', '.') }} Ar</td>
                         <td align="right">{{ (stock.quantite * stock.article.prixunitaire)|number_format(0, ',', '.') }} Ar</td>
                         {% endif %}
@@ -120,54 +122,54 @@
                 {% if typeclient != typeclientreference %}
                     {% if caution != 0 %}
                     <tr>
-                        <td colspan="6" align="right">Caution</td>
+                        <td colspan="7" align="right">Caution</td>
                         <td>{{ caution|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                     {% endif %}
                     <tr>
-                        <td colspan="6" align="right">Total HT</td>
+                        <td colspan="7" align="right">Total HT</td>
                         <td>{{ total|number_format(0, ',', '.') }}</td>
                     </tr>
                     {% if tvaCollecter != 0 %}
                     <tr>
-                        <td colspan="6" align="right">TVA</td>
+                        <td colspan="7" align="right">TVA</td>
                         <td>{{ tvaCollecter|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                     {% endif %}
                     {% if transport != 0 %}
                     <tr>
-                        <td colspan="6" align="right">Transport</td>
+                        <td colspan="7" align="right">Transport</td>
                         <td>{{ transport|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                     {% endif %}
                     {% if ttc != 0 %}
                     <tr>
-                        <td colspan="6" align="right">TTC</td>
+                        <td colspan="7" align="right">TTC</td>
                         <td>{{ ttc|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                     {% endif %}                    
                     {% if remise != 0 %}
                     <tr>
-                        <td colspan="6" align="right">Remise</td>
+                        <td colspan="7" align="right">Remise</td>
                         <td>{{ remise|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                     {% endif %}
                     {% if indemnite != 0 %}
                         <tr>
-                            <td colspan="6" align="right">Indeminté</td>
+                            <td colspan="7" align="right">Indeminté</td>
                             <td>{{ indemnite|number_format(0, ',', '.') }}  Ar</td>
                         </tr>
                     {% endif %}
                     <tr>
-                        <td colspan="6" align="right">Net à Payer</td>
+                        <td colspan="7" align="right">Net à Payer</td>
                         <td>{{ netapayer|number_format(0, ',', '.') }}  Ar</td>
                     </tr>  
                     <tr>
-                        <td colspan="6" align="right">Payer</td>
+                        <td colspan="7" align="right">Payer</td>
                         <td>{{ payer|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                     <tr>
-                        <td colspan="6" align="right">Reste</td>
+                        <td colspan="7" align="right">Reste</td>
                         <td>{{ reste|number_format(0, ',', '.') }}  Ar</td>
                     </tr>
                 {% endif %} 
@@ -183,6 +185,7 @@
             <div>Date d'évènement : {{ dateevenement|date('d F Y')  }}</div>
             <div>Date d'acquisition : {{ dateacquisition|date('d F Y')  }}</div>
             <div>Date de retour prévu : {{ dateretour|date('d F Y')  }}</div>
+            <div><strong>Arrété la présente facture à la somme de : {{ totallettre }} Ariary</strong></div>
         </div>
         <br><br>
         <div class="row">

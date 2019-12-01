@@ -6,6 +6,8 @@ use App\Entity\Stock;
 use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,7 +30,12 @@ class SortieType extends AbstractType
             ])
             ->add('quantite')
             ->add('client')
-            ->add('date_evenement')
+            ->add('date_evenement', Null, [
+                'label' => 'Date de l\'évènement',
+                /* 'attr' => [
+                    'class' => 'datepicker',
+                ], */
+            ])
             //->add('dateCommande')
             ->add('dateSortiePrevue')
             //->add('dateSortieEffectif')

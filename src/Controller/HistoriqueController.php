@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Stock;
 use App\Form\StockType;
+use App\Repository\PayeRepository;
 use App\Repository\StockRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -48,7 +49,7 @@ class HistoriqueController extends AbstractController
     /**
      * @Route("/historiqueexcel", name="historique_excel")
      */
-    public function historiqueExcel(StockRepository $stockRepository)
+    public function historiqueExcel(StockRepository $stockRepository, PayeRepository $payeRepository)
     {
         $spreadsheet = new Spreadsheet();
         
@@ -135,9 +136,51 @@ class HistoriqueController extends AbstractController
         $sheet->getColumnDimension('K')->setAutoSize(true);
         $sheet->getColumnDimension('L')->setAutoSize(true);
         $sheet->getColumnDimension('M')->setAutoSize(true);
-        $sheet->getColumnDimension('M')->setAutoSize(true);
+        $sheet->getColumnDimension('N')->setAutoSize(true);
         $sheet->getColumnDimension('O')->setAutoSize(true);
         // Create your Office 2007 Excel (XLSX Format)
+
+        $sheet2 = $spreadsheet->createSheet();
+        //$sheet->setActiveSheetIndex(1);
+        $sheet2->setTitle("Payement");
+        $sheet2->setCellValue('A1', 'Reference');
+        $sheet2->setCellValue('B1', 'Date payement');
+        $sheet2->setCellValue('C1', 'Montant');
+        $sheet2->setCellValue('D1', 'Motif');
+        $sheet2->setCellValue('E1', 'Type de Mouvement');
+        $sheet2->setCellValue('F1', 'Moyen de Payement');
+        $sheet2->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet2->getStyle('B1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet2->getStyle('C1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet2->getStyle('D1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet2->getStyle('E1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet2->getStyle('F1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet2->getStyle('A1')->getFont()->setBold(true);
+        $sheet2->getStyle('B1')->getFont()->setBold(true);
+        $sheet2->getStyle('C1')->getFont()->setBold(true);
+        $sheet2->getStyle('D1')->getFont()->setBold(true);
+        $sheet2->getStyle('E1')->getFont()->setBold(true);
+        $sheet2->getStyle('F1')->getFont()->setBold(true);
+        $hitoriquepaye = $payeRepository->findHistoriqueExcel();
+        $j = 1;
+        foreach($hitoriquepaye as $hist){
+            $j++;
+            $sheet2->setCellValue('A'.$j, $hist->getRefstock(), \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC);
+            $sheet2->setCellValue('B'.$j, $hist->getDatePayement());
+            $sheet2->setCellValue('C'.$j, $hist->getMontant());            
+            $sheet2->setCellValue('D'.$j, $hist->getMotifPayement());    
+            $sheet2->setCellValue('E'.$j, $hist->getPayement());
+            $sheet2->setCellValue('F'.$j, $hist->getTypePayement());            
+            $sheet2->getStyle('A'.$j)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER);
+        }        
+        $sheet2->getStyle('A')->getNumberFormat();
+        $sheet2->getColumnDimension('A')->setAutoSize(true);
+        $sheet2->getColumnDimension('B')->setAutoSize(true);
+        $sheet2->getColumnDimension('C')->setAutoSize(true);
+        $sheet2->getColumnDimension('D')->setAutoSize(true);
+        $sheet2->getColumnDimension('E')->setAutoSize(true);
+        $sheet2->getColumnDimension('F')->setAutoSize(true);
+
         $writer = new Xlsx($spreadsheet);
         
         // Create a Temporary file in the system

@@ -51,6 +51,22 @@ class PayeRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Paye[] Returns an array of Paye objects
+     */
+    public function findHistoriqueExcel()
+    {
+        //$effectiveDate = new DateTime();
+        return $this->createQueryBuilder('p')
+            //->where('p.datePayement = :val1')
+            //->groupBy('p.refstock')
+            ->orderBy('p.id', 'DESC')
+            //->setParameter('val1', $effectiveDate->format('Y-m-d'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
     // /**
     //  * @return Paye[] Returns an array of Paye objects

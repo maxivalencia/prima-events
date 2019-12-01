@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/notif.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -328,9 +329,15 @@
         <script src="/js/misc.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
         <script src="/js/notif.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <!-- endinject -->
         <!-- Custom js for this page-->
         <script src="/js/dashboard.js"></script>
+        <script>
+            $( function() {
+                $( ".datepicker" ).datepicker();
+            } );
+        </script>
         <!-- End custom js for this page-->
         {% block javascripts %}{% endblock %}
     </body>

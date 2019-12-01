@@ -128,7 +128,7 @@ class Paye
 
     public function getTypePayement()
     {
-        return $this->typePayement;
+        return $this->typepayement;
     }
 
     public function addTypePayement(TypePayement $typePayement): self
