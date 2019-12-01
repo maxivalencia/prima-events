@@ -31,6 +31,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use DateTime;
+use Symfony\Component\Validator\Constraints\Date;
 
 class FactureController extends AbstractController
 {
@@ -152,6 +153,9 @@ class FactureController extends AbstractController
         $type_client_reference = $typeClientRepository->findOneBy(["id" => 3]);
         $client = '';
         $typeclient = new TypeClient();
+        $date_evenement = new Date();
+        $date_acquisition = new Date();
+        $date_retour_prevue = new Date();
         foreach($indemnites as $inde){
             $indemnite += $inde->getPrix();
         }
@@ -169,6 +173,9 @@ class FactureController extends AbstractController
             $type_client = $sto->getClient()->getTypeClient();
             $client = $sto->getClient()->getNom();
             $typeclient = $sto->getClient();
+            $date_evenement = $sto->getDateEvenement();
+            $date_acquisition = $sto->getDateSortieEffectif();
+            $date_retour_prevue = $sto->getDateRetourPrevu();
         }
         /* $tvaCollecter = (($total - $caution) * $tva->getTva()) / 100;
         $netapayer = $total + $caution + $transport + $indemnite + $tvaCollecter - $remise;
@@ -205,6 +212,9 @@ class FactureController extends AbstractController
             'typeclient' => $type_client,
             'typeclientreference' => $type_client_reference->getType(),
             'client' => $client,
+            'dateevenement' => $date_evenement,
+            'dateacquisition' => $date_acquisition,
+            'dateretour' => $date_retour_prevue,
         ]);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portait');

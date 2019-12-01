@@ -119,6 +119,11 @@ class Stock
      */
     private $remise;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date_evenement;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -486,6 +491,18 @@ class Stock
     public function setRemise(?float $remise): self
     {
         $this->remise = $remise;
+
+        return $this;
+    }
+
+    public function getDateEvenement(): ?\DateTimeInterface
+    {
+        return $this->date_evenement;
+    }
+
+    public function setDateEvenement(?\DateTimeInterface $date_evenement): self
+    {
+        $this->date_evenement = $date_evenement;
 
         return $this;
     }

@@ -20,21 +20,19 @@
     <table class="table">
         <thead>
             <tr>
+                <th>Article</th>
                 <th>Quantite</th>
                 <th>Reference</th>
-                <th>DateCommande</th>
-                <th>DateSortiePrevue</th>
-                <th>DateRetourPrevu</th>
+                <th>Commentaire</th>
             </tr>
         </thead>
         <tbody>
         {% for stock in stocks %}
             <tr>
+                <td>{{ stock.article }}</td>
                 <td>{{ stock.quantite }}</td>
                 <td>{{ stock.reference }}</td>
-                <td>{{ stock.dateCommande ? stock.dateCommande|date('Y-m-d') : '' }}</td>
-                <td>{{ stock.dateSortiePrevue ? stock.dateSortiePrevue|date('Y-m-d') : '' }}</td>
-                <td>{{ stock.dateRetourPrevu ? stock.dateRetourPrevu|date('Y-m-d') : '' }}</td>
+                <td>{{ stock.commentaire }}</td>
             </tr>
         {% else %}
             <tr>

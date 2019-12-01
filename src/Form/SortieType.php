@@ -28,6 +28,7 @@ class SortieType extends AbstractType
             ])
             ->add('quantite')
             ->add('client')
+            ->add('date_evenement')
             //->add('dateCommande')
             ->add('dateSortiePrevue')
             //->add('dateSortieEffectif')

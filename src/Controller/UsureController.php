@@ -49,6 +49,7 @@ class UsureController extends AbstractController
             $modeRepository = $entityManager->getRepository(Mode::class);
             $mode = $modeRepository->findOneBy(["id" => 1]);
             $stock->setMode($mode);
+            $stock->setClient(null);
             $entityManager->persist($stock);
             $entityManager->flush();
 

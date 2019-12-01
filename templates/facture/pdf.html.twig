@@ -1,9 +1,9 @@
 
         <style>
             /** Define the margins of your page **/
-            @page {
-                margin: 100px 25px;
-            }
+            {# @page {
+                margin: 25px 25px;
+            } #}
             table thead tr th {
                 border: 0;
             }
@@ -46,7 +46,7 @@
 
             footer {
                 position: fixed; 
-                bottom: -60px; 
+                bottom: -30px; 
                 left: 0px; 
                 right: 0px;
                 height: 50px; 
@@ -169,6 +169,12 @@
         <div class="row" align="center">
             <div class="col-3"></div>
             <div class="col-3"></div>
+        </div>
+        <br><br>
+        <div>
+            <div>Date d'évènement : {{ dateevenement|date('d F Y')  }}</div>
+            <div>Date d'acquisition : {{ dateacquisition|date('d F Y')  }}</div>
+            <div>Date de retour prévu : {{ dateretour|date('d F Y')  }}</div>
         </div>
         <br><br>
         <div class="row">
