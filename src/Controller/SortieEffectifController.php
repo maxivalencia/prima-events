@@ -183,12 +183,23 @@ class SortieEffectifController extends AbstractController
         $responsable = $utilisateurRepository->findOneBy(["id" => $this->getUser()->getId()]);
         $client = $stockRepository->findOneBy(["reference" => $reference])->getClient()->getNom();
         $logo = $this->getParameter('image').'/LOGOFINAL.GIF';
+        /* $date_evenement = new Date();
+        $date_acquisition = new Date();
+        $date_retour_prevue = new Date();
+        foreach($sortieArticleRepository->findBy(['refernce' => $reference]) as $sto){            
+            $date_evenement = $sto->getDateEvenement();
+            $date_acquisition = $sto->getDateSortieEffectif();
+            $date_retour_prevue = $sto->getDateRetourPrevu();
+        } */
         $html = $this->renderView('sortie_effectif/pdf.html.twig', [
             'stocks' => $sortieArticleRepository->findBy(['refernce' => $reference]),
             'logo' => $logo,
             'reference' => $reference,
             'responsable' => $responsable->getNom(),
             'client' => $client,
+            /* 'dateevenement' => $date_evenement,
+            'dateacquisition' => $date_acquisition,
+            'dateretour' => $date_retour_prevue, */
         ]);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portait');

@@ -131,7 +131,7 @@ class FactureController extends AbstractController
     /**
      * @Route("/facture/{ref}/pdf", name="facture_pdf")
      */
-    public function facturePdf(int $ref, TypeClientRepository $typeClientRepository, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
+    public function facturePdf(int $ref, PayeRepository $payeRepository, TypeClientRepository $typeClientRepository, TVARepository $tvaRepository, StockRepository $stockRepository, IndemniteRepository $indemniteRepository, RemiseRepository $remiseRepository, TransportRepository $transportRepository, CautionRepository $cautionRepository, Request $request, PaginatorInterface $paginator)
     {
         $pdfOption = new Options();
         $pdfOption->set('defaultFont', 'Arial');
@@ -156,6 +156,10 @@ class FactureController extends AbstractController
         $date_evenement = new Date();
         $date_acquisition = new Date();
         $date_retour_prevue = new Date();
+        $paye = 0;
+        foreach($payeRepository->findBy(["refstock" => $reference]) as $p){
+            $paye += $p->getMontant();
+        }
         foreach($indemnites as $inde){
             $indemnite += $inde->getPrix();
         }
@@ -209,6 +213,8 @@ class FactureController extends AbstractController
             'tvaCollecter' => $tvaCollecter,
             'ttc' => $ttc,
             'netapayer' => $netapayer,
+            'payer' => $paye,
+            'reste' => $netapayer - $paye,
             'typeclient' => $type_client,
             'typeclientreference' => $type_client_reference->getType(),
             'client' => $client,

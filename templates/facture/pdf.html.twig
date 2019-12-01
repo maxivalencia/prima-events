@@ -162,6 +162,14 @@
                         <td colspan="6" align="right">Net à Payer</td>
                         <td>{{ netapayer|number_format(0, ',', '.') }}  Ar</td>
                     </tr>  
+                    <tr>
+                        <td colspan="6" align="right">Payer</td>
+                        <td>{{ payer|number_format(0, ',', '.') }}  Ar</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" align="right">Reste</td>
+                        <td>{{ reste|number_format(0, ',', '.') }}  Ar</td>
+                    </tr>
                 {% endif %} 
                 </tbody>
             </table>
